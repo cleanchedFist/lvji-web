@@ -27,6 +27,12 @@ const Footer: React.FC = () => {
           href: 'https://ant.design',
           blankTarget: true,
         },
+        {
+          key: 'ICP',
+          title: 'ICP备案/许可证号：蜀ICP备2025165504号-1',
+          href: 'https://beian.miit.gov.cn/',
+          blankTarget: true,
+        },
       ]}
     />
   );
