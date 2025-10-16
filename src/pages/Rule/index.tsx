@@ -5,6 +5,7 @@ import { useParams, useRequest } from '@umijs/max';
 import { Button, Input, Table, Tag, message } from 'antd';
 import React, { useMemo, useState } from 'react';
 import AddForm from './components/AddFrom';
+import ExpandableCell from './components/ExpandableCell';
 import UpdateForm from './components/UpdateForm';
 
 const handleRemove = async (row: API.RuleTypeItem) => {
@@ -81,10 +82,16 @@ const TableList: React.FC = () => {
     {
       title: '名称',
       dataIndex: 'name',
+      render(value: string) {
+        return <div className="min-w-8">{value}</div>;
+      },
     },
     {
       title: '描述',
       dataIndex: 'description',
+      render(value: string) {
+        return <ExpandableCell text={value}></ExpandableCell>;
+      },
     },
     {
       title: '创建来源',
