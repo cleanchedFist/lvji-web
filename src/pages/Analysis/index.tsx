@@ -1,10 +1,5 @@
-import {
-  addRule,
-  downloadReview,
-  getResultList,
-  removeReview,
-  updateRule,
-} from '@/services/ant-design-pro/api';
+import { addRule, getResultList, removeReview, updateRule } from '@/services/ant-design-pro/api';
+import { contractDownload } from '@/utils/contractHandle';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -79,33 +74,6 @@ const handleRemove = async (row: API.AnalysisListItem) => {
   }
 };
 
-const handleDownload = async (row: API.AnalysisListItem) => {
-  const hide = message.loading('正在导出');
-  if (!row) return true;
-  try {
-    const data = await downloadReview(row.reviewId);
-    console.log('xxxx', data);
-    const blob = new Blob([data], { type: 'application/octet-stream' });
-    const url = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${row.contractName}.docx`;
-    document.body.appendChild(link);
-    link.click();
-
-    // 释放资源
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-    hide();
-    message.success('导出成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('导出失败，请重试');
-    return false;
-  }
-};
 const TableList: React.FC = () => {
   /**
    * @en-US Pop-up window of new window
@@ -157,7 +125,7 @@ const TableList: React.FC = () => {
   }
 
   function handleExport(row: API.AnalysisListItem) {
-    handleDownload(row);
+    contractDownload(row);
   }
 
   const columns: ProColumns<API.AnalysisListItem>[] = [
@@ -210,7 +178,9 @@ const TableList: React.FC = () => {
       valueType: 'option',
       render: (_, record) => [
         <Button key="view" size="small" color="primary" variant="link">
-          <Link to={`/clm/contract/view/${record.reviewId}`}>查看</Link>
+          <Link to={`/clm/contract/view/${record.reviewId}`} state={{ name: record.contractName }}>
+            查看
+          </Link>
         </Button>,
         <Button
           key="del"

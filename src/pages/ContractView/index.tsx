@@ -2,9 +2,10 @@ import AllTab from '@/components/contract/AllTab';
 import Analysis from '@/components/contract/Analysis';
 import { contractView } from '@/services/ant-design-pro/api';
 import WebOfficeProvider from '@/store/wpsProvider';
-import { FileDoneOutlined, FireOutlined } from '@ant-design/icons';
+import { contractDownload } from '@/utils/contractHandle';
+import { DownloadOutlined, FileDoneOutlined, FireOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { useParams, useRequest } from '@umijs/max';
+import { useLocation, useParams, useRequest } from '@umijs/max';
 import { Tabs } from 'antd';
 import React, { useMemo, useState } from 'react';
 import Loading from './components/Loading';
@@ -35,6 +36,7 @@ import Loading from './components/Loading';
 
 const ContractView: React.FC = () => {
   const [loading] = useState(false);
+  const location = useLocation();
   const params = useParams();
 
   const { data } = useRequest(contractView, {
@@ -157,6 +159,13 @@ const ContractView: React.FC = () => {
     ];
   }, [items]);
 
+  // 下载合同源文件
+  const handleExport = () => {
+    const contractData = location.state;
+    const contractName = contractData.name;
+    contractDownload({ contractName, reviewId: params.id });
+  };
+
   return (
     <div className="[&_.ant-pro-page-container-children-container]:pr-0">
       <PageContainer>
@@ -218,6 +227,15 @@ const ContractView: React.FC = () => {
                       <FileDoneOutlined />
                     </div>
                     <div className="mt-1">解析</div>
+                  </div>
+                  <div className={`mt-6 cursor-pointer text-center text-xs hover:font-bold`}>
+                    <div
+                      className={`w-[40px] h-[40px] rounded-xl hover:bg-white flex justify-center items-center text-lg`}
+                      onClick={handleExport}
+                    >
+                      <DownloadOutlined />
+                    </div>
+                    <div className="mt-1">导出</div>
                   </div>
                 </div>
               </div>
