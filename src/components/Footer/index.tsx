@@ -1,6 +1,7 @@
 import { GithubOutlined } from '@ant-design/icons';
 import { DefaultFooter } from '@ant-design/pro-components';
 import React from 'react';
+import PSBFilling from './components/PSBFilling';
 
 const Footer: React.FC = () => {
   return (
@@ -25,6 +26,12 @@ const Footer: React.FC = () => {
           key: 'Ant Design',
           title: 'Ant Design',
           href: 'https://ant.design',
+          blankTarget: true,
+        },
+        {
+          key: 'Public Security Bureau Filing Number',
+          title: <PSBFilling />,
+          href: 'https://beian.miit.gov.cn/',
           blankTarget: true,
         },
         {
