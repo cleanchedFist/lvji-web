@@ -207,7 +207,7 @@ export function RuleFormItem(props) {
         <Button icon={<PlusOutlined />} onClick={show}>
           添加规则
         </Button>
-        <Button icon={<SettingOutlined />} onClick={() => navigate(-1)}>
+        <Button icon={<SettingOutlined />} onClick={() => navigate('/clm/config?tab=1')}>
           管理规则库
         </Button>
       </Space>

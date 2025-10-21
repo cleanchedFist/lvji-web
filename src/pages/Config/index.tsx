@@ -7,7 +7,7 @@ import {
 } from '@/services/ant-design-pro/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { Link, useRequest } from '@umijs/max';
+import { Link, useRequest, useSearchParams } from '@umijs/max';
 import { Button, Card, Input, List, Segmented, Typography, message } from 'antd';
 import React, { useMemo, useState } from 'react';
 import AddForm, { FormValueType } from './components/AddForm';
@@ -75,6 +75,8 @@ const TableList: React.FC = () => {
   const [strategyKey, setStrategyKey] = useState('');
   const { data, refresh: refreshStrategy } = useRequest(strategyList);
   const { data: rules, refresh } = useRequest(scenarioList);
+  const [searchParams] = useSearchParams();
+  const tabId = searchParams.get('tab');
 
   const [scenarioModalOpen, setScenarioModalOpen] = useState(false);
 
@@ -123,7 +125,7 @@ const TableList: React.FC = () => {
     <PageContainer>
       <Text type="secondary">合同配置可以配置专属的自定义审核规则</Text>
       <div className="mt-4">
-        <Segmented options={tabs} onChange={setTab} />
+        <Segmented options={tabs} onChange={setTab} defaultValue={tabId ? +tabId : tabs[0].value} />
       </div>
       {tab === 0 && (
         <>
