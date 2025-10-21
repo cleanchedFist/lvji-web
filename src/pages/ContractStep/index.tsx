@@ -5,7 +5,23 @@ import { Link, useNavigate, useParams, useRequest } from '@umijs/max';
 import { Button, Input, Select } from 'antd';
 import React, { useState } from 'react';
 
-const scales = ['强势', '中立', '弱势'];
+const scaleInfoMap = [
+  {
+    id: 0,
+    title: '强势',
+    tip: '你所代表阵营的谈判地位较高，对合同的修改尺度较大，可修改的程度较高，系统在审查修改时会尽量多争取权利条款，尽量避免义务条款。',
+  },
+  {
+    id: 1,
+    title: '中立',
+    tip: '合同双方谈判地位势均，你所代表的阵营无明显优势。系统在在审查合同时应以完善合同内容、增强合同的可操作性为出发点，以权利义务对等为原则，对合同内容进行审查和修改。',
+  },
+  {
+    id: 2,
+    title: '弱势',
+    tip: '你所代表阵营的谈判地位较低，对合同的修改尺度处于相对劣势。系统在审查修改时对于与实现合同核心目的有关的底线问题必须修改，对于非底线问题可适度放宽审查标准。',
+  },
+];
 
 function Step1(props) {
   const { data, form } = props;
@@ -25,7 +41,7 @@ function Step1(props) {
     props.onOk({
       data: {
         reviewStance: position === 0 ? data.partyA : data.partyB,
-        scale: scales[checkScale],
+        scale: scaleInfoMap[checkScale].title,
         strategyId: strategy,
         reviewer: annotations,
       },
@@ -107,9 +123,7 @@ function Step1(props) {
             <div className="text-lg">弱势</div>
           </div>
         </div>
-        <div className="text-[#86909c] text-sm mt-3">
-          你所代表阵营的谈判地位较低，对合同的修改尺度处于相对劣势。系统在审查修改时对于与实现合同核心目的有关的底线问题必须修改，对于非底线问题可适度放宽审查标准。
-        </div>
+        <div className="text-[#86909c] text-sm mt-3">{scaleInfoMap[checkScale].tip}</div>
       </div>
       <div className="mt-12">
         <div className="flex items-center justify-between">
