@@ -4,7 +4,7 @@ import { LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
-import { history, Link } from '@umijs/max';
+import { history, Link, matchRoutes } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import './git-markdown.less';
 import './markdown.css';
@@ -54,7 +54,28 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+  const setSiderCollapsed = (collapsed?: boolean) => {
+    let collapsedSetting = { collapsed };
+    if (collapsed !== void 0) {
+      collapsedSetting.collapsed = collapsed;
+    } else {
+      const hideSidebarPaths = [{ path: '/clm/contract/view/:id' }];
+      const shouldHideSidebar = matchRoutes(hideSidebarPaths, history?.location?.pathname)?.length;
+      collapsedSetting.collapsed = !!shouldHideSidebar;
+    }
+    setInitialState((preInitialState) => ({
+      ...preInitialState,
+      settings: {
+        ...(preInitialState?.settings || {}),
+        ...collapsedSetting,
+      },
+    }));
+  };
   return {
+    defaultCollapsed: setSiderCollapsed,
+    onCollapse: (collapsed) => {
+      setSiderCollapsed(collapsed);
+    },
     actionsRender: () => [<Question key="doc" />],
     avatarProps: {
       src: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
@@ -73,6 +94,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);
       }
+      setSiderCollapsed();
     },
     bgLayoutImgList: [
       {
