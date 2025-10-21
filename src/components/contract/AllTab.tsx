@@ -1,7 +1,6 @@
 import { updateAdvice } from '@/services/ant-design-pro/api';
 import { useWebOffice } from '@/store/wps';
 import {
-  CopyOutlined,
   DownOutlined,
   EditOutlined,
   FileDoneOutlined,
@@ -9,7 +8,6 @@ import {
   PushpinOutlined,
 } from '@ant-design/icons';
 import { Button, Collapse, Input, Modal, Skeleton, message } from 'antd';
-import copy from 'copy-to-clipboard';
 import { diffChars } from 'diff';
 import { useMemo, useState } from 'react';
 
@@ -50,10 +48,10 @@ function Item({ data }) {
     return text && revisedText && text !== revisedText;
   }, [text, revisedText]);
 
-  function handleCopy() {
-    copy(revisedText);
-    message.success('复制成功');
-  }
+  // function handleCopy() {
+  //   copy(revisedText);
+  //   message.success('复制成功');
+  // }
   async function focusText() {
     if (!instance?.Application) {
       return;
@@ -203,7 +201,7 @@ function Item({ data }) {
           <PushpinOutlined style={{ color: '#009e59' }} />
           <span>定位到原文</span>
         </div>
-        {showRevise && (
+        {/* {showRevise && (
           <div
             className="flex items-center gap-1 cursor-pointer hover:text-[#009e59]"
             onClick={handleCopy}
@@ -211,7 +209,7 @@ function Item({ data }) {
             <CopyOutlined style={{ color: '#009e59' }} />
             <span>复制修改建议</span>
           </div>
-        )}
+        )} */}
         <div className="ml-auto flex items-center gap-1 cursor-pointer">
           <Button icon={<EditOutlined style={{ color: '#009e59' }} />} onClick={showEdit}>
             修改
