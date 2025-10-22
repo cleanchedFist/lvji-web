@@ -20,7 +20,7 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({ text, maxLines = 2 }) =
     color: '#1890ff',
     cursor: 'pointer',
     marginLeft: '5px',
-    fontSize: '20px',
+    fontSize: '14px',
   };
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({ text, maxLines = 2 }) =
       </div>
       {text && isTruncated && (
         <div onClick={toggleExpanded}>
+          {/* <span style={buttonStyle}>{expanded ? '收起' : '展开'}</span> */}
           {expanded ? <UpOutlined style={buttonStyle} /> : <DownOutlined style={buttonStyle} />}
         </div>
       )}

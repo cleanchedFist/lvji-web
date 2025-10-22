@@ -1,10 +1,12 @@
 import { AvatarDropdown, AvatarName, Footer, Question } from '@/components';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import usePageHistory from '@/hooks/usePageHistory';
 import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
-import { LinkOutlined } from '@ant-design/icons';
+import { LeftOutlined, LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
-import { history, Link, matchRoutes } from '@umijs/max';
+import { history, Link, matchPath, matchRoutes } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import './git-markdown.less';
 import './markdown.css';
@@ -12,7 +14,8 @@ import { errorConfig } from './requestErrorConfig';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 const registPath = '/user/regist';
-
+const contractViewPath = { path: '/clm/contract/view/:id' };
+const contractDetailPath = { path: '/clm/contract/detail/:id' };
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
@@ -54,12 +57,17 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+  // eslint-disable-next-line
+  const trackPageChange = usePageHistory();
+  const editBtnStorageKey = 'editingDocId';
+  // eslint-disable-next-line
+  const editBtnStorage = useLocalStorage(editBtnStorageKey);
   const setSiderCollapsed = (collapsed?: boolean) => {
     let collapsedSetting = { collapsed };
     if (collapsed !== void 0) {
       collapsedSetting.collapsed = collapsed;
     } else {
-      const hideSidebarPaths = [{ path: '/clm/contract/view/:id' }];
+      const hideSidebarPaths = [contractViewPath, contractDetailPath];
       const shouldHideSidebar = matchRoutes(hideSidebarPaths, history?.location?.pathname)?.length;
       collapsedSetting.collapsed = !!shouldHideSidebar;
     }
@@ -94,7 +102,21 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);
       }
+
+      // 设置侧边栏的收起展开状态
       setSiderCollapsed();
+
+      // 根据页面判断是否显示 返回编辑页面 按钮
+      const { previousPath, currentPath } = trackPageChange(location.pathname);
+      const matchDetailPath = matchPath(contractDetailPath, previousPath);
+      if (matchPath(contractViewPath, currentPath)) {
+        editBtnStorage.removeValue();
+      } else if (matchDetailPath && currentPath !== previousPath) {
+        const { params } = matchDetailPath;
+        if (params.id) {
+          editBtnStorage.setValue(params.id);
+        }
+      }
     },
     bgLayoutImgList: [
       {
@@ -147,6 +169,28 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
             />
           )}
         </>
+      );
+    },
+    menuExtraRender: (menuProps) => {
+      const styleObj = {
+        color: '#1890ff',
+        cursor: 'pointer',
+        lineHeight: '40px',
+      };
+
+      const handleClick = () => {
+        // 获取 合同 id，跳转到合同
+        history.push(`/clm/contract/view/${editBtnStorage.value}`);
+      };
+      return !!editBtnStorage.value ? (
+        <div style={styleObj} onClick={handleClick}>
+          <LeftOutlined />{' '}
+          <span style={{ display: menuProps.collapsed ? 'none' : 'inline-block' }}>
+            返回编辑中的合同
+          </span>
+        </div>
+      ) : (
+        <></>
       );
     },
     ...initialState?.settings,
