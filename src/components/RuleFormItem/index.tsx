@@ -1,17 +1,26 @@
-import { ruleList, scenarioList } from '@/services/ant-design-pro/api';
+import AddRule from '@/components/AddRule';
+import AddRuleSet, { RuleSetFormValueType } from '@/components/AddRuleSet';
+import { addRule, ruleList, scenarioAdd, scenarioList } from '@/services/ant-design-pro/api';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { useControlModel } from '@ant-design/pro-components';
 import { useNavigate, useRequest } from '@umijs/max';
-import { Button, Drawer, Input, Menu, Space, Table, Tag } from 'antd';
+import { Button, Drawer, Input, Menu, Space, Table, Tag, message } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import { useEffect, useMemo, useState } from 'react';
 
-export function RuleDrawer(props) {
+export function RuleDrawer(props: { [key: string]: any }) {
   const { selected: initSelected = [], open, onChange, onClose } = props;
-  const { data: list } = useRequest(scenarioList);
-  const { data: rules, run } = useRequest(ruleList, {
+  const { data: list, refresh: refreshRuleSet } = useRequest(scenarioList);
+  const {
+    data: rules,
+    run,
+    refresh: refreshRule,
+  } = useRequest(ruleList, {
     manual: true,
   });
+
+  const [ruleSetAddModalOpen, setRuleSetModalOpen] = useState(false);
+  const [ruleModalOpen, setRuleModalOpen] = useState(false);
 
   const [keywords, setKeywords] = useState('');
 
@@ -32,7 +41,7 @@ export function RuleDrawer(props) {
       title: '规则来源',
       dataIndex: 'createdSource',
       width: 100,
-      render(value) {
+      render(value: any) {
         if (value === 0) {
           return <span>系统创建</span>;
         }
@@ -44,7 +53,7 @@ export function RuleDrawer(props) {
     {
       title: '风险等级',
       dataIndex: 'riskLevel',
-      render(value) {
+      render(value: any) {
         if (value === 0) {
           return <Tag color="green">低风险</Tag>;
         }
@@ -76,7 +85,8 @@ export function RuleDrawer(props) {
       return {
         ...v,
         init: v['init'].filter(
-          (item) => !rules?.rulesDetailRecords.find((row) => row.id === item.id),
+          (item: { [key: string]: any }) =>
+            !rules?.rulesDetailRecords.find((row) => row.id === item.id),
         ),
         [selected]: newSelectedRows,
       };
@@ -97,6 +107,79 @@ export function RuleDrawer(props) {
     setSelectedMap({ init: initSelected });
   }, [initSelected]);
 
+  // ==新增规则 新增规则集 start==
+
+  const handleAddRuleSet = async (fields: RuleSetFormValueType) => {
+    const hide = message.loading('新增中');
+    try {
+      await scenarioAdd(fields);
+      hide();
+      message.success('新增成功');
+      return true;
+    } catch (error) {
+      hide();
+      message.error('新增失败，请重试');
+      return false;
+    }
+  };
+  async function addRuleSetConfirm(value: RuleSetFormValueType) {
+    const success = await handleAddRuleSet(value);
+    if (success) {
+      setRuleSetModalOpen(false);
+      refreshRuleSet();
+    }
+  }
+
+  function addScenarioCancel() {
+    setRuleSetModalOpen(false);
+  }
+
+  function showRuleSetDrawer() {
+    setRuleSetModalOpen(true);
+  }
+
+  const showRuleAddBtn = useMemo(() => {
+    const selectedRuleSet = list?.records.find((row) => +row.id === +selected);
+    return !selectedRuleSet || selectedRuleSet?.createdSource === 0;
+  }, [selected]);
+
+  function showRuleDrawer() {
+    setRuleModalOpen(true);
+  }
+
+  const handleRuleAdd = async (fields: Record<string, any>) => {
+    const hide = message.loading('新增中');
+    try {
+      await addRule(fields);
+      hide();
+      message.success('新增成功');
+      return true;
+    } catch (error) {
+      hide();
+      message.error('新增失败，请重试');
+      return false;
+    }
+  };
+
+  async function addRuleConfirm(value: API.RuleListItem) {
+    const success = await handleRuleAdd({
+      ruleTableId: selected,
+      name: value.name,
+      description: value.description,
+      riskLevel: value.riskLevel,
+      createdSource: 1,
+    });
+    if (success) {
+      setRuleModalOpen(false);
+      refreshRule();
+    }
+  }
+
+  function addCancel() {
+    setRuleModalOpen(false);
+  }
+  // ==新增规则 新增规则集 end==
+
   return (
     <Drawer
       height="80%"
@@ -109,7 +192,12 @@ export function RuleDrawer(props) {
     >
       <div className="flex flex-1 h-full overflow-hidden">
         <div className="flex flex-col w-64 border-r p-4">
-          <div className="text-lg font-semibold mb-4">规则库</div>
+          <div className="flex justify-between items-center mb-4">
+            <div className="text-lg font-semibold ">规则库</div>
+            <div className="text-xs text-[#1890ff] cursor-pointer" onClick={showRuleSetDrawer}>
+              新增规则库
+            </div>
+          </div>
           <div className="flex flex-col h-full overflow-auto">
             {list && (
               <Menu
@@ -121,14 +209,25 @@ export function RuleDrawer(props) {
           </div>
         </div>
         <div className="flex-1 p-4 h-full overflow-auto">
-          <div className="flex justify-between items-center mb-4">
-            <Input
-              value={keywords}
-              onChange={(e) => setKeywords(e.target.value)}
-              className="w-[300px]"
-              placeholder="请输入规则名称进行搜索"
-            />
-            <Button onClick={confirm}>确认({selectedRowKeys.length})</Button>
+          <div className="flex justify-between items-top mb-4">
+            <div>
+              <Input
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
+                className="w-[300px]"
+                placeholder="请输入规则名称进行搜索"
+              />
+              <Button className="ml-4" onClick={confirm}>
+                确认({selectedRowKeys.length})
+              </Button>
+            </div>
+            <div
+              hidden={showRuleAddBtn}
+              className="text-sm text-[#1890ff] cursor-pointer"
+              onClick={showRuleDrawer}
+            >
+              新增规则
+            </div>
           </div>
           <Table
             rowKey="id"
@@ -139,6 +238,12 @@ export function RuleDrawer(props) {
           />
         </div>
       </div>
+      <AddRuleSet
+        onSubmit={addRuleSetConfirm}
+        onCancel={addScenarioCancel}
+        visible={ruleSetAddModalOpen}
+      />
+      <AddRule onSubmit={addRuleConfirm} onCancel={addCancel} visible={ruleModalOpen} values={{}} />
     </Drawer>
   );
 }
