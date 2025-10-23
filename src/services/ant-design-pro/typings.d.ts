@@ -123,6 +123,7 @@ declare namespace API {
     parta: string;
     partb: string;
     reviewer: string;
+    status?: number;
   };
   type ContractList = {
     data?: {
