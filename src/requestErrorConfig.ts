@@ -89,8 +89,11 @@ export const errorConfig: RequestConfig = {
     (config: RequestOptions) => {
       const token = window.localStorage.getItem('token');
       if (token) {
+        console.log(111);
+        console.log(config.headers);
         config.headers = {
           Authorization: token,
+          ...(config.headers || {}),
         };
       }
       return { ...config };

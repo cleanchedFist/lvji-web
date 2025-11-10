@@ -118,6 +118,9 @@ export async function contractPre(id: string) {
 export async function contractView(id: string) {
   return request(`/api/llm-service/get/reviewed/${id}`, {
     method: 'GET',
+    headers: {
+      'ngrok-skip-browser-warning': '1',
+    },
   });
 }
 
