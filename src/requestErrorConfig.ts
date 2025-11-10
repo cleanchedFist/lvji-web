@@ -93,6 +93,7 @@ export const errorConfig: RequestConfig = {
         console.log(config.headers);
         config.headers = {
           Authorization: token,
+          'ngrok-skip-browser-warning': '1',
           ...(config.headers || {}),
         };
       }
