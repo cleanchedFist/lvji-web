@@ -282,6 +282,11 @@ function Title({ index, data }) {
           高风险
         </div>
       )}
+      {data.isAdd === 1 && (
+        <div className="px-[2px] text-blue-500 border-blue-500 border bg-blue-100 font-medium rounded whitespace-nowrap">
+          新增
+        </div>
+      )}
     </div>
   );
 }
