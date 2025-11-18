@@ -91,6 +91,8 @@ export const errorConfig: RequestConfig = {
       if (token) {
         config.headers = {
           Authorization: token,
+          'ngrok-skip-browser-warning': '1',
+          ...(config.headers || {}),
         };
       }
       return { ...config };

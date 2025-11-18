@@ -13,9 +13,14 @@ export default {
   // 如果需要自定义本地开发服务器  请取消注释按需调整
   dev: {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
+    // '/api/llm-service': {
+    //   target: 'http://175.27.214.13:11086',
+    //   changeOrigin: true,
+    // },
     '/api/': {
       // 要代理的地址
-      target: 'http://175.27.214.13:11086',
+      // target: 'http://175.27.214.13:11086',
+      target: 'https://07cf3dc5d019.ngrok-free.app',
       // 配置了这个可以从 http 代理到 https
       // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
@@ -33,7 +38,8 @@ export default {
   test: {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
     '/api/': {
-      target: 'https://proapi.azurewebsites.net',
+      // target: 'https://proapi.azurewebsites.net',
+      target: 'https://07cf3dc5d019.ngrok-free.app',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
