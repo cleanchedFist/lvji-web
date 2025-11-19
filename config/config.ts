@@ -168,4 +168,7 @@ export default defineConfig({
     //     name: assetDir + '/img/[name].[hash:8].[ext]',
     //   }));
   },
+  mock: {
+    include: ['mock/**/*.ts'],
+  },
 });
