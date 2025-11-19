@@ -1,6 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
+import {UploadFile} from 'antd'
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
@@ -142,8 +143,8 @@ export async function removeReview(id: string) {
   });
 }
 
-export async function downloadReview(id: string) {
-  return request<Record<string, any>>(`/api/llm-service/download/${id}`, {
+export async function downloadReview(id: number | string) {
+  return request<BlobPart>(`/api/llm-service/download/${id}`, {
     method: 'GET',
     responseType: 'blob',
   });
@@ -316,13 +317,13 @@ export async function scenarioAdd(options?: { [key: string]: any }) {
 /**
  * 上传文件
  */
-export async function uploadContract(file: File) {
+export async function uploadContract(file: File, versionId?: string) {
   const formData = new FormData();
   if (file) {
-    // console.log('xxxx', file);
     formData.append('docxFile', file.originFileObj);
+    formData.append('version', `${versionId}`);
   }
-  return request('/api/llm-service/upload', {
+  return request('/api/llm-service/upload/dir', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -345,6 +346,78 @@ export async function updateAdvice(options?: { [key: string]: any }) {
     method: 'PUT',
     data: {
       ...(options || {}),
+    },
+  });
+}
+
+// 目录接口
+export async function getDirList(params: any, options?: { [key: string]: any }) {
+  const { pageSize, name: words, ...rest } = params;
+  return request('/api/llm-service/dir/all/list', {
+    method: 'GET',
+    params: {
+      size: params.pageSize,
+      words,
+      ...rest,
+    },
+  });
+}
+
+/**
+ * 上传目录下的单独版本
+ */
+export async function uploadVersion(file: File, dirId: string, versionId) {
+  const formData = new FormData();
+  if (file) {
+    formData.append('docxFile', file.originFileObj);
+    formData.append('dir', dirId);
+    formData.append('version', versionId);
+  }
+  return request('/api/llm-service/upload/file', {
+    method: 'POST',
+    data: formData,
+    requestType: 'form',
+  });
+}
+
+// 删除目录
+
+export async function deleteContractDir(id: string) {
+  return request<Record<string, any>>(`/api/llm-service/dir/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+
+// 获取版本数量
+export async function getDirCount(dirId: number) {
+  return request('/api/llm-service/dir/cnt', {
+    method: 'GET',
+    params: {
+      dir: dirId
+    },
+  });
+}
+
+// 解析合同
+export async function parseContract(dirId: number, contractId: number) {
+  return request('/api/llm-service/upload/change', {
+    method: 'GET',
+    params: {
+      dir: dirId,
+      file: contractId
+    },
+  });
+}
+
+// 获取目录下的所有合同
+export function getContractVersionList(dirId: number) {
+  return request('/api/llm-service/dir/one/list', {
+    method: 'GET',
+    params: {
+      dir: dirId,
+      current: 1,
+      size: 999
     },
   });
 }

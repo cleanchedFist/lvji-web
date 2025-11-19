@@ -35,14 +35,26 @@ export default [
   },
 
   {
-    name: 'clm.contract',
+    path: '/cataloge',
     icon: 'table',
+    name: '合同目录',
+    component: './ContractCataloge',
+    
+  },
+
+  {
+    // name: 'clm.contract',
+    // icon: 'table',
     path: '/clm/contract',
     hideChildrenInMenu: true,
     routes: [
       {
         path: '/clm/contract',
         component: './Contract',
+      },
+      {
+        path: '/clm/contract/cataloge',
+        component: './ContractCataloge',
       },
       {
         path: '/clm/contract/step/:id',

@@ -127,7 +127,7 @@ declare namespace API {
   };
   type ContractList = {
     data?: {
-      records: ContractListItem[];
+      records: CatalogeCardProps[];
       total?: number;
     };
     success?: boolean;
@@ -191,4 +191,38 @@ declare namespace API {
       total: number;
     };
   };
+
+  type ContractCataloge = {
+    id: string,
+    name: string,
+  }
+
+  type CatalogeCardProps = {
+    "id": number,
+    "name": string,
+    "userId": number,
+    "parta": string,
+    "partb": string,
+    "latestFileId": number,
+    "version": string,
+    "checked": boolean,
+    "createTimeStamp": number
+  }
+
+  type ContractDownloadProps = {
+    contractName: string,
+    reviewId: number | string
+  }
+
+  type ContractVersionItem = {
+    id: number,
+    version: string
+    "name": string,
+    "title": string,
+    "parta": string,
+    "partb": string,
+    "status": number,
+    "stage": string,
+    "createTimeStamp": number
+  }
 }

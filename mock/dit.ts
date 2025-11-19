@@ -56,4 +56,128 @@ export default {
     requestId: null,
     success: true,
   },
+  'GET /api/llm-service/dir/cnt': {
+    "code": "0",
+    "message": null,
+    "data": 6,
+    "requestId": null,
+    "success": true
+  },
+  'POST /api/llm-service/upload/file': {
+    "code": "0",
+    "message": null,
+    "data": 361,
+    "requestId": null,
+    "success": true
+  },
+  'GET /api/llm-service/upload/change': {
+    "code": "0",
+    "message": null,
+    "data": null,
+    "requestId": null,
+    "success": true
+  },
+  'GET /api/llm-service/dir/one/list': {
+    "code": "0",
+    "message": null,
+    "data": {
+      "current": 1,
+      "size": 5,
+      "total": 6,
+      "records": [
+        {
+          "id": 344,
+          "name": "电梯维修保养合同-甲方.docx",
+          "title": "电梯日常维保合同",
+          "parta": null,
+          "partb": null,
+          "status": 2,
+          "stage": "起草中",
+          "createTimeStamp": 1763447358000
+        },
+        {
+          "id": 346,
+          "name": "劳务外包服务合同-无偏向.docx",
+          "title": null,
+          "parta": null,
+          "partb": null,
+          "status": 1,
+          "stage": "起草中",
+          "createTimeStamp": 1763447538000
+        },
+        {
+          "id": 354,
+          "name": "劳务外包服务合同-无偏向.docx",
+          "title": null,
+          "parta": null,
+          "partb": null,
+          "status": 1,
+          "stage": "起草中",
+          "createTimeStamp": 1763450083000
+        },
+        {
+          "id": 356,
+          "name": "劳务外包服务合同-无偏向.docx",
+          "title": null,
+          "parta": null,
+          "partb": null,
+          "status": 1,
+          "stage": "起草中",
+          "createTimeStamp": 1763453553000
+        },
+        {
+          "id": 357,
+          "name": "劳务外包服务合同-无偏向.docx",
+          "title": null,
+          "parta": null,
+          "partb": null,
+          "status": 1,
+          "stage": "起草中",
+          "createTimeStamp": 1763454268000
+        }
+      ]
+    },
+    "requestId": null,
+    "success": true
+  },
+  'GET /api/llm-service/retrieval/344': {
+    "code": "0",
+    "message": null,
+    "data": {
+      "id": 344,
+      "title": "西式分餐外卖订餐合同",
+      "name": "2020.7.27西式分餐外卖订餐合同.docx",
+      "status": 2,
+      "parta": "xxxx有限责任公司",
+      "partb": "yyyy有限公司",
+      "reviewer": null,
+      "price": 11000.0,
+      "startTime": 1595865600000,
+      "endTime": null,
+      "type": "外卖订餐合同",
+      "stage": "起草中"
+    },
+    "requestId": null,
+    "success": true
+  },
+  'GET /api/llm-service/retrieval/346': {
+    "code": "0",
+    "message": null,
+    "data": {
+      "id": 346,
+      "title": "西式分餐外卖订餐合同2222",
+      "name": "2020.7.27西式分餐外卖订餐合同.docx",
+      "status": 2,
+      "parta": "xxxx有限责任公司222",
+      "partb": "yyyy有限公司",
+      "reviewer": null,
+      "price": 11000.0,
+      "startTime": 1595865600000,
+      "endTime": null,
+      "type": "外卖订餐合同",
+      "stage": "起草中"
+    },
+    "requestId": null,
+    "success": true
+  },
 };
