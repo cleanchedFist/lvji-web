@@ -1,17 +1,16 @@
 import { downloadReview } from '@/services/ant-design-pro/api';
 import { message } from 'antd';
-export const contractDownload = async (row: API.AnalysisListItem) => {
+export const contractDownload = async (props: API.ContractDownloadProps) => {
   const hide = message.loading('正在导出');
-  if (!row) return true;
+  if (!props) return true;
   try {
-    const data = await downloadReview(row.reviewId);
-    console.log('xxxx', data);
+    const data = await downloadReview(props.reviewId);
     const blob = new Blob([data], { type: 'application/octet-stream' });
     const url = window.URL.createObjectURL(blob);
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${row.contractName}.docx`;
+    link.download = `${props.contractName}.docx`;
     document.body.appendChild(link);
     link.click();
 
