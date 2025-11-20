@@ -2,7 +2,7 @@ import { Modal, Card, Descriptions, Steps, Tabs, Button, List, Row, Col, message
 import React, { useState, useMemo, forwardRef, useImperativeHandle } from 'react';
 import { history } from '@umijs/max';
 import formatTime from '../utils/formatTime';
-import { getContractVersionList, contractDetail, deleteContractDir } from '@/services/ant-design-pro/api';
+import { getContractVersionList, contractDetail, removeContract } from '@/services/ant-design-pro/api';
 import { contractDownload } from '@/utils/contractHandle';
 
 export interface ContractVersionListRef {
@@ -11,25 +11,26 @@ export interface ContractVersionListRef {
 
 const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref) => {
     const [focusVersionParseData, setFocusVersionParseData] = useState<API.ContractListItem>({} as API.ContractListItem)
-    const [versionList, setVersionList] = useState([])
+    const [versionList, setVersionList] = useState<API.ContractVersionItem[]>([])
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [dirInfo, setDirInfo] = useState<number>()
+    const [dirInfo, setDirInfo] = useState<API.CatalogeCardProps>({} as API.CatalogeCardProps)
 
-   
+
     function updateList(id?: number) {
-        if (id || dirInfo.id) {
-            getContractVersionList(id || dirInfo.id)
-                .then(res => {
-                    setVersionList(res.data.records)
-                    setFocusVersionParseData(res.data.records[0])
-                })
-        }
+        return getContractVersionList(id || dirInfo.id)
+            .then(res => {
+                setVersionList(res.data.records)
+                setFocusVersionParseData(res.data.records[0])
+            })
 
     }
-     useImperativeHandle(ref, () => ({
+    useImperativeHandle(ref, () => ({
         openModal(data: any) {
-            setModalVisible(true)
             updateList(data.id)
+                .then(() => {
+                    setModalVisible(true)
+
+                })
             setDirInfo(data)
         }
     }))
@@ -41,9 +42,11 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
 
 
     const handleItemClick = (id: number) => {
+        const hide = message.loading('加载中');
         contractDetail(`${id}`)
             .then(res => {
                 setFocusVersionParseData(res.data)
+                hide()
             })
     }
 
@@ -51,13 +54,13 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
         history.push(`/clm/contract/view/${id}`);
     }
 
-    const handleDownloadContract = (data:any) => {
+    const handleDownloadContract = (data: any) => {
         const contractName = data.name;
         contractDownload({ contractName, reviewId: data.latestFileId });
     }
 
     const handleDeleteContract = (id: number) => {
-        deleteContractDir(`${id}`)
+        removeContract(`${id}`)
             .then(() => {
                 updateList();
             })
@@ -124,17 +127,17 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
                 <Tabs>
                     <Tabs.TabPane tab="版本历史" key="item-1">
                         <List style={{ height: '400px', overflow: 'scroll' }}>
-                            {versionList?.map(i => <Card key={i.id} className={`hover:bg-gray-100 cursor-pointer ${focusVersionParseData.id ===i.id ? 'border-blue-500' : ''}`} style={{ margin: '0 0 10px 0' }} onClick={() => handleItemClick(i.id)}>
+                            {versionList?.map(i => <Card key={i.id} className={`hover:bg-gray-100 cursor-pointer ${`${focusVersionParseData.id}` === `${i.id}` ? 'border-blue-500' : ''}`} style={{ margin: '0 0 10px 0' }} onClick={() => handleItemClick(i.id)}>
                                 <Row>
                                     <Col span="16">
-                                        <div>v{i.version}</div>
+                                        <div>v{i.version || '1.0.0'}</div>
                                         <div style={{ color: 'gray' }}>{formatTime(i.createTimeStamp)}</div>
                                     </Col>
                                     <Col span="8">
-                                        <Button style={{ margin: '0 14px 0 0' }} onClick={() => handleViewContract(i.id)}>查看</Button>
+                                        <Button disabled={!i.checked} style={{ margin: '0 14px 0 0' }} onClick={() => handleViewContract(i.id)}>查看</Button>
                                         <Button style={{ margin: '0 14px 0 0' }} onClick={() => handleDownloadContract(i)}>下载</Button>
-                                        <Button style={{ margin: '0 14px 0 0' }} onClick={() => { handleReviewContract(i.id) }}>智能审查</Button>
-                                        <Button onClick={() => { handleDeleteContract(i.id) }}>删除</Button>
+                                        <Button disabled={i.checked} style={{ margin: '0 14px 0 0' }} onClick={() => { handleReviewContract(i.id) }} type='primary'>智能审查</Button>
+                                        <Button disabled={versionList.length === 1} onClick={() => { handleDeleteContract(i.id) }}>删除</Button>
                                     </Col>
                                 </Row>
                             </Card>)}

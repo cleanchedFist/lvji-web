@@ -50,7 +50,7 @@ export default function ContractCardActions(_: any, data: API.CatalogeCardProps)
   
 
     return [
-        <Button key="viewContract" style={{ margin: '0 0 0 8px' }} onClick={() => handleViewContract(data)}>查看最新版本</Button>,
+        <Button key="viewContract" disabled={!data.checked}  style={{ margin: '0 0 0 8px' }} onClick={() => handleViewContract(data)}>查看最新版本</Button>,
         <Button key="download" onClick={() => handleDownload(data)}>下载最新版本</Button>,
         <Button key="versionList" onClick={() => { actionContext.versionHandler(data) }}>历史版本记录</Button>,
         <Button key="check" disabled={data.checked} onClick={() => { handleReview(data) }}>智能审查</Button>,

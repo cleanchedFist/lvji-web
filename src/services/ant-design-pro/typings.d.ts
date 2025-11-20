@@ -223,6 +223,7 @@ declare namespace API {
     "partb": string,
     "status": number,
     "stage": string,
+    checked: boolean
     "createTimeStamp": number
   }
 }

@@ -75,7 +75,7 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props:any, ref) 
 
     function handleUploadDir() {
         setUploading(true);
-        const fileRequest = fileList.map((item) => uploadContract(item as unknown as File));
+        const fileRequest = fileList.map((item) => uploadContract(item as unknown as File, '1.0.0'));
         Promise.all(fileRequest)
             .then(() => {
                 setFileList([]);

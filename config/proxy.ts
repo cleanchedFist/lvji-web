@@ -19,8 +19,8 @@ export default {
     // },
     '/api/': {
       // 要代理的地址
-      target: 'http://175.27.214.13:11086',
-      // target: 'https://f8c13279b759.ngrok-free.app',
+      // target: 'http://175.27.214.13:11086',
+      target: 'https://98fa17247b0f.ngrok-free.app',
       'secure': false,
       // 配置了这个可以从 http 代理到 https
       changeOrigin: true,
