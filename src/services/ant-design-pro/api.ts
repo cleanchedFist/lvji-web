@@ -1,7 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
-import {UploadFile} from 'antd'
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
@@ -388,13 +387,12 @@ export async function deleteContractDir(id: string) {
   });
 }
 
-
 // 获取版本数量
 export async function getDirCount(dirId: number) {
   return request('/api/llm-service/dir/cnt', {
     method: 'GET',
     params: {
-      dir: dirId
+      dir: dirId,
     },
   });
 }
@@ -405,7 +403,7 @@ export async function parseContract(dirId: number, contractId: number) {
     method: 'GET',
     params: {
       dir: dirId,
-      file: contractId
+      file: contractId,
     },
   });
 }
@@ -417,7 +415,7 @@ export function getContractVersionList(dirId: number) {
     params: {
       dir: dirId,
       current: 1,
-      size: 999
+      size: 999,
     },
   });
 }

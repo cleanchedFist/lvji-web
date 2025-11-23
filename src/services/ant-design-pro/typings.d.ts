@@ -193,37 +193,39 @@ declare namespace API {
   };
 
   type ContractCataloge = {
-    id: string,
-    name: string,
-  }
+    id: string;
+    name: string;
+  };
 
   type CatalogeCardProps = {
-    "id": number,
-    "name": string,
-    "userId": number,
-    "parta": string,
-    "partb": string,
-    "latestFileId": number,
-    "version": string,
-    "checked": boolean,
-    "createTimeStamp": number
-  }
+    id: number;
+    name: string;
+    userId: number;
+    parta: string;
+    partb: string;
+    latestFileId: number;
+    version: string;
+    checked: boolean;
+    createTimeStamp: number;
+    reviewId: number;
+  };
 
   type ContractDownloadProps = {
-    contractName: string,
-    reviewId: number | string
-  }
+    contractName: string;
+    reviewId: number | string;
+  };
 
   type ContractVersionItem = {
-    id: number,
-    version: string
-    "name": string,
-    "title": string,
-    "parta": string,
-    "partb": string,
-    "status": number,
-    "stage": string,
-    checked: boolean
-    "createTimeStamp": number
-  }
+    id: number;
+    version: string;
+    name: string;
+    title: string;
+    parta: string;
+    partb: string;
+    status: number;
+    stage: string;
+    checked: boolean;
+    createTimeStamp: number;
+    reviewId: number;
+  };
 }

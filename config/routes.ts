@@ -39,7 +39,6 @@ export default [
     icon: 'table',
     name: '合同目录',
     component: './ContractCataloge',
-    
   },
 
   {
