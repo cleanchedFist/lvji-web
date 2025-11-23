@@ -99,20 +99,22 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props: any, ref)
   }
 
   function handleParseVersion(fileId: number) {
-    const fileRequest = parseContract(dirId, fileId);
-    fileRequest
-      .then(() => {
-        setFileList([]);
-        message.success('上传成功');
-        setUploadModalVisible(false);
-        contractVersionsContext.reloadList();
-      })
-      .catch(() => {
-        message.error('上传失败，请重试');
-      })
-      .finally(() => {
-        setUploading(false);
-      });
+    if (dirId) {
+      const fileRequest = parseContract(dirId, fileId);
+      fileRequest
+        .then(() => {
+          setFileList([]);
+          message.success('上传成功');
+          setUploadModalVisible(false);
+          contractVersionsContext.reloadList();
+        })
+        .catch(() => {
+          message.error('上传失败，请重试');
+        })
+        .finally(() => {
+          setUploading(false);
+        });
+    }
   }
 
   function handleUploadVersion() {

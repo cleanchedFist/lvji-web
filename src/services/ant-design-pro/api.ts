@@ -329,7 +329,7 @@ export async function uploadContract(file: File, versionId?: string) {
   });
 }
 
-export async function getResultList(params) {
+export async function getResultList(params: any) {
   return request<API.RuleList>('/api/llm-service/resultList', {
     method: 'GET',
     params: {

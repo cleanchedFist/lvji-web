@@ -10,7 +10,7 @@ import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
 import formatTime from '../utils/formatTime';
 
 export interface ContractVersionListRef {
-  openModal: (ut: number, dirId?: number) => void;
+  openModal: (data: API.CatalogeCardProps) => void;
 }
 
 const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref) => {
@@ -28,7 +28,7 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
     });
   }
   useImperativeHandle(ref, () => ({
-    openModal(data: any) {
+    openModal(data: API.CatalogeCardProps) {
       updateList(data.id).then(() => {
         setModalVisible(true);
       });
@@ -75,7 +75,7 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
 
   return [
     <Modal
-      title={dirInfo?.title}
+      title={dirInfo?.name}
       key="list-modal"
       centered
       open={modalVisible}
