@@ -50,13 +50,17 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
     });
   };
 
-  const handleViewContract = (id: number) => {
-    history.push(`/clm/contract/view/${id}`);
+  const handleViewContract = (data: API.ContractVersionItem) => {
+    if (data.checked) {
+      history.push(`/clm/contract/view/${data.reviewId}`);
+    } else {
+      history.push(`/cataloge/file/${data.id}`);
+    }
   };
 
   const handleDownloadContract = (data: any) => {
     const contractName = data.name;
-    contractDownload({ contractName, reviewId: data.latestFileId });
+    contractDownload({ contractName, reviewId: data.id });
   };
 
   const handleDeleteContract = (id: number) => {
@@ -149,9 +153,8 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
                     </Col>
                     <Col span="8">
                       <Button
-                        disabled={!i.checked}
                         style={{ margin: '0 14px 0 0' }}
-                        onClick={() => handleViewContract(i.id)}
+                        onClick={() => handleViewContract(i)}
                       >
                         查看
                       </Button>
@@ -162,7 +165,6 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
                         下载
                       </Button>
                       <Button
-                        disabled={i.checked}
                         style={{ margin: '0 14px 0 0' }}
                         onClick={() => {
                           handleReviewContract(i.reviewId);

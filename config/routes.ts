@@ -38,7 +38,17 @@ export default [
     path: '/cataloge',
     icon: 'table',
     name: '合同目录',
-    component: './ContractCataloge',
+
+    routes: [
+      {
+        path: '/cataloge',
+        component: './ContractCataloge',
+      },
+      {
+        path: '/cataloge/file/:id',
+        component: './FilePreview',
+      },
+    ],
   },
 
   {

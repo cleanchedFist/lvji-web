@@ -11,7 +11,11 @@ const handleDownload = (data: API.CatalogeCardProps) => {
 };
 
 const handleViewContract = (data: API.CatalogeCardProps) => {
-  history.push(`/clm/contract/view/${data.reviewId}`);
+  if (data.checked) {
+    history.push(`/clm/contract/view/${data.reviewId}`);
+  } else {
+    history.push(`/cataloge/file/${data.latestFileId}`);
+  }
 };
 
 const handleReview = (data: API.CatalogeCardProps) => {
@@ -45,7 +49,6 @@ export default function ContractCardActions(_: any, data: API.CatalogeCardProps)
   return [
     <Button
       key="viewContract"
-      disabled={!data.checked}
       style={{ margin: '0 0 0 8px' }}
       onClick={() => handleViewContract(data)}
     >
@@ -64,7 +67,6 @@ export default function ContractCardActions(_: any, data: API.CatalogeCardProps)
     </Button>,
     <Button
       key="check"
-      disabled={data.checked}
       onClick={() => {
         handleReview(data);
       }}

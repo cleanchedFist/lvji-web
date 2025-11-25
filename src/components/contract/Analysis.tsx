@@ -13,6 +13,7 @@ const panelStyle: React.CSSProperties = {
 // 交易流程
 function LcItem(props) {
   const { data } = props;
+  console.log(3333, data.secondParty);
   const items = useMemo(() => {
     return [
       {
@@ -20,7 +21,7 @@ function LcItem(props) {
         label: <div className="text-sm font-bold">甲方</div>,
         children: (
           <ul>
-            {data.firstParty.map((item, index) => (
+            {data.firstParty?.map((item, index) => (
               <li key={index} className="list-disc ml-6">
                 {item}
               </li>
@@ -33,7 +34,7 @@ function LcItem(props) {
         label: <div className="text-sm font-bold">乙方</div>,
         children: (
           <ul>
-            {data.secondParty.map((item, index) => (
+            {data.secondParty?.map((item, index) => (
               <li key={index} className="list-disc ml-6">
                 {item}
               </li>
