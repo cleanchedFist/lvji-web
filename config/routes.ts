@@ -30,13 +30,13 @@ export default [
   {
     path: '/dashboard',
     name: 'dashboard',
-    icon: 'smile',
+    icon: 'FundOutlined',
     component: './Dashboard',
   },
 
   {
     path: '/cataloge',
-    icon: 'table',
+    icon: 'FileTextOutlined',
     name: '合同目录',
 
     routes: [
@@ -55,6 +55,7 @@ export default [
     // name: 'clm.contract',
     // icon: 'table',
     path: '/clm/contract',
+    icon: 'CheckSquareOutlined',
     hideChildrenInMenu: true,
     routes: [
       {
@@ -81,13 +82,13 @@ export default [
   },
   {
     name: 'clm.analysis',
-    icon: 'table',
+    icon: 'CheckSquareOutlined',
     path: '/clm/analysis',
     component: './Analysis',
   },
   {
     name: 'clm.config',
-    icon: 'table',
+    icon: 'SettingOutlined',
     path: '/clm/config',
     hideChildrenInMenu: true,
     routes: [
