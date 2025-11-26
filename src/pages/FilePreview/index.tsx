@@ -30,6 +30,7 @@ import React, { useMemo } from 'react';
 const ContractView: React.FC = () => {
   const params = useParams();
 
+  console.log(333, params.id);
   const sdkConfig = useMemo(() => {
     const token = window.localStorage.getItem('token');
     return {

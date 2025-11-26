@@ -51,7 +51,7 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
   };
 
   const handleViewContract = (data: API.ContractVersionItem) => {
-    if (data.checked) {
+    if (data.reviewId) {
       history.push(`/clm/contract/view/${data.reviewId}`);
     } else {
       history.push(`/cataloge/file/${data.id}`);
