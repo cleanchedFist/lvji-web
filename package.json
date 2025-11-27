@@ -48,6 +48,7 @@
   "dependencies": {
     "@ant-design/charts": "^2.6.1",
     "@ant-design/icons": "^4.8.1",
+    "@ant-design/plots": "^2.6.6",
     "@ant-design/pro-components": "^2.6.48",
     "@hufe921/canvas-editor": "^0.9.113",
     "@hufe921/canvas-editor-plugin-docx": "^0.0.5",

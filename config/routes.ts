@@ -37,7 +37,7 @@ export default [
   {
     path: '/cataloge',
     icon: 'FileTextOutlined',
-    name: '合同目录',
+    name: 'cataloge',
 
     routes: [
       {
