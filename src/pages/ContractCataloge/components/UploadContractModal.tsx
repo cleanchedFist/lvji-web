@@ -1,10 +1,10 @@
+import { UploadIcon } from '@/components/Icon';
 import {
   getDirCount,
   parseContract,
   uploadContract,
   uploadVersion,
 } from '@/services/ant-design-pro/api';
-import { InboxOutlined } from '@ant-design/icons';
 import {
   Checkbox,
   CheckboxChangeEvent,
@@ -17,6 +17,7 @@ import {
 } from 'antd';
 import { forwardRef, useContext, useImperativeHandle, useState } from 'react';
 import { ContractVersionsContext } from '../utils/context';
+import { ModalButtonConfig } from '../utils/modalConfig';
 export interface UploadContractModalRef {
   openModal: (ut: number, dirId?: number) => void;
 }
@@ -78,6 +79,12 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props: any, ref)
       setFileList([...files.fileList]);
     },
     fileList,
+    style: {
+      border: '2px dashed rgb(129, 140, 248)',
+      borderRadius: '8px',
+      background: 'transparent',
+    },
+    className: 'bg-indigo-50 hover:bg-indigo-100 block',
   };
 
   function handleUploadDir() {
@@ -159,17 +166,21 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props: any, ref)
         width={600}
         open={uploadModalVisible}
         onOk={handleUpload}
-        okButtonProps={{ loading: uploading }}
+        okButtonProps={{ ...ModalButtonConfig.okButtonProps, loading: uploading }}
+        cancelButtonProps={ModalButtonConfig.cancelButtonProps}
         onCancel={() => setUploadModalVisible(false)}
       >
         <div className="py-4">
-          <Descriptions style={{ display: uploadType === UploadType.dir ? 'none' : 'block' }}>
+          <Descriptions
+            className="mb-2"
+            style={{ display: uploadType === UploadType.dir ? 'none' : 'block' }}
+          >
             <Descriptions.Item label="版本号">{nextVersionName}</Descriptions.Item>
           </Descriptions>
           <Upload.Dragger {...uploadProps} multiple={uploadType === UploadType.dir ? true : false}>
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
+            <div className="ant-upload-drag-icon flex flex-col items-center justify-center">
+              <UploadIcon className="text-indigo-600 mb-4" />
+            </div>
             <p className="text-base font-medium text-[#71717a]">
               {`在这里拖拽${uploadType === UploadType.dir ? '多个' : ''}文件或者点击上传文件`}
             </p>

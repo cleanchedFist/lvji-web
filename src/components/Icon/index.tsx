@@ -78,4 +78,118 @@ const WarnFile = function (props: Partial<CustomIconComponentProps>) {
   return <Icon component={warnFileSvg} {...props} />;
 };
 
-export { Files, UnDoFile, WarnFile };
+const DownloadSvg = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-download"
+    aria-hidden="true"
+  >
+    <path d="M12 15V3"></path>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <path d="m7 10 5 5 5-5"></path>
+  </svg>
+);
+const Download = function (props: Partial<CustomIconComponentProps>) {
+  return <Icon component={DownloadSvg} {...props} />;
+};
+
+const TrashSvg = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-trash2 lucide-trash-2"
+    aria-hidden="true"
+  >
+    <path d="M3 6h18"></path>
+    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+    <line x1="10" x2="10" y1="11" y2="17"></line>
+    <line x1="14" x2="14" y1="11" y2="17"></line>
+  </svg>
+);
+const Trash = function (props: Partial<CustomIconComponentProps>) {
+  return <Icon component={TrashSvg} {...props} />;
+};
+
+const FileTextSvg = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-file-text"
+    aria-hidden="true"
+  >
+    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+    <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+    <path d="M10 9H8"></path>
+    <path d="M16 13H8"></path>
+    <path d="M16 17H8"></path>
+  </svg>
+);
+const FileText = function (props: Partial<CustomIconComponentProps>) {
+  return <Icon component={FileTextSvg} {...props} />;
+};
+
+const GuardSvg = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-shield-alert"
+    aria-hidden="true"
+  >
+    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+    <path d="M12 8v4"></path>
+    <path d="M12 16h.01"></path>
+  </svg>
+);
+const Guard = function (props: Partial<CustomIconComponentProps>) {
+  return <Icon component={GuardSvg} {...props} />;
+};
+
+const UploadIcon = (props: { [key: string]: any }) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="48"
+    height="48"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+    <path d="M5.4 5.1L5 5.5v13.9l.4.4h13.2l.4-.4V5.5l-.4-.4H5.4z" />
+    <path d="M12 9v6" />
+  </svg>
+);
+export { Download, Files, FileText, Guard, Trash, UnDoFile, UploadIcon, WarnFile };
