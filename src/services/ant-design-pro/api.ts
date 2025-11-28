@@ -149,7 +149,7 @@ export async function downloadReview(id: number | string) {
   });
 }
 
-/** 获取审查结果列表 GET /api/analysis */
+/** 获取审查结果列表 GET /api/analysis todo: 是否已废弃*/
 export async function analysis(
   params: {
     current?: number;
@@ -330,7 +330,7 @@ export async function uploadContract(file: File, versionId?: string) {
 }
 
 export async function getResultList(params: any) {
-  return request<API.RuleList>('/api/llm-service/resultList', {
+  return request<API.ReviewList>('/api/llm-service/resultList', {
     method: 'GET',
     params: {
       current: params.current,

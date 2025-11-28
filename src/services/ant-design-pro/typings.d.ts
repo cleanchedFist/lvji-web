@@ -143,15 +143,18 @@ declare namespace API {
   };
 
   type AnalysisListItem = {
-    id: string;
+    id?: string;
+    fileId?: string;
     reviewId: string;
-    contract_name: string;
+    contract_name?: string;
     file_name: string;
     contract_party: string;
     status: string;
     created_at: string;
     review_conclusion: string;
     finish_time: string;
+    contractName: string;
+    createTimeStamp: number;
     review_score: Array<{
       score: number;
       type: string;
@@ -162,6 +165,14 @@ declare namespace API {
     data?: AnalysisListItem[];
     total?: number;
     success?: boolean;
+  };
+
+  type ReviewList = {
+    data?: {
+      records: AnalysisListItem[];
+      total?: number;
+      success?: boolean;
+    };
   };
 
   type StrategyItem = {

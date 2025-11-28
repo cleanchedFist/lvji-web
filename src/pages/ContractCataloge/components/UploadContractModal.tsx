@@ -5,6 +5,7 @@ import {
   uploadContract,
   uploadVersion,
 } from '@/services/ant-design-pro/api';
+import { ModalButtonConfig } from '@/utils/modalConfig';
 import {
   Checkbox,
   CheckboxChangeEvent,
@@ -17,7 +18,6 @@ import {
 } from 'antd';
 import { forwardRef, useContext, useImperativeHandle, useState } from 'react';
 import { ContractVersionsContext } from '../utils/context';
-import { ModalButtonConfig } from '../utils/modalConfig';
 export interface UploadContractModalRef {
   openModal: (ut: number, dirId?: number) => void;
 }

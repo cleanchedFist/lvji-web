@@ -1,0 +1,38 @@
+.custom-pagination .ant-pagination-item {
+    height: 1.75rem !important;
+}
+
+.custom-pagination .ant-pagination-item-active {
+    border: none !important;
+    background: none !important;
+}
+
+.custom-pagination .ant-pagination-item:hover {
+    background: none !important;
+}
+
+.custom-pagination .ant-pagination-item button:hover {
+    background: #eff6ff !important;
+}
+
+
+.custom-pagination .ant-pagination-item button {
+    background: #f4f4f5 !important;
+}
+
+
+.custom-pagination .ant-pagination-item-active button {
+    background: #2563eb !important;
+    color: #fff;
+}
+
+.custom-pagination .ant-pagination-item-active:hover button {
+    background: #215cda !important;
+    color: #fff;
+}
+
+.custom-pagination .ant-pagination-disabled button {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+}

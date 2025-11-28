@@ -1,10 +1,10 @@
 import { removeContract } from '@/services/ant-design-pro/api';
 import { contractDownload } from '@/utils/contractHandle';
+import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { message, Modal } from 'antd';
 import { FileText } from 'lucide-react';
 import formatTime from '../utils/formatTime';
-import { deleteModalConfig } from '../utils/modalConfig';
 
 const ContractCard = ({
   contract,
@@ -17,7 +17,7 @@ const ContractCard = ({
 }) => {
   const handleViewContract = (data: API.ContractVersionItem) => {
     if (data.reviewId) {
-      history.push(`/clm/contract/view/${data.reviewId}`);
+      history.push(`/clm/contract/view/${data.reviewId}`, { name: data.name });
     } else {
       history.push(`/cataloge/file/${data.id}`);
     }

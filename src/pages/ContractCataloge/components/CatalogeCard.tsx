@@ -1,12 +1,12 @@
 import { Download, FileText, Guard, Trash } from '@/components/Icon';
 import { deleteContractDir } from '@/services/ant-design-pro/api';
 import { contractDownload } from '@/utils/contractHandle';
+import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { Modal, message } from 'antd';
 import { useContext } from 'react';
 import { ActionContext, ContractVersionsContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
-import { deleteModalConfig } from '../utils/modalConfig';
 /**
  * 合同卡片组件
  * @param {{ contract: Contract }} props
@@ -21,7 +21,7 @@ const handleDownload = (data: API.CatalogeCardProps) => {
 
 const handleViewContract = (data: API.CatalogeCardProps) => {
   if (data.reviewId) {
-    history.push(`/clm/contract/view/${data.reviewId}`);
+    history.push(`/clm/contract/view/${data.reviewId}`, { name: data.name });
   } else {
     history.push(`/cataloge/file/${data.latestFileId}`);
   }
