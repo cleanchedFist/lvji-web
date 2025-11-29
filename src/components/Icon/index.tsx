@@ -192,4 +192,16 @@ const UploadIcon = (props: { [key: string]: any }) => (
     <path d="M12 9v6" />
   </svg>
 );
-export { Download, Files, FileText, Guard, Trash, UnDoFile, UploadIcon, WarnFile };
+
+const BulbIcon = (props: { [key: string]: any }) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path d="M10 2a6 6 0 00-6 6c0 1.95.84 3.73 2.19 5.06l-.76 1.15a.5.5 0 00.41.83h7.32a.5.5 0 00.41-.83l-.76-1.15A6 6 0 0016 8a6 6 0 00-6-6zm0 14a2 2 0 100-4 2 2 0 000 4z" />
+  </svg>
+);
+export { BulbIcon, Download, Files, FileText, Guard, Trash, UnDoFile, UploadIcon, WarnFile };

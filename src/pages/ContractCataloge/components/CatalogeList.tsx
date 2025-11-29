@@ -142,7 +142,7 @@ const CatalogeList = forwardRef((props: any, ref) => {
         >
           下一页
         </button>
-        <span className="text-sm ml-4 text-gray-500">共 {total} 条</span>
+        {/* <span className="text-sm ml-4 text-gray-500">共 {total} 条</span> */}
       </div>
     );
   };
