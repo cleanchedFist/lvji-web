@@ -1,215 +1,189 @@
-import { addRule, removeRule, ruleList, updateRule } from '@/services/ant-design-pro/api';
-import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer } from '@ant-design/pro-components';
+import AddRuleModal from '@/components/AddRuleModal';
+import PageContainer from '@/components/PageContainer';
+import RiskLevel from '@/components/RiskLevel';
+import { removeRule, ruleList } from '@/services/ant-design-pro/api';
+import createsourceMap from '@/utils/createsourceMap';
 import { useParams, useRequest } from '@umijs/max';
-import { Button, Input, Table, Tag, message } from 'antd';
+import { message } from 'antd';
+import { Plus, Search } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
-import AddForm from './components/AddFrom';
-import ExpandableCell from './components/ExpandableCell';
-import UpdateForm from './components/UpdateForm';
-
-const handleRemove = async (row: API.RuleTypeItem) => {
-  const hide = message.loading('正在删除');
-  if (!row) return true;
-  try {
-    await removeRule(row.id);
-    hide();
-    message.success('删除成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('删除失败，请重试');
-    return false;
-  }
-};
-
-const handleUpdate = async (fields: Record<string, any>) => {
-  const hide = message.loading('更新中');
-  try {
-    await updateRule(fields);
-    hide();
-    message.success('修改成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('修改失败，请重试');
-    return false;
-  }
-};
-
-const handleAdd = async (fields: Record<string, any>) => {
-  const hide = message.loading('新增中');
-  try {
-    await addRule(fields);
-    hide();
-    message.success('新增成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('新增失败，请重试');
-    return false;
-  }
-};
+import ExpandableDescription from './components/ExpandableDescription';
 
 const TableList: React.FC = () => {
   const params = useParams();
-  const { data: rules, refresh } = useRequest(ruleList, {
+  const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
+  const [keywords, setKeywords] = useState('');
+  const [addRuleModalVisible, setAddRuleModalVisible] = useState(false);
+
+  const { data: ruleInfo, refresh } = useRequest(ruleList, {
     defaultParams: [params.id!],
   });
 
-  const [updateModalOpen, handleUpdateModalOpen] = useState(false);
-  const [addModalOpen, handleAddModalOpen] = useState(false);
-  const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
-  const [keywords, setKeywords] = useState('');
+  const handleRemove = async (id: string) => {
+    const hide = message.loading('正在删除');
+    if (!id) return true;
+    try {
+      await removeRule(id);
+      refresh();
+      hide();
+      message.success('删除成功');
+      return true;
+    } catch (error) {
+      hide();
+      message.error('删除失败，请重试');
+      return false;
+    }
+  };
 
-  const filteredRuleList = useMemo(() => {
-    return rules?.rulesDetailRecords.filter((item) => item.name?.includes(keywords));
-  }, [keywords, rules]);
+  const rules = useMemo(() => {
+    return ruleInfo?.rulesDetailRecords.filter((item) => item.name?.includes(keywords)) || [];
+  }, [keywords, ruleInfo]);
 
-  async function handleDel(row: API.RuleListItem) {
-    const success = await handleRemove(row);
+  const showAddRuleModal = () => {
+    setCurrentRow({} as API.RuleListItem);
+    setAddRuleModalVisible(true);
+  };
+
+  const showAddRuleModalWithData = (data: API.RuleListItem) => {
+    setCurrentRow(data);
+    setAddRuleModalVisible(true);
+  };
+
+  const handleRuleAddConfirm = (success: boolean) => {
     if (success) {
+      setAddRuleModalVisible(false);
       refresh();
     }
-  }
+  };
 
-  function showUpdate(row: API.RuleListItem) {
-    handleUpdateModalOpen(true);
-    setCurrentRow(row);
-  }
-
-  const columns = [
-    {
-      title: '名称',
-      dataIndex: 'name',
-      render(value: string) {
-        return <div className="min-w-8">{value}</div>;
-      },
-    },
-    {
-      title: '描述',
-      dataIndex: 'description',
-      render(value: string) {
-        return <ExpandableCell text={value}></ExpandableCell>;
-      },
-    },
-    {
-      title: '创建来源',
-      dataIndex: 'createdSource',
-      width: 100,
-      render(value) {
-        if (value === 0) {
-          return <span>系统创建</span>;
-        }
-        if (value === 1) {
-          return <span>用户自定义</span>;
-        }
-      },
-    },
-    {
-      title: '风险等级',
-      dataIndex: 'riskLevel',
-      render(value) {
-        if (value === 0) {
-          return <Tag color="green">低风险</Tag>;
-        }
-        if (value === 1) {
-          return <Tag color="orange">中风险</Tag>;
-        }
-        return <Tag color="red">高风险</Tag>;
-      },
-    },
-    {
-      title: '操作',
-      key: 'action',
-      render: (_, record) => [
-        <Button
-          key="update"
-          size="small"
-          color="primary"
-          variant="link"
-          onClick={() => showUpdate(record)}
-        >
-          修改
-        </Button>,
-        <Button
-          key="view"
-          size="small"
-          color="primary"
-          variant="link"
-          onClick={() => handleDel(record)}
-        >
-          删除
-        </Button>,
-      ],
-    },
-  ];
-
-  function updateCancel() {
-    handleUpdateModalOpen(false);
-    setCurrentRow(undefined);
-  }
-
-  async function updateConfirm(value: API.RuleListItem) {
-    const success = await handleUpdate({
-      ruleDetailId: value.id,
-      ruleTableId: params.id,
-      name: value.name,
-      description: value.description,
-      riskLevel: value.riskLevel,
-    });
-    if (success) {
-      handleUpdateModalOpen(false);
-      setCurrentRow(undefined);
-      refresh();
-    }
-  }
-
-  function showAdd() {
-    handleAddModalOpen(true);
-  }
-
-  function addCancel() {
-    handleAddModalOpen(false);
-  }
-
-  async function addConfirm(value: API.RuleListItem) {
-    const success = await handleAdd({
-      ruleTableId: params.id,
-      name: value.name,
-      description: value.description,
-      riskLevel: value.riskLevel,
-      createdSource: 1,
-    });
-    if (success) {
-      handleAddModalOpen(false);
-      refresh();
-    }
-  }
+  const handleRuleAddCancel = () => {
+    setAddRuleModalVisible(false);
+  };
 
   return (
     <PageContainer>
-      <div className="mt-4 flex items-center justify-between">
-        <Input
-          value={keywords}
-          onChange={(e) => setKeywords(e.target.value)}
-          className="w-[300px]"
-          placeholder="输入规则名称搜索..."
-        />
-        <Button icon={<PlusOutlined />} iconPosition="start" onClick={showAdd}>
-          新增规则
-        </Button>
+      <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
+        <header className="mb-6">
+          <h1 className="text-2xl font-semibold text-gray-800 border-b pb-2">审查规则</h1>
+        </header>
+
+        {/* 搜索与操作区域 - 采用模板 (Image 1) 的布局风格 */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 p-4 bg-white rounded-lg shadow-sm border border-gray-100">
+          {/* 搜索框 */}
+          <div className="relative w-full md:w-96 mb-4 md:mb-0">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="输入规则名称或描述搜索..."
+              value={keywords}
+              onChange={(e) => setKeywords(e.target.value)}
+              className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+            />
+          </div>
+
+          {/* 新增规则按钮 (保留模板样式) */}
+          <button
+            type="button"
+            onClick={showAddRuleModal}
+            className="flex items-center px-4 py-2 bg-blue-600 text-white font-medium text-sm rounded-lg shadow hover:bg-blue-700 transition duration-150 ease-in-out focus:outline-none"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            <span>新增规则</span>
+          </button>
+        </div>
+
+        {/* 表格区域 - 采用模板 (Image 1) 的背景和边框样式 */}
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5"
+                >
+                  规则名称
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/5"
+                >
+                  规则描述
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5"
+                >
+                  规则来源
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12"
+                >
+                  风险等级
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12"
+                >
+                  操作
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-100">
+              {rules.length > 0 ? (
+                rules.map((rule) => (
+                  <tr key={rule.id} className="hover:bg-gray-50 transition duration-100">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900 align-top">
+                      {rule.name}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-800 align-top max-w-lg">
+                      <ExpandableDescription description={rule.description || ''} />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 align-top">
+                      {createsourceMap[rule.createdSource].label}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm align-top">
+                      <RiskLevel type={rule.riskLevel} />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-top">
+                      {/* 操作区域 - 模仿模板中的按钮/链接样式 */}
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          onClick={() => showAddRuleModalWithData(rule)}
+                          className="text-indigo-600 hover:text-indigo-700 font-medium transition duration-150 ease-in-out flex items-center"
+                        >
+                          修改
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleRemove(`${rule.id}`)}
+                          className="ml-2 text-red-500 hover:text-red-700 font-medium transition duration-150 ease-in-out flex items-center"
+                        >
+                          删除
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="px-6 py-10 text-center text-gray-500 text-base">
+                    未找到匹配的规则。
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+        <AddRuleModal
+          data={currentRow}
+          tableId={params.id || ''}
+          onSubmit={handleRuleAddConfirm}
+          onCancel={handleRuleAddCancel}
+          visible={addRuleModalVisible}
+        ></AddRuleModal>
       </div>
-      <div className="mt-4">
-        <Table columns={columns} dataSource={filteredRuleList} pagination={false} />
-      </div>
-      <UpdateForm
-        onSubmit={updateConfirm}
-        onCancel={updateCancel}
-        visible={updateModalOpen}
-        values={currentRow || {}}
-      />
-      <AddForm onSubmit={addConfirm} onCancel={addCancel} visible={addModalOpen} values={{}} />
     </PageContainer>
   );
 };

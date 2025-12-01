@@ -38,8 +38,8 @@ declare namespace API {
     id: number;
     name?: string;
     description?: string;
-    createdSource: number;
-    riskLevel: number;
+    createdSource: 0 | 1;
+    riskLevel: 0 | 1 | 2;
   };
 
   type RuleList = {

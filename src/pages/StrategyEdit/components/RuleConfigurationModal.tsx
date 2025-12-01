@@ -4,6 +4,7 @@ import Checkbox from '@/components/Checkbox';
 import Mask from '@/components/Mask';
 import RiskLevel, { RiskLevelType } from '@/components/RiskLevel';
 import { ruleList, scenarioList } from '@/services/ant-design-pro/api';
+import createsourceMap from '@/utils/createsourceMap';
 import { useRequest } from '@umijs/max';
 import { debounce } from 'lodash';
 import { CircleX } from 'lucide-react';
@@ -245,7 +246,7 @@ const RuleConfigurationModal = ({
                             {i.description}
                           </td>
                           <td className="px-4 py-3 text-slate-500">
-                            {i.createdSource === 0 ? '系统预置' : '用户自定义'}
+                            {createsourceMap[i.createdSource].label}
                           </td>
                           <td className="px-4 py-3">
                             <RiskLevel type={+i.riskLevel as RiskLevelType} />

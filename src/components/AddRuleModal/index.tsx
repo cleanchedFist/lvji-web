@@ -1,4 +1,4 @@
-import { addRule } from '@/services/ant-design-pro/api';
+import { addRule, updateRule } from '@/services/ant-design-pro/api';
 import { message } from 'antd';
 import { useState } from 'react';
 import Mask from '../Mask';
@@ -9,6 +9,7 @@ type AddRuleModalProps = {
   onCancel: () => void;
   visible: boolean;
   tableId: string;
+  data?: API.RuleListItem;
 };
 
 type RuleInfo = {
@@ -25,7 +26,7 @@ const RISK_LEVELS = [
   { label: '低风险', value: '0' },
 ];
 
-const handleSubmit = async (data: RuleInfo) => {
+const handleAddSubmit = async (data: RuleInfo) => {
   const hide = message.loading('新增中');
   try {
     await addRule(data);
@@ -39,11 +40,27 @@ const handleSubmit = async (data: RuleInfo) => {
   }
 };
 
+const handleUpdateSubmit = async (fields: Record<string, any>) => {
+  const hide = message.loading('更新中');
+  try {
+    await updateRule(fields);
+    hide();
+    message.success('修改成功');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('修改失败，请重试');
+    return false;
+  }
+};
+
 // 主应用组件，包含重新设计的新增规则集模态框
-const AddRuleModal = ({ onSubmit, onCancel, visible, tableId }: AddRuleModalProps) => {
-  const [ruleName, setRuleName] = useState('');
-  const [ruleDescription, setRuleDescription] = useState('');
-  const [riskLevel, setRiskLevel] = useState<string>(RISK_LEVELS[0].value); // 默认选中中风险
+const AddRuleModal = ({ onSubmit, onCancel, visible, tableId, data }: AddRuleModalProps) => {
+  const [ruleName, setRuleName] = useState(data?.name || '');
+  const [ruleDescription, setRuleDescription] = useState(data?.description);
+  const [riskLevel, setRiskLevel] = useState<string>(
+    data?.riskLevel !== void 0 ? `${data.riskLevel}` : RISK_LEVELS[0].value,
+  ); // 默认选中中风险
 
   const handleCancel = () => {
     setRuleName('');
@@ -53,14 +70,27 @@ const AddRuleModal = ({ onSubmit, onCancel, visible, tableId }: AddRuleModalProp
   };
 
   const handleConfirm = async () => {
-    const success = await handleSubmit({
-      name: ruleName,
-      description: ruleDescription,
-      riskLevel,
-      ruleTableId: tableId,
-      createdSource: 1,
-    });
-    onSubmit(success);
+    // 更新
+    if (data?.id) {
+      const success = await handleUpdateSubmit({
+        ruleDetailId: data.id,
+        ruleTableId: tableId,
+        name: ruleName,
+        description: ruleDescription,
+        riskLevel,
+      });
+      onSubmit(success);
+    } else {
+      // 新增
+      const success = await handleAddSubmit({
+        name: ruleName,
+        description: ruleDescription,
+        riskLevel,
+        ruleTableId: tableId,
+        createdSource: 1,
+      });
+      onSubmit(success);
+    }
   };
 
   return (
