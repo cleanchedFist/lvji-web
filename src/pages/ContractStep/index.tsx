@@ -40,7 +40,7 @@ function Step1(props) {
   function confirm() {
     props.onOk({
       data: {
-        reviewStance: position === 0 ? data.partyA : data.partyB,
+        reviewStance: position === 0 ? `甲方: ${data.partyA}` : `乙方: ${data.partyB}`,
         scale: scaleInfoMap[checkScale].title,
         strategyId: strategy,
         reviewer: annotations,
