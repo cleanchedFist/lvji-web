@@ -105,6 +105,7 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
     hideInForm: true,
     search: false,
     colSize: 2,
+    width: 150,
     render: (dom: any, entity: API.AnalysisListItem) => {
       const { status } = entity as { status: StatusKey; [key: string]: any };
 
@@ -139,6 +140,8 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
     title: '操作',
     dataIndex: 'option',
     valueType: 'option',
+    width: 220,
+
     render: (text: any, record: API.AnalysisListItem, index: number, action: any) => [
       <span
         key={index}
