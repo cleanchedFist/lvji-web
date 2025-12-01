@@ -1,8 +1,8 @@
-import { removeBigRule, scenarioAdd, scenarioList } from '@/services/ant-design-pro/api';
+import AddRuleSetModal from '@/components/AddRuleSetModal';
+import { removeBigRule, scenarioList } from '@/services/ant-design-pro/api';
 import { history, useRequest } from '@umijs/max';
 import { message } from 'antd';
 import { useMemo, useState } from 'react';
-import AddRuleSetModal from './AddRuleSetModal';
 import RuleCard from './RuleCard';
 import SearchRow from './SearchRow';
 
@@ -23,20 +23,6 @@ const handleRemoveRule = async (id: string) => {
 
 const handleSet = (id: string) => {
   history.push(`/clm/config/rule-edit/${id}`);
-};
-
-const handleAddRuleSubmit = async (value: string) => {
-  const hide = message.loading('新增中');
-  try {
-    await scenarioAdd({ name: value });
-    hide();
-    message.success('新增成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('新增失败，请重试');
-    return false;
-  }
 };
 
 const RulePanel = () => {
@@ -70,8 +56,7 @@ const RulePanel = () => {
     setAddModalVisible(false);
   };
 
-  const handleAddConfirm = async (value: string) => {
-    const success = await handleAddRuleSubmit(value);
+  const handleAddConfirm = async (success: boolean) => {
     if (success) {
       setAddModalVisible(false);
       refreshRules();

@@ -6,7 +6,7 @@ import SearchRow from './SearchRow';
 import StrategyCard from './StrategyCard';
 
 const handleAddStrategy = () => {
-  history.push(`/clm/config/strategy-add`);
+  history.push(`/clm/config/strategy-edit/add`);
 };
 
 const handleRemoveStrategy = async (id: string) => {
@@ -25,7 +25,7 @@ const handleRemoveStrategy = async (id: string) => {
 };
 
 const handleSet = (id: string) => {
-  history.push(`/clm/config/strategy-edit/${id}`);
+  history.push(`/clm/config/strategy-edit/modify/${id}`);
 };
 
 const StrategyPanel = () => {

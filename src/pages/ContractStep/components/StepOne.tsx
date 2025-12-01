@@ -51,7 +51,7 @@ const StepOne = (props: StepOneProps) => {
   }
 
   function handleAddStrategy() {
-    history.push('/clm/config/strategy-add');
+    history.push(`/clm/config/strategy-edit/add`);
   }
 
   const partyCardInfo = useMemo(

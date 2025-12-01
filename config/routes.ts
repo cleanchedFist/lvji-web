@@ -97,14 +97,14 @@ export default [
         component: './Config',
       },
       {
-        path: '/clm/config/strategy-edit/:id',
-        name: 'strategy',
-        component: './Strategy',
+        path: '/clm/config/strategy-edit/add',
+        name: 'strategy.add',
+        component: './StrategyEdit',
       },
       {
-        path: '/clm/config/strategy-add',
-        name: 'strategyAdd',
-        component: './StrategyAdd',
+        path: '/clm/config/strategy-edit/modify/:id',
+        name: 'strategy.modify',
+        component: './StrategyEdit',
       },
       {
         path: '/clm/config/rule-edit/:id',
