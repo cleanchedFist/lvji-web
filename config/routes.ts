@@ -38,7 +38,6 @@ export default [
     path: '/cataloge',
     icon: 'FileTextOutlined',
     name: 'cataloge',
-
     routes: [
       {
         path: '/cataloge',
@@ -48,34 +47,35 @@ export default [
         path: '/cataloge/file/:id',
         component: './FilePreview',
       },
+      // {
+      //   path: '/cataloge/contract/reivew/:id',
+      //   component: './ContractReview',
+      // },
+      {
+        path: '/cataloge/reivew/step/:id',
+        component: './ContractStep',
+      },
     ],
   },
-
   {
-    // name: 'clm.contract',
-    // icon: 'table',
     path: '/clm/contract',
     icon: 'CheckSquareOutlined',
     hideChildrenInMenu: true,
     routes: [
       {
-        path: '/clm/contract',
+        path: '/clm/contract', // 之前的合同列表页
         component: './Contract',
-      },
-      {
-        path: '/clm/contract/cataloge',
-        component: './ContractCataloge',
       },
       {
         path: '/clm/contract/step/:id',
         component: './ContractStep',
       },
       {
-        path: '/clm/contract/detail/:id',
+        path: '/clm/contract/detail/:id', // 审查操作后跳转的页面
         component: './ContractDetail',
       },
       {
-        path: '/clm/contract/view/:id',
+        path: '/clm/contract/view/:id', // 审查结果页
         component: './ContractView',
       },
     ],

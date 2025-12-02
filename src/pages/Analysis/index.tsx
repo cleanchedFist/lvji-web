@@ -8,7 +8,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<API.AnalysisListItem, API.PageParams>
-        rowKey="key"
+        rowKey="reviewId"
         toolbar={{ settings: undefined }}
         request={async (params) => {
           const res = await getResultList(params);

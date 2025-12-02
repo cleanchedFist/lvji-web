@@ -50,7 +50,7 @@ const ContractCard = ({
   };
 
   const handleReviewContract = (id: number) => {
-    history.push(`/clm/contract/step/${id}`);
+    history.push(`/cataloge/reivew/step/${id}`);
   };
 
   return (

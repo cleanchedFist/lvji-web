@@ -45,7 +45,7 @@ function handleView(row: API.AnalysisListItem) {
 }
 
 function handleReview(row: API.AnalysisListItem) {
-  history.push(`/clm/contract/step/${row.fileId}`);
+  history.push(`/cataloge/reivew/step/${row.fileId}`);
 }
 
 const statusMap = {
@@ -144,14 +144,14 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
 
     render: (text: any, record: API.AnalysisListItem, index: number, action: any) => [
       <span
-        key={index}
+        key={1}
         onClick={() => handleView(record)}
         className="text-indigo-600 hover:text-indigo-700 font-medium text-xs hover:underline cursor-pointer"
       >
         查看
       </span>,
       <span
-        key={index}
+        key={2}
         onClick={() => handleDel(record, action)}
         className="text-rose-500 hover:text-rose-700 font-medium text-xs hover:underline cursor-pointer"
       >
@@ -159,7 +159,7 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
       </span>,
       record.status === '2' && (
         <span
-          key={index}
+          key={3}
           onClick={() => handleReview(record)}
           className="text-orange-500 hover:text-orange-700 font-medium text-xs hover:underline cursor-pointer"
         >
@@ -167,7 +167,7 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
         </span>
       ),
       <span
-        key={index}
+        key={4}
         onClick={() => handleExport(record)}
         className="text-slate-500 hover:text-slate-700 font-medium text-xs hover:underline cursor-pointer"
       >

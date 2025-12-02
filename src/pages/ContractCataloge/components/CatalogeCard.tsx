@@ -28,7 +28,7 @@ const handleViewContract = (data: API.CatalogeCardProps) => {
 };
 
 const handleReview = (data: API.CatalogeCardProps) => {
-  history.push(`/clm/contract/step/${data.latestFileId}`);
+  history.push(`/cataloge/reivew/step/${data.latestFileId}`);
 };
 
 const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {

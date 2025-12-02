@@ -222,7 +222,7 @@ const TableList: React.FC = () => {
           删除
         </Button>,
         <Button key="check" size="small" color="primary" variant="link">
-          <Link to={`/clm/contract/step/${record.id}`}>智能审查</Link>
+          <Link to={`/cataloge/reivew/step/${record.id}`}>智能审查</Link>
         </Button>,
       ],
     },
