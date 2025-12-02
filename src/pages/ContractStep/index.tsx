@@ -2,7 +2,7 @@ import PageContainer from '@/components/PageContainer';
 import { contractPre } from '@/services/ant-design-pro/api';
 import { useNavigate, useParams, useRequest } from '@umijs/max';
 import React, { useState } from 'react';
-import StepOne from './components/StepOne';
+import StepOne, { FormData as StepOneFormData } from './components/StepOne';
 import StepTwo from './components/StepTwo';
 
 const ContractStep: React.FC = () => {
@@ -12,7 +12,7 @@ const ContractStep: React.FC = () => {
   const { data } = useRequest(contractPre, {
     defaultParams: [params.id!],
   });
-  const [step1Form, setStep1Form] = useState({});
+  const [step1Form, setStep1Form] = useState<StepOneFormData>({});
 
   function next(value: any) {
     setStep1Form(value);
@@ -30,6 +30,8 @@ const ContractStep: React.FC = () => {
       contractType: data.contractType,
       ...step1Form,
       ...value,
+      reviewStance:
+        step1Form?.reviewStance === '甲方' ? `甲方: ${data.partyA}` : `乙方: ${data.partyB}`,
     };
     localStorage.setItem('reviewParams', JSON.stringify(reviewParams));
     if (data.reviewResultNewId) {

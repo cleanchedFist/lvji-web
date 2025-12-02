@@ -5,7 +5,7 @@ import React, { useMemo, useState } from 'react';
 import { transformToKey, transformToValue } from '../utils/StepOneMap';
 import CustomSelect from './CustomSelect';
 import StanceSelector from './StanceSelector';
-type FormData = {
+export type FormData = {
   // key值
   reviewStance?: string | null; // step1
   scale?: string; // step1
