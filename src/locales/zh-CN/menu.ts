@@ -24,7 +24,7 @@ export default {
   'menu.list': '列表页',
   'menu.list.table-list': '查询表格',
   'menu.clm.contract': '合同管理',
-  'menu.clm.analysis': '审查结果',
+  'menu.reviews.list': '审查结果',
   'menu.clm.config': '合同配置',
   'menu.clm.config.strategy.modify': '修改审核策略',
   'menu.clm.config.strategy.add': '增加审核策略',

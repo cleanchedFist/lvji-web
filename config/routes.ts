@@ -43,22 +43,14 @@ export default [
         path: '/cataloge',
         component: './ContractCataloge',
       },
-      {
-        path: '/cataloge/file/:id',
-        component: './FilePreview',
-      },
       // {
       //   path: '/cataloge/contract/reivew/:id',
       //   component: './ContractReview',
       // },
-      {
-        path: '/cataloge/reivew/step/:id',
-        component: './ContractStep',
-      },
     ],
   },
   {
-    path: '/clm/contract',
+    path: '/clm/contract', // 废弃
     icon: 'CheckSquareOutlined',
     hideChildrenInMenu: true,
     routes: [
@@ -81,10 +73,27 @@ export default [
     ],
   },
   {
-    name: 'clm.analysis',
+    name: 'reviews.list',
     icon: 'CheckSquareOutlined',
-    path: '/clm/analysis',
-    component: './Analysis',
+    path: '/clm/reviews',
+    routes: [
+      {
+        path: '/clm/reviews',
+        component: './ReviewList',
+      },
+      {
+        path: '/clm/reviews/file/:id',
+        component: './FilePreview',
+      },
+      // {
+      //   path: '/cataloge/contract/reivew/:id',
+      //   component: './ContractReview',
+      // },
+      {
+        path: '/clm/reviews/step/:id',
+        component: './ContractStep',
+      },
+    ],
   },
   {
     name: 'clm.config',

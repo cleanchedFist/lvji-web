@@ -19,7 +19,7 @@ const ContractCard = ({
     if (data.reviewId) {
       history.push(`/clm/contract/view/${data.reviewId}`, { name: data.name });
     } else {
-      history.push(`/cataloge/file/${data.id}`);
+      history.push(`/clm/reviews/file/${data.id}`);
     }
   };
 
@@ -50,7 +50,7 @@ const ContractCard = ({
   };
 
   const handleReviewContract = (id: number) => {
-    history.push(`/cataloge/reivew/step/${id}`);
+    history.push(`/clm/reviews/step/${id}`);
   };
 
   return (

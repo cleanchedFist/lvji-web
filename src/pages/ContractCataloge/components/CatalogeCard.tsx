@@ -23,12 +23,12 @@ const handleViewContract = (data: API.CatalogeCardProps) => {
   if (data.reviewId) {
     history.push(`/clm/contract/view/${data.reviewId}`, { name: data.name });
   } else {
-    history.push(`/cataloge/file/${data.latestFileId}`);
+    history.push(`/clm/reviews/file/${data.latestFileId}`);
   }
 };
 
 const handleReview = (data: API.CatalogeCardProps) => {
-  history.push(`/cataloge/reivew/step/${data.latestFileId}`);
+  history.push(`/clm/reviews/step/${data.latestFileId}`);
 };
 
 const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {

@@ -45,7 +45,7 @@ function handleView(row: API.AnalysisListItem) {
 }
 
 function handleReview(row: API.AnalysisListItem) {
-  history.push(`/cataloge/reivew/step/${row.fileId}`);
+  history.push(`/clm/reviews/step/${row.fileId}`);
 }
 
 const statusMap = {
