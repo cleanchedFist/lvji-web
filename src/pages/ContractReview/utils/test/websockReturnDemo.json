@@ -1,0 +1,2057 @@
+[
+  {
+    "dealNodes": [
+      {
+        "nodeName": "合同签订",
+        "firstParty": [
+          "提供广告发布的内容资料完整、真实、合法",
+          "承诺具有签署合同的合法资格与资质"
+        ],
+        "secondParty": ["承诺具有签署合同的合法资格与资质", "开发微博广告发布服务"]
+      },
+      {
+        "nodeName": "微博广告内容设计与确认",
+        "firstParty": [
+          "提供微博广告发布内容所需的品牌及产品相关资料",
+          "与乙方确认微博广告内容设计"
+        ],
+        "secondParty": [
+          "设计、策划微博广告内容并与甲方确认",
+          "修改微博广告内容以满足甲方要求，最多3次"
+        ]
+      },
+      {
+        "nodeName": "微博广告发布",
+        "firstParty": ["不擅自购买新浪微博功能“粉丝头条”", "至少在确定发布日前三天提供发布内容"],
+        "secondParty": ["按照约定时间发布微博广告内容", "协调处理被删帖或屏蔽的发布内容"]
+      },
+      {
+        "nodeName": "费用及付款",
+        "firstParty": ["按时足额支付服务费用", "验收广告发布报告后支付费用"],
+        "secondParty": ["提交广告发布报告", "开具与付款金额等额的增值税普通发票"]
+      },
+      {
+        "nodeName": "知识产权保护",
+        "firstParty": [
+          "保证提供资料的知识产权独立拥有",
+          "同意履行本合同过程中乙方创作的作品知识产权归乙方所有"
+        ],
+        "secondParty": ["不将甲方提供的资料用于合同之外的用途", "乙方创作的作品知识产权归乙方所有"]
+      },
+      {
+        "nodeName": "保密条款",
+        "firstParty": ["有权要求乙方返还或销毁提供的资料"],
+        "secondParty": ["负有保密义务，不得将甲方提供的资料用于合同之外的用途"]
+      },
+      {
+        "nodeName": "违约责任",
+        "firstParty": ["有权解除合同并拒付相关服务费", "因乙方违约有权解除合同并要求赔偿损失"],
+        "secondParty": ["因未履行合同义务支付违约金", "因未经甲方同意转包服务支付违约金"]
+      },
+      {
+        "nodeName": "项目负责人",
+        "firstParty": ["指定项目负责人并认可其代表行为", "变更负责人需提前通知乙方"],
+        "secondParty": ["指定项目负责人并认可其代表行为", "变更负责人需提前通知甲方"]
+      }
+    ],
+    "type": "交易流程"
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "contractParties": {
+      "contractee": {
+        "party": "乙方",
+        "responsibilities": [
+          {
+            "condition": "未履行合同约定的义务",
+            "consequence": "解除合同并支付解约违约金",
+            "detail": "如发生由于乙方的原因未履行本合同约定的义务使甲方遭受损失，甲方有权解除本合同，并有权拒付相关服务费，同时，乙方应按照本合同服务总费用的30%向甲方支付解约违约金，违约金不足以弥补给甲方造成的损失由乙方承担补足责任。",
+            "original": "如发生由于乙方的原因未履行本合同约定的义务使甲方遭受损失，甲方有权解除本合同，并有权拒付相关服务费，同时，乙方应按照本合同服务总费用的30%向甲方支付解约违约金，违约金不足以弥补给甲方造成的损失由乙方承担补足责任。"
+          },
+          {
+            "condition": "未经甲方书面同意将服务业务转包",
+            "consequence": "解除合同并支付解约违约金",
+            "detail": "如乙方未经甲方书面同意而将本合同项下全部或部分服务业务转包给第三方完成的，甲方有权解除本合同，并有权拒付相关服务费，同时，乙方应按照本合同服务总费用的30%向甲方承担解约违约金，违约金不足以弥补给甲方造成的损失由乙方承担补足责任。",
+            "original": "如乙方未经甲方书面同意而将本合同项下全部或部分服务业务转包给第三方完成的，甲方有权解除本合同，并有权拒付相关服务费，同时，乙方应按照本合同服务总费用的30%向甲方承担解约违约金，违约金不足以弥补给甲方造成的损失由乙方承担补足责任。"
+          },
+          {
+            "condition": "延迟、中断或终止广告发布服务",
+            "consequence": "支付违约金并赔偿损失",
+            "detail": "因乙方自身原因导致延迟、中断或终止本合同约定的广告发布服务的，甲方无需支付本合同约定的服务费，乙方应按照本合同服务总费用的30%向甲方支付违约金，并赔偿甲方经济损失（包括直接损失和间接损失）。",
+            "original": "因乙方自身原因导致延迟、中断或终止本合同约定的广告发布服务的，甲方无需支付本合同约定的服务费，乙方应按照本合同服务总费用的30%向甲方支付违约金，并赔偿甲方经济损失（包括直接损失和间接损失）。"
+          }
+        ]
+      },
+      "contractor": {
+        "party": "甲方",
+        "responsibilities": [
+          {
+            "condition": "未按时足额向乙方支付服务费",
+            "consequence": "支付逾期违约金",
+            "detail": "甲方应按照本合同的约定按时足额向乙方支付服务费，每逾期一天，甲方应按照本合同服务总费用的万分之五向乙方支付逾期违约金。",
+            "original": "甲方应按照本合同的约定按时足额向乙方支付服务费，每逾期一天，甲方应按照本合同服务总费用的万分之五向乙方支付逾期违约金。"
+          }
+        ]
+      }
+    },
+    "type": "违约责任审查"
+  },
+  {
+    "contractClauses": [
+      {
+        "clauseName": "合同签订与生效",
+        "riskLevel": "低风险",
+        "original": "本合同自甲乙双方加盖公章之日起生效，至各方在本合同项下的义务履行完毕之日自动终止。",
+        "reviewResult": "合同的生效条件明确，符合合同法的基本要求。",
+        "reviewBasics": [
+          {
+            "type": "审查重点",
+            "description": "合同生效条件",
+            "detail": "合同生效条件为双方加盖公章，符合《中华人民共和国合同法》的关于合同生效的规定。"
+          }
+        ]
+      },
+      {
+        "clauseName": "服务内容",
+        "riskLevel": "中风险",
+        "original": "乙方应按照本合同约定的发布时间为甲方提供微博广告内容设计并安排约定账号发布广告服务，具体发布内容如下：...",
+        "reviewResult": "建议明确具体微博广告内容的详细要求及标准，以避免履行过程中产生争议。",
+        "reviewBasics": [
+          {
+            "type": "审查重点",
+            "description": "服务内容明确性",
+            "detail": "合同对于微博广告服务的内容有一定描述，但缺乏具体标准及详细要求，可能导致履行过程中出现分歧。建议补充具体要求。"
+          }
+        ]
+      },
+      {
+        "clauseName": "费用及付款方式",
+        "riskLevel": "中风险",
+        "original": "本合同服务总费用为人民币（含税XX%）XX元（大写：XX元整），前述价格为包干价，包括但不限于广告发布费、技术服务费及税金等。",
+        "reviewResult": "需明确具体费用金额及付款条件，以确保双方权益。",
+        "reviewBasics": [
+          {
+            "type": "审查重点",
+            "description": "费用明确性",
+            "detail": "合同中费用为包干价，但未明确具体金额，需补充具体金额以确保双方理解一致。"
+          }
+        ]
+      },
+      {
+        "clauseName": "知识产权保护",
+        "riskLevel": "低风险",
+        "original": "甲方在履行本合同过程中提供给乙方的数据、素材、图纸等资料和信息，其知识产权均应为甲方独立拥有，且甲方应承诺前述资料和信息均不存在侵犯任何第三方合法权利的情形。",
+        "reviewResult": "条款内容明确，符合知识产权保护的基本要求。",
+        "reviewBasics": [
+          {
+            "type": "审查重点",
+            "description": "知识产权归属",
+            "detail": "合同明确甲方资料的知识产权归属，符合《中华人民共和国著作权法》的相关规定。"
+          }
+        ]
+      },
+      {
+        "clauseName": "保密条款",
+        "riskLevel": "中风险",
+        "original": "为履行本合同，甲方可能向乙方提供经营、业务、产品技术等有关的文件、信息、图纸、软件等资料，乙方对甲方所提供的资料负有保密的义务...",
+        "reviewResult": "保密义务的期限和具体措施需进一步明确，以确保保密义务的可操作性。",
+        "reviewBasics": [
+          {
+            "type": "审查重点",
+            "description": "保密义务",
+            "detail": "建议明确保密义务的具体期限及具体保密措施，以增强操作性和法律约束力。"
+          }
+        ]
+      },
+      {
+        "clauseName": "争议解决",
+        "riskLevel": "低风险",
+        "original": "因本合同的内容或履行发生争议的，任何一方均应向合同签订地人民法院提起诉讼，通过诉讼方式予以解决。",
+        "reviewResult": "争议解决方式明确，符合合同法相关规定。",
+        "reviewBasics": [
+          {
+            "type": "审查重点",
+            "description": "争议解决方式",
+            "detail": "合同明确约定争议通过诉讼方式解决，符合《中华人民共和国民事诉讼法》的相关规定。"
+          }
+        ]
+      }
+    ],
+    "type": "程序性条款审查"
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "mdContent": "# 合同标的审查结果\n\n## 合同类型\n通过分析合同内容，该合同为**服务合同**，具体为微博广告发布服务合同。合同中甲方（委托方）委托乙方（受托方）提供微博广告发布服务，明确了双方的权利义务、服务内容、费用及付款方式等条款。\n\n## 审查角度\n根据合同类型，合同标的审查应从以下几个角度进行：\n1. **合同标的的明确性**：确保服务内容及要求清晰、具体。\n2. **服务质量及标准**：确定乙方需达到的服务标准。\n3. **服务周期及时间安排**：明确服务的时间节点。\n4. **费用及付款条款**：核实费用构成及支付方式。\n5. **违约责任及救济措施**：双方的违约责任是否明确。\n6. **知识产权及保密条款**：涉及的知识产权归属和保密义务。\n7. **争议解决机制**：合同争议的处理方式。\n\n## 审查结果\n\n### 1. 合同标的的明确性\n- 合同明确规定了乙方需提供的微博广告发布服务，包括内容设计、账号发布等。\n- 合同中列出了博主名、微博链接、发布形式、单价、总价、发布时间及期限等细节，但具体内容未完全填写，需补充完整。\n\n### 2. 服务质量及标准\n- 乙方需按照合同约定的发布时间提供广告内容设计及发布服务。\n- 广告内容需经过甲乙双方书面确认，不得擅自修改或删除。\n\n### 3. 服务周期及时间安排\n- 服务周期及发布时间有明确约定，但具体的发布时间表需进一步细化。\n\n### 4. 费用及付款条款\n- 合同总费用为包干价，包括广告发布费、技术服务费及税金。\n- 付款方式和时间节点明确，但具体金额及百分比需填写完整。\n\n### 5. 违约责任及救济措施\n- 合同详细规定了双方的违约责任及相应的赔偿措施。\n- 乙方需对因自身原因导致的服务未完成承担责任，并按照合同总费用的30%支付违约金。\n\n### 6. 知识产权及保密条款\n- 合同明确了甲方提供资料的知识产权归属及乙方的保密义务。\n- 乙方创作的作品知识产权归乙方所有，甲方需取得授权方可用于其他用途。\n\n### 7. 争议解决机制\n- 合同规定争议通过合同签订地人民法院诉讼解决。\n- 适用中华人民共和国法律。\n\n## 结论\n合同内容基本完整，标的明确，但需要补充和细化部分具体信息，如博主名、微博链接、具体费用等，以确保合同的可执行性和双方权益的保障。建议在合同签署前对未填写的内容进行完善。\n",
+    "type": "合同标的"
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": true
+          },
+          {
+            "message": "判断最终所属分类",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": true
+          },
+          {
+            "message": "判断最终所属分类",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": true
+          },
+          {
+            "message": "判断最终所属分类",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": true
+          },
+          {
+            "message": "分析代表阵营目的及实现条件所关联的权利义务",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "status": false,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": true
+          },
+          {
+            "message": "判断最终所属分类",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": true
+          },
+          {
+            "message": "分析代表阵营目的及实现条件所关联的权利义务",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3675,
+    "reviewId": 392,
+    "reviewType": "广告审核流程",
+    "reviewSummary": "甲方在广告发布后无权删除或撤回广告内容，这对甲方不利。",
+    "riskLevel": "中风险",
+    "originalContent": "在乙方发布前，乙方为甲方设计、策划的微博广告内容一律需要经过甲乙双方书面确认（确认形式包含：QQ、微信、邮件等）。微博广告内容一经发布，甲乙双方均不得删除、撤回。",
+    "revisedContent": "在乙方发布前，乙方为甲方设计、策划的微博广告内容一律需要经过甲乙双方书面确认（确认形式包含：QQ、微信、邮件等）。微博广告内容一经发布，若甲方发现内容不符合相关规定或有误，甲方有权要求乙方删除、撤回。",
+    "compareContent": "在乙方发布前，乙方为甲方设计、策划的微博广告内容一律需要经过甲乙双方书面确认（确认形式包含：QQ、微信、邮件等）。微博广告内容一经发布，<span class=\"red-txt\">若</span>甲<span class=\"green-txt\">乙双</span>方<span class=\"green-txt\">均</span><span class=\"red-txt\">发现内容</span>不<span class=\"green-txt\">得</span><span class=\"red-txt\">符合相关规定或有误，甲方有权要求乙方</span>删除、撤回。",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "甲方应保留对广告内容的最终控制权，以确保符合相关规定并保护自身利益。",
+    "evidenceContent": "广告发布后若内容不符合相关规定或出现错误，甲方应有权要求删除或撤回，以维护合法权益。"
+  },
+  {
+    "id": 3677,
+    "reviewId": 392,
+    "reviewType": "合同变更与解除",
+    "reviewSummary": "该条款对甲方不利，限制了甲方的行为并赋予乙方单方面删除微博的权利。",
+    "riskLevel": "中风险",
+    "originalContent": "（3）甲方承诺不擅自为乙方自媒体购买新浪微博功能“粉丝头条”（或称“帮上头条”）。如经发现，乙方有权立即删除微博，甲乙双方按照微博广告发布期限及数量结算服务费。",
+    "revisedContent": "甲方承诺在乙方书面同意的情况下，方可为乙方自媒体购买新浪微博功能“粉丝头条”。如经发现未经乙方书面同意购买，乙方有权要求甲方删除相关购买并协商解决方案，甲乙双方按照微博广告发布期限及数量结算服务费。",
+    "compareContent": "<span class=\"green-txt\">（3）</span>甲方承诺<span class=\"green-txt\">不擅自</span><span class=\"red-txt\">在乙方书面同意的情况下，方可</span>为乙方自媒体购买新浪微博功能“粉丝头条”<span class=\"green-txt\">（或称“帮上头条”）</span>。如经发现<span class=\"red-txt\">未经乙方书面同意购买</span>，乙方有权<span class=\"green-txt\">立即</span><span class=\"red-txt\">要求甲方</span>删除<span class=\"green-txt\">微博</span><span class=\"red-txt\">相关购买并协商解决方案</span>，甲乙双方按照微博广告发布期限及数量结算服务费。",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "明确合同变更和解除的条件及程序。",
+    "evidenceContent": "合同应明确双方权利义务，尤其在合同解除条款中，应确保双方的行为边界和解除条件清晰，以防止单方面行为引发不必要的争议。"
+  },
+  {
+    "id": 3674,
+    "reviewId": 392,
+    "reviewType": "广告素材提供",
+    "reviewSummary": "甲方需承担额外修改费用，限制了甲方权利。",
+    "riskLevel": "中风险",
+    "originalContent": "（4）需乙方提供微博广告发布的内容（如：漫画、长微博、软文、P图等），乙方有义务尽可能满足甲方要求，并给甲方提供专业意见。乙方应当按照甲方要求对微博广告内容进行修改直至满足甲方的要求（以甲方书面确认修改合格为准），乙方修改合格的次数不超过3次(包含3次)，如3次之后仍需修改，甲方需支付乙方人民币2000元/次的修改费用，这样较为合适。",
+    "revisedContent": "乙方应当按照甲方要求对微博广告内容进行修改直至满足甲方的要求（以甲方书面确认修改合格为准），乙方修改合格的次数不超过3次(包含3次)，如3次之后仍需修改，乙方应继续进行修改直至满足甲方要求，甲方无需支付额外费用。",
+    "compareContent": "<span class=\"green-txt\">（4）需</span>乙方<span class=\"green-txt\">提供微博广告发布的内容（如：漫画、长微博、软文、P图等），乙方有义务尽可能满足甲方要求，并给甲方提供专业意见。乙方</span>应当按照甲方要求对微博广告内容进行修改直至满足甲方的要求（以甲方书面确认修改合格为准），乙方修改合格的次数不超过3次(包含3次)，如3次之后仍需修改，<span class=\"red-txt\">乙方应继续进行修改直至满足</span>甲方<span class=\"red-txt\">要求，甲方无</span>需支付<span class=\"green-txt\">乙方人民币2000元/次的修改</span><span class=\"red-txt\">额外</span>费用<span class=\"green-txt\">，这样较为合适</span>。",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "甲方应有权要求乙方进行必要的修改以满足其要求，而不应受到额外费用限制。",
+    "evidenceContent": "根据商业逻辑，合同条款应有利于甲方并避免不利限制。"
+  },
+  {
+    "id": 3676,
+    "reviewId": 392,
+    "reviewType": "支付条款",
+    "reviewSummary": "条款在收款账户变更通知方面对甲方不利，甲方应有更多的确认权利。",
+    "riskLevel": "中风险",
+    "originalContent": "4、乙方收款账户信息：\\n（公司账户仅支持公司账户付款，个人付款视作无效）\\n账户名称：\\n开户银行：\\n账号：\\n乙方如需变更收款账户的，应提前【7】个工作日向甲方发出变更账户的书面通知，否则，甲方向以上账户付款即视为甲方履行完毕全部付款义务。",
+    "revisedContent": "4、乙方收款账户信息：\\n（公司账户仅支持公司账户付款，个人付款视作无效）\\n账户名称：\\n开户银行：\\n账号：\\n乙方如需变更收款账户的，应提前【7】个工作日向甲方发出变更账户的书面通知，且需经甲方书面确认后方可生效，否则，甲方向以上账户付款即视为甲方履行完毕全部付款义务。",
+    "compareContent": "4、乙方收款账户信息：\\n（公司账户仅支持公司账户付款，个人付款视作无效）\\n账户名称：\\n开户银行：\\n账号：\\n乙方如需变更收款账户的，应提前【7】个工作日向甲方发出变更账户的书面通知，<span class=\"red-txt\">且需经甲方书面确认后方可生效，</span>否则，甲方向以上账户付款即视为甲方履行完毕全部付款义务。",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "确保甲方在变更收款账户时拥有确认权，以避免支付风险。",
+    "evidenceContent": "明确金额、付款节点、账户及违约后果，保障支付安排清晰可执行。"
+  },
+  {
+    "id": 3678,
+    "reviewId": 392,
+    "reviewType": "知识产权保护",
+    "reviewSummary": "乙方拥有创作作品的知识产权，甲方需获得授权才能在合同规定用途之外使用，限制了甲方的权利。",
+    "riskLevel": "中风险",
+    "originalContent": "乙方为履行本合同约定的服务合同而自行或委托第三人创作的文字、图片等全部作品的知识产权归乙方所有。甲方如需在本合同服务方案约定用途之外使用前述文字、图片等内容的，应与乙方积极协商取得授权，双方应另行达成书面合同。",
+    "revisedContent": "乙方为履行本合同约定的服务合同而自行或委托第三人创作的文字、图片等全部作品的知识产权归乙方所有，但甲方享有在合同服务方案约定范围内的永久使用权。甲方如需在本合同服务方案约定用途之外使用前述文字、图片等内容的，乙方应给予合理授权，双方应另行达成书面合同。",
+    "compareContent": "乙方为履行本合同约定的服务合同而自行或委托第三人创作的文字、图片等全部作品的知识产权归乙方所有<span class=\"red-txt\">，但甲方享有在合同服务方案约定范围内的永久使用权</span>。甲方如需在本合同服务方案约定用途之外使用前述文字、图片等内容的，<span class=\"green-txt\">应与</span>乙方<span class=\"green-txt\">积极协商取得</span><span class=\"red-txt\">应给予合理</span>授权，双方应另行达成书面合同。",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "明确甲方的使用权，减少甲方在使用乙方创作作品时的限制。",
+    "evidenceContent": "为了减少甲方的限制，合同应明确甲方在合同范围内的永久使用权，并要求乙方合理给予授权。"
+  },
+  {
+    "id": 3679,
+    "reviewId": 392,
+    "reviewType": "支付条款",
+    "reviewSummary": "甲方在逾期付款时需支付违约金，增加了甲方的财务负担。",
+    "riskLevel": "高风险",
+    "originalContent": "4、甲方应按照本合同的约定按时足额向乙方支付服务费，每逾期一天，甲方应按照本合同服务总费用的万分之五向乙方支付逾期违约金。",
+    "revisedContent": "4、甲方应按照本合同的约定按时足额向乙方支付服务费。若甲方逾期付款超过【30】个工作日，则甲方需按照本合同服务总费用的万分之五支付逾期违约金。",
+    "compareContent": "4、甲方应按照本合同的约定按时足额向乙方支付服务费<span class=\"green-txt\">，每</span><span class=\"red-txt\">。若甲方</span>逾期<span class=\"green-txt\">一天</span><span class=\"red-txt\">付款超过【30】个工作日</span>，<span class=\"red-txt\">则</span>甲方<span class=\"green-txt\">应</span><span class=\"red-txt\">需</span>按照本合同服务总费用的万分之五<span class=\"green-txt\">向乙方</span>支付逾期违约金。",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "修改条款以减轻甲方的违约金负担，并给予合理的宽限期。",
+    "evidenceContent": "根据商业合同惯例，提供合理的宽限期以避免不必要的财务惩罚。"
+  },
+  {
+    "id": 3681,
+    "reviewId": 392,
+    "reviewType": "通知送达条款",
+    "reviewSummary": "项目负责人信息不完整，缺乏姓名、联系方式等具体信息，可能导致沟通不畅或责任不明确。",
+    "riskLevel": "中风险",
+    "originalContent": "第九条 项目负责人\\n1、本次微博广告发布项目合作事宜中，甲方指定 为项目负责人，乙方指定 为项目负责人。双方认可项目负责人代表该方签收、确认、验收、沟通等行为，均为该方的意思表示。",
+    "revisedContent": "第九条 项目负责人\\n1、本次微博广告发布项目合作事宜中，甲方指定 [姓名] 为项目负责人，乙方指定 [姓名] 为项目负责人。双方认可项目负责人代表该方签收、确认、验收、沟通等行为，均为该方的意思表示。甲方项目负责人联系方式包括：QQ号、微信号、电子邮箱、联系地址；乙方项目负责人联系方式包括：QQ号、微信号、电子邮箱、联系地址。",
+    "compareContent": "第九条 项目负责人\\n1、本次微博广告发布项目合作事宜中，甲方指定 <span class=\"red-txt\">[姓名] </span>为项目负责人，乙方指定 <span class=\"red-txt\">[姓名] </span>为项目负责人。双方认可项目负责人代表该方签收、确认、验收、沟通等行为，均为该方的意思表示。<span class=\"red-txt\">甲方项目负责人联系方式包括：QQ号、微信号、电子邮箱、联系地址；乙方项目负责人联系方式包括：QQ号、微信号、电子邮箱、联系地址。</span>",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "项目负责人信息明确是确保通知有效送达的重要条件。",
+    "evidenceContent": "根据商业合作的常识，项目负责人信息不完整可能导致沟通障碍和责任不明确，影响合同履行的有效性。"
+  },
+  {
+    "id": 3680,
+    "reviewId": 392,
+    "reviewType": "合同主体资格",
+    "reviewSummary": "条款对甲方不利，可能造成甲方由于未及时通知变更而承担不必要的责任。",
+    "riskLevel": "中风险",
+    "originalContent": "3、一方负责人发生变更的，应提前3个工作日书面通知对方，否则应自行承担由此产生的一切风险和责任。",
+    "revisedContent": "3、一方负责人发生变更的，应提前3个工作日书面通知对方。如因不可抗力或其他合理原因未能及时通知，双方应友好协商解决，由此产生的责任由双方共同承担。",
+    "compareContent": "3、一方负责人发生变更的，应提前3个工作日书面通知对方<span class=\"red-txt\">。如因不可抗力或其他合理原因未能及时通知</span>，<span class=\"green-txt\">否则</span><span class=\"red-txt\">双方</span>应<span class=\"green-txt\">自行承担</span><span class=\"red-txt\">友好协商解决，</span>由此产生的<span class=\"green-txt\">一切风险和</span>责任<span class=\"red-txt\">由双方共同承担</span>。",
+    "modify": "批注",
+    "accept": 0,
+    "isAdd": 0,
+    "evidenceType": "商业逻辑依据",
+    "evidenceSummary": "条款可能造成一方因未及时通知而承担过多责任，需明确不可抗力或合理原因的免责条款。",
+    "evidenceContent": "根据商业逻辑，应在合同中加入对于不可抗力或合理原因导致未及时通知的免责条款，以平衡双方责任。"
+  },
+  {
+    "status": true,
+    "taskQueue": [
+      {
+        "name": "合同结构分析",
+        "taskList": [
+          {
+            "message": "识别合同中的所有条款",
+            "status": true
+          },
+          {
+            "message": "分析条款性质",
+            "status": true
+          },
+          {
+            "message": "查找数据库中的合同分类特征",
+            "status": true
+          },
+          {
+            "message": "判断最终所属分类",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "审查重点",
+        "taskList": [
+          {
+            "message": "确认合同审查重点",
+            "status": true
+          },
+          {
+            "message": "分析合同审查重点是否存在风险",
+            "status": true
+          },
+          {
+            "message": "生成风险相应的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "合同标的审查",
+        "taskList": [
+          {
+            "message": "识别合同标的内容",
+            "status": true
+          },
+          {
+            "message": "定位标的内容关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同的标的条款安排",
+            "status": true
+          },
+          {
+            "message": "分析标的条款风险",
+            "status": true
+          },
+          {
+            "message": "生成标的条款修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "权利义务条款审查",
+        "taskList": [
+          {
+            "message": "分析代表阵营的目的及条件",
+            "status": true
+          },
+          {
+            "message": "分析代表阵营目的及实现条件所关联的权利义务",
+            "status": false
+          }
+        ]
+      },
+      {
+        "name": "违约责任审查",
+        "taskList": [
+          {
+            "message": "识别违约责任内容",
+            "status": true
+          },
+          {
+            "message": "定位违约责任关联的条款",
+            "status": true
+          },
+          {
+            "message": "分析同类型合同违约责任安排",
+            "status": true
+          },
+          {
+            "message": "分析违约责任条款风险",
+            "status": true
+          },
+          {
+            "message": "生成违约责任条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "程序性条款审查",
+        "taskList": [
+          {
+            "message": "识别合同中的所有程序性条款",
+            "status": true
+          },
+          {
+            "message": "分析程序性条款风险",
+            "status": true
+          },
+          {
+            "message": "生成程序性条款的修改建议",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "文字符号审查",
+        "taskList": [
+          {
+            "message": "分析文字内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "分析符号内容是否存在风险",
+            "status": true
+          },
+          {
+            "message": "根据文字符号风险完成条款内容修改",
+            "status": true
+          }
+        ]
+      },
+      {
+        "name": "整体优化修改建议",
+        "taskList": [
+          {
+            "message": "找到所有存在冲突的条款",
+            "status": true
+          },
+          {
+            "message": "优化条款修改内容",
+            "status": true
+          }
+        ]
+      }
+    ]
+  }
+]

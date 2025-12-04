@@ -21,7 +21,7 @@ const handleDownload = (data: API.CatalogeCardProps) => {
 
 const handleViewContract = (data: API.CatalogeCardProps) => {
   if (data.reviewId) {
-    history.push(`/clm/contract/view/${data.reviewId}`, { name: data.name });
+    history.push(`/clm/reviews/result/${data.reviewId}`, { name: data.name });
   } else {
     history.push(`/clm/reviews/file/${data.latestFileId}`);
   }

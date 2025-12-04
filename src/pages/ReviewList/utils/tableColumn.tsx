@@ -41,7 +41,7 @@ function handleExport(row: API.AnalysisListItem) {
 }
 
 function handleView(row: API.AnalysisListItem) {
-  history.push(`/clm/contract/view/${row.reviewId}`, { name: row.contractName });
+  history.push(`/clm/reviews/result/${row.reviewId}`, { name: row.contractName });
 }
 
 function handleReview(row: API.AnalysisListItem) {

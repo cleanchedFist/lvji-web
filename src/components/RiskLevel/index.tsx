@@ -21,7 +21,9 @@ const riskMap: Record<RiskLevelType, RiskInfo> = {
 };
 const RiskLevel = ({ type }: { type: RiskLevelType }) => {
   return (
-    <span className={`px-2 py-0.5 rounded text-xs border font-medium ${riskMap[type]?.className}`}>
+    <span
+      className={`px-2 py-0.5 ml-1 rounded text-xs border shrink-0 font-medium ${riskMap[type]?.className}`}
+    >
       {riskMap[type]?.name}
     </span>
   );

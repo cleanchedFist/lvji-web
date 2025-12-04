@@ -1,25 +1,23 @@
 import { CheckCircleOutlined, SyncOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 
-type ReviewLodaingProps = {
-  data: {
-    name: string;
-    taskList: {
-      status: boolean;
-      message: string;
-    }[];
+export type LoadingTask = {
+  name: string;
+  taskList: {
+    status: boolean;
+    message: string;
   }[];
 };
 
-const ReviewLodaing = ({ data }: ReviewLodaingProps) => {
+const ReviewLodaing = ({ taskQueue }: { taskQueue: LoadingTask[] }) => {
   return (
-    <div className="py-4">
-      <div className="flex items-center gap-3 p-3 rounded-lg text-[#4e5969] bg-gradient-to-br from-[#f4f4f4] to-[#e8f9f2]">
-        <Spin size="small" />
+    <div className="w-full flex-1 flex-col  overflow-y-auto bg-white p-4 rounded-xl shadow-md">
+      <div className="flex items-center gap-3 p-3 rounded-lg bg-indigo-100 text-indigo-600 from-[#4F46E5] to-[#E0E7FF]">
+        <Spin className="[&_.ant-spin-dot-item]:bg-indigo-800" size="small" />
         <span>审核中，若关闭页面会以短信方式通知审查完成。</span>
       </div>
       <div>
-        {data.map((item, index) => {
+        {taskQueue.map((item, index) => {
           return (
             <div key={index} className="mb-5">
               <div className="mt-2 font-bold">{item.name}</div>

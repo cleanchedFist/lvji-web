@@ -13,7 +13,6 @@ const panelStyle: React.CSSProperties = {
 // 交易流程
 function LcItem(props) {
   const { data } = props;
-  console.log(3333, data.secondParty);
   const items = useMemo(() => {
     return [
       {

@@ -66,10 +66,10 @@ export default [
         path: '/clm/contract/detail/:id', // 审查操作后跳转的页面
         component: './ContractDetail',
       },
-      {
-        path: '/clm/contract/view/:id', // 审查结果页
-        component: './ContractView',
-      },
+      // {
+      //   path: '/clm/contract/view/:id', // 审查结果页
+      //   component: './ContractView',
+      // },
     ],
   },
   {
@@ -85,10 +85,10 @@ export default [
         path: '/clm/reviews/file/:id',
         component: './FilePreview',
       },
-      // {
-      //   path: '/cataloge/contract/reivew/:id',
-      //   component: './ContractReview',
-      // },
+      {
+        path: '/clm/reviews/result/:id',
+        component: './ContractReview',
+      },
       {
         path: '/clm/reviews/step/:id',
         component: './ContractStep',

@@ -35,7 +35,7 @@ const ContractStep: React.FC = () => {
     };
     localStorage.setItem('reviewParams', JSON.stringify(reviewParams));
     if (data.reviewResultNewId) {
-      navigate(`/clm/contract/detail/${data.reviewResultNewId}`);
+      navigate(`/clm/reviews/result/${data.reviewResultNewId}?loading=1`);
     }
   }
 

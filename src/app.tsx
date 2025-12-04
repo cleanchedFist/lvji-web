@@ -13,8 +13,7 @@ import { errorConfig } from './requestErrorConfig';
 // const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 const registPath = '/user/regist';
-const contractViewPath = { path: '/clm/contract/view/:id' };
-const contractDetailPath = { path: '/clm/contract/detail/:id' };
+const ReivewResultPath = { path: '/clm/reviews/result/:id' };
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
@@ -66,7 +65,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     if (collapsed !== void 0) {
       collapsedSetting.collapsed = collapsed;
     } else {
-      const hideSidebarPaths = [contractViewPath, contractDetailPath];
+      const hideSidebarPaths = [ReivewResultPath];
       const shouldHideSidebar = matchRoutes(hideSidebarPaths, history?.location?.pathname)?.length;
       collapsedSetting.collapsed = !!shouldHideSidebar;
     }
@@ -107,11 +106,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
 
       // 根据页面判断是否显示 返回编辑页面 按钮
       const { previousPath, currentPath } = trackPageChange(location.pathname);
-      const matchDetailPath = matchPath(contractDetailPath, previousPath);
-      if (matchPath(contractViewPath, currentPath)) {
+      const matchReviewPath = matchPath(ReivewResultPath, previousPath);
+      if (matchPath(ReivewResultPath, currentPath)) {
         editBtnStorage.removeValue();
-      } else if (matchDetailPath && currentPath !== previousPath) {
-        const { params } = matchDetailPath;
+      } else if (matchReviewPath && currentPath !== previousPath) {
+        const { params } = matchReviewPath;
         if (params.id) {
           editBtnStorage.setValue(params.id);
         }
@@ -153,14 +152,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     // },
     menuExtraRender: (menuProps) => {
       const styleObj = {
-        color: '#1890ff',
+        color: '#4f46e5',
         cursor: 'pointer',
         lineHeight: '40px',
       };
 
       const handleClick = () => {
         // 获取 合同 id，跳转到合同
-        history.push(`/clm/contract/view/${editBtnStorage.value}`);
+        history.push(`/clm/reviews/result/${editBtnStorage.value}`);
       };
       return !!editBtnStorage.value ? (
         <div style={styleObj} onClick={handleClick}>
