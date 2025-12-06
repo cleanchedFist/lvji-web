@@ -39,7 +39,7 @@ const ViolateItem = ({ data }: { data: ViolateItemData }) => {
     <div>
       <div className="text-base items-center font-bold">{data.party}</div>
       <ul>
-        {data.responsibilities.map((i, k) => (
+        {data.responsibilities?.map((i, k) => (
           <LiRender key={k} i={i} k={k}></LiRender>
         ))}
       </ul>
@@ -52,8 +52,8 @@ const ViolateCard = ({ data }: { data: ViolateCardData }) => {
     <AnalysisBaseCard title="交易流程">
       {data ? (
         <>
-          <ViolateItem data={data.contractee}></ViolateItem>
-          <ViolateItem data={data.contractor}></ViolateItem>
+          <ViolateItem data={data.contractee || {}}></ViolateItem>
+          <ViolateItem data={data.contractor || {}}></ViolateItem>
         </>
       ) : (
         '无内容'

@@ -9,7 +9,7 @@ type DealNodesCardData = {
 const DealNodesCard = ({ data }: { data: DealNodesCardData[] }) => {
   return (
     <AnalysisBaseCard title="交易流程">
-      {data.map((i, k) => (
+      {data?.map((i, k) => (
         <div key={k} className="mt-2">
           <Collapse className="text-base items-center font-bold" title={i.nodeName}>
             <div className="ml-6 mt-4">
