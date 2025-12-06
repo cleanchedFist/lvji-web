@@ -1,5 +1,6 @@
 import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCaptcha, ProFormText } from '@ant-design/pro-components';
 import { FormattedMessage, Helmet, history, Link, SelectLang, useIntl, useModel } from '@umijs/max';
@@ -75,6 +76,7 @@ const Login: React.FC = () => {
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const { styles } = useStyles();
+  const { styles: loginStyle } = UseLoginStyles();
   const intl = useIntl();
 
   const fetchUserInfo = async () => {
@@ -116,6 +118,7 @@ const Login: React.FC = () => {
       </Helmet>
       <Lang />
       <div
+        className={loginStyle.wrapper}
         style={{
           flex: '1',
           padding: '32px 0',
@@ -126,7 +129,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={null}
           title="邦盛 AI"
           //   subTitle="登录"
           initialValues={{
@@ -151,7 +154,6 @@ const Login: React.FC = () => {
               //   },
             ]}
           />
-
           {status === 'error' && loginType === 'account' && (
             <LoginMessage
               content={intl.formatMessage({

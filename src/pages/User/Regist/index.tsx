@@ -1,4 +1,5 @@
 import { regist } from '@/services/ant-design-pro/api';
+import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history } from '@umijs/max';
@@ -45,6 +46,7 @@ const useStyles = createStyles(({ token }) => {
 
 const Regist: React.FC = () => {
   const { styles } = useStyles();
+  const { styles: loginStyle } = UseLoginStyles();
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
@@ -63,6 +65,7 @@ const Regist: React.FC = () => {
         <title>注册页 - {Settings.title}</title>
       </Helmet>
       <div
+        className={loginStyle.wrapper}
         style={{
           flex: '1',
           padding: '32px 0',
