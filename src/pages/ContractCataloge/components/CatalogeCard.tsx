@@ -1,9 +1,10 @@
-import { Download, FileText, Guard, Trash } from '@/components/Icon';
+import { FileText, Guard } from '@/components/Icon';
 import { deleteContractDir } from '@/services/ant-design-pro/api';
 import { contractDownload } from '@/utils/contractHandle';
 import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { Modal, message } from 'antd';
+import { Download, Trash2 } from 'lucide-react';
 import { useContext } from 'react';
 import { ActionContext, ContractVersionsContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
@@ -11,9 +12,8 @@ import formatTime from '../utils/formatTime';
  * 合同卡片组件
  * @param {{ contract: Contract }} props
  */
-
 const buttonClassNames =
-  'flex-1 py-1.5 text-xs font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded transition-colors';
+  'flex-1 py-1.5 text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded transition-colors';
 const handleDownload = (data: API.CatalogeCardProps) => {
   const contractName = data.name;
   contractDownload({ contractName, reviewId: data.latestFileId });
@@ -67,10 +67,10 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
               <FileText />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-800 group-hover:text-indigo-600 transition-colors cursor-pointer">
+              <h3 className="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors cursor-pointer">
                 {contract.name}
               </h3>
-              <div className="flex items-center gap-3 mt-1 text-xs text-slate-400">
+              <div className="flex items-center gap-3 mt-1 text-sm text-slate-400">
                 <span>创建时间: {formatTime(contract.createTimeStamp)}</span>
                 {/* <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">履约中</span> */}
               </div>
@@ -86,7 +86,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
               className="p-2 hover:text-gray-400 rounded-full transition duration-150"
               aria-label="Download"
             >
-              <Download />
+              <Download className="w-[20px] h-[20px]" />
             </button>
             {/* 删除图标 */}
             <button
@@ -95,13 +95,13 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
               className="p-2 hover:text-gray-400 rounded-full transition duration-150"
               aria-label="Delete"
             >
-              <Trash />
+              <Trash2 className="w-[20px] h-[20px]" />
             </button>
             {/* 上传新版本按钮 */}
             <button
               type="button"
               onClick={() => contractVersionsContext.onUploadDVersionBtnClick(contract.id)}
-              className="px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-xs font-semibold transition-colors"
+              className="px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-sm font-semibold transition-colors"
             >
               上传新版本
             </button>
@@ -109,13 +109,13 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
         </div>
 
         {/* 主内容区域：甲乙双方信息 */}
-        <div className="bg-slate-50 rounded-lg p-3 flex flex-wrap gap-y-2 gap-x-8 text-sm">
+        <div className="bg-slate-50 rounded-lg p-3 flex flex-wrap gap-y-2 gap-x-8 text-base">
           <div className="flex flex-col">
-            <span className="text-xs text-slate-400 mb-0.5">甲方</span>
+            <span className="text-sm text-slate-400 mb-0.5">甲方</span>
             <span className="font-medium text-slate-700">{contract.parta || '-'}</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-xs text-slate-400 mb-0.5">乙方</span>
+            <span className="text-sm text-slate-400 mb-0.5">乙方</span>
             <span className="font-medium text-slate-700">{contract.partb || '-'}</span>
           </div>
         </div>
