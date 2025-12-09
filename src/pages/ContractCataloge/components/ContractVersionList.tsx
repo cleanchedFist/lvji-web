@@ -1,3 +1,4 @@
+import Mask from '@/components/Mask';
 import { contractDetail, getContractVersionList } from '@/services/ant-design-pro/api';
 import { List, message } from 'antd';
 import { CircleX, Clock4, FileText } from 'lucide-react';
@@ -54,11 +55,7 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
   };
 
   return (
-    <div
-      className={`${
-        modalVisible ? 'fixed' : 'hidden'
-      } inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4`}
-    >
+    <Mask visible={modalVisible}>
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
         <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 shrink-0">
           <h3 className="text-lg font-bold text-slate-800">合同详情</h3>
@@ -146,7 +143,7 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
           </div>
         </div>
       </div>
-    </div>
+    </Mask>
   );
 });
 export default ContractVersionList;

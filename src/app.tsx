@@ -1,6 +1,6 @@
 import { AvatarDropdown, AvatarName, Footer, Question } from '@/components';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import usePageHistory from '@/hooks/usePageHistory';
+import useSessionStorage from '@/hooks/useSessionStorage';
 import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
 import { LeftOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
@@ -59,7 +59,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
   const trackPageChange = usePageHistory();
   const editBtnStorageKey = 'editingDocId';
   // eslint-disable-next-line
-  const editBtnStorage = useLocalStorage(editBtnStorageKey);
+  const editBtnStorage = useSessionStorage(editBtnStorageKey);
   const setSiderCollapsed = (collapsed?: boolean) => {
     let collapsedSetting = { collapsed };
     if (collapsed !== void 0) {
