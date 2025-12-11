@@ -1,7 +1,8 @@
+import WebOfficeContext from '@/store/wps';
 import { contractDownload } from '@/utils/contractHandle';
 import { DownloadOutlined, FileDoneOutlined, FireOutlined } from '@ant-design/icons';
 import { useLocation, useParams } from '@umijs/max';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 type SiderMenuProps = {
   onChangeMode: (v: number) => void;
@@ -38,14 +39,16 @@ const Btn = ({
     </div>
   );
 };
+
 const SiderMenu = ({ onChangeMode }: SiderMenuProps) => {
   const location = useLocation();
   const params = useParams();
   const [mode, setMode] = useState(0);
+  const context = useContext(WebOfficeContext);
 
   const handleExport = () => {
     const contractData = location.state as { name: string };
-    const contractName = contractData.name;
+    const contractName = context?.fileName || contractData?.name || '合同文件';
     if (params.id) {
       contractDownload({ contractName, reviewId: params.id });
     }

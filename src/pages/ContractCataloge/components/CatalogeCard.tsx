@@ -16,7 +16,7 @@ const buttonClassNames =
   'flex-1 py-1.5 text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded transition-colors';
 const handleDownload = (data: API.CatalogeCardProps) => {
   const contractName = data.name;
-  contractDownload({ contractName, reviewId: data.latestFileId });
+  contractDownload({ contractName, reviewId: data.reviewId });
 };
 
 const handleViewContract = (data: API.CatalogeCardProps) => {

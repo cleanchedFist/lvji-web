@@ -5,6 +5,7 @@ import WebOfficeContext from './wps';
 
 const WebOfficeProvider = ({ children, config }) => {
   const [sdkInstance, setSdkInstance] = useState(null);
+  const [fileName, setFileName] = useState('');
   const [status, setStatus] = useState({
     isInitialized: false,
     error: null,
@@ -16,6 +17,9 @@ const WebOfficeProvider = ({ children, config }) => {
       const instance = await WebOfficeSDK.init(config);
       setSdkInstance(instance);
       setStatus({ isInitialized: true, error: null });
+      instance.on('fileOpen', (data: any) => {
+        setFileName(data?.fileInfo?.name);
+      });
       await instance.ready();
 
       instance.Application.ActiveDocument.TrackRevisions = true;
@@ -52,6 +56,7 @@ const WebOfficeProvider = ({ children, config }) => {
     isInitialized: status.isInitialized,
     error: status.error,
     initializeSDK: initialize,
+    fileName,
   };
 
   return <WebOfficeContext.Provider value={contextValue}>{children}</WebOfficeContext.Provider>;

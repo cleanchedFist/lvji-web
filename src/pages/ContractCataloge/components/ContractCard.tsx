@@ -25,7 +25,7 @@ const ContractCard = ({
 
   const handleDownloadContract = (data: API.ContractVersionItem) => {
     const contractName = data.name;
-    contractDownload({ contractName, reviewId: data.id });
+    contractDownload({ contractName, reviewId: data.reviewId });
   };
 
   const handleDeleteContract = (id: number) => {

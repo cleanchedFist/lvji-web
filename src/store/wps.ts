@@ -5,6 +5,7 @@ const WebOfficeContext = React.createContext({
   isInitialized: false, // 初始化状态
   error: null, // 错误信息
   initializeSDK: () => {}, // 初始化函数
+  fileName: '', // 文件名称
 });
 
 export const useWebOffice = () => {
