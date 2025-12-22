@@ -1,5 +1,27 @@
 import { message } from 'antd';
 import { diffChars } from 'diff';
+import findLongestCommonSubstring from './findLongestCommonSubstring';
+
+export async function focusTextInfo(Application: any, text: string) {
+  if (!Application) {
+    return;
+  }
+
+  // 搜索并高亮文本
+  const r = await Application.ActiveDocument?.Find?.Execute(text, true);
+
+  // 判断是否有查找结果，如果没有的话，使用公共子串矫正查找对象
+  if (!r || !r[0]) {
+    message.warning('因排版或格式差异，未发现完全一致的内容，已为您匹配最长关联片段。');
+    const range = await Application.ActiveDocument.Content;
+    const content = await range.Text;
+    const fixedText = findLongestCommonSubstring(content, text);
+    const r = await Application.ActiveDocument?.Find?.Execute(fixedText, true);
+    return r?.[0];
+  }
+
+  return r?.[0];
+}
 
 export async function focusText(Application: any, text: string) {
   if (!Application) {
@@ -7,10 +29,10 @@ export async function focusText(Application: any, text: string) {
   }
 
   // 搜索并高亮文本
-  const r = await Application.ActiveDocument.Find.Execute(text, true);
+  const focusInfo = await focusTextInfo(Application, text);
 
-  if (r[0]) {
-    const { pos, len } = r[0];
+  if (focusInfo) {
+    const { pos, len } = focusInfo;
     const range = await Application.ActiveDocument.Range(pos, pos + len);
     // 滚动文档窗口, 显示指定的区域
     await Application.ActiveDocument.ActiveWindow.ScrollIntoView(range);

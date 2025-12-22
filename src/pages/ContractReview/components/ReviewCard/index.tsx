@@ -104,17 +104,23 @@ const ReviewCard = ({
             </div>
           </div>
 
-          <div className="border-t pt-4 mt-4 border-gray-100">
+          <div className="border-b pb-2 mb-4 border-gray-100">
             <div className="flex justify-between items-center">
               <button
                 type="button"
                 onClick={() =>
                   locate(instance?.Application, revised, data.id, data.originalContent)
                 }
-                className="flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-semibold transition-colors"
+                className="min-w-[20px]"
               >
-                <MapPin className="w-3 h-3 mr-1" />
-                定位到原文
+                <div
+                  className={`flex items-center text-xs text-indigo-600 hover:text-indigo-800 font-semibold transition-colors ${
+                    data.isAdd === 1 ? 'hidden' : ''
+                  }`}
+                >
+                  <MapPin className="w-3 h-3 mr-1" />
+                  定位到原文
+                </div>
               </button>
 
               <div className="flex items-center space-x-2">
