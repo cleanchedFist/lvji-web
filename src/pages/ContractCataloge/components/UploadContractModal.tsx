@@ -1,11 +1,14 @@
+import CustomSelect from '@/components/CustomSelect';
 import { UploadIcon } from '@/components/Icon';
 import {
   getDirCount,
+  getSupportModels,
   parseContract,
   uploadContract,
   uploadVersion,
 } from '@/services/ant-design-pro/api';
 import { ModalButtonConfig } from '@/utils/modalConfig';
+import { useRequest } from '@umijs/max';
 import {
   Checkbox,
   CheckboxChangeEvent,
@@ -16,7 +19,7 @@ import {
   UploadProps,
   message,
 } from 'antd';
-import { forwardRef, useContext, useImperativeHandle, useState } from 'react';
+import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { ContractVersionsContext } from '../utils/context';
 export interface UploadContractModalRef {
   openModal: (ut: number, dirId?: number) => void;
@@ -33,6 +36,15 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props: any, ref)
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
   const [nextVersionName, setNextVersionName] = useState('1.0.0');
+  const [model, setModel] = useState<string>('');
+
+  const { data: modelList } = useRequest(getSupportModels);
+
+  useEffect(() => {
+    if (modelList) {
+      setModel(modelList[0]);
+    }
+  }, [modelList]);
   // const { uploadType, dirId } = props
   const [uploadType, setUploadType] = useState<number>();
   const [dirId, setDirId] = useState<number>();
@@ -89,7 +101,9 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props: any, ref)
 
   function handleUploadDir() {
     setUploading(true);
-    const fileRequest = fileList.map((item) => uploadContract(item as unknown as File, '1.0.0'));
+    const fileRequest = fileList.map((item) =>
+      uploadContract(item as unknown as File, model, '1.0.0'),
+    );
     Promise.all(fileRequest)
       .then(() => {
         setFileList([]);
@@ -128,7 +142,7 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props: any, ref)
     setUploading(true);
 
     const file = fileList[0];
-    const fileRequest = uploadVersion(file as unknown as File, `${dirId}`, nextVersionName);
+    const fileRequest = uploadVersion(file as unknown as File, `${dirId}`, model, nextVersionName);
     fileRequest
       .then((res) => {
         if (ifParse) {
@@ -171,6 +185,21 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props: any, ref)
         onCancel={() => setUploadModalVisible(false)}
       >
         <div className="py-4">
+          <div className="mb-2 flex items-center">
+            <span className="text-black/45 font-normal text-[14px] leading-[1.5714] text-start">
+              模型：
+            </span>
+            <div className="flex-1">
+              <CustomSelect
+                value={model}
+                onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+                  setModel(e.target.value)
+                }
+                placeholder="选择一个策略"
+                options={modelList?.map((i: string) => ({ label: i, value: i }))}
+              />
+            </div>
+          </div>
           <Descriptions
             className="mb-2"
             style={{ display: uploadType === UploadType.dir ? 'none' : 'block' }}

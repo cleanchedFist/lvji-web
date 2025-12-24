@@ -1,9 +1,9 @@
+import CustomSelect from '@/components/CustomSelect';
 import { strategyList } from '@/services/ant-design-pro/api';
 import { history, useRequest } from '@umijs/max';
 import { Plus } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 import { transformToKey, transformToValue } from '../utils/StepOneMap';
-import CustomSelect from './CustomSelect';
 import StanceSelector from './StanceSelector';
 export type FormData = {
   // key值

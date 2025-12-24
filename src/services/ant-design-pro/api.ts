@@ -316,11 +316,12 @@ export async function scenarioAdd(options?: { [key: string]: any }) {
 /**
  * 上传文件
  */
-export async function uploadContract(file: File, versionId?: string) {
+export async function uploadContract(file: File, model: string, versionId?: string) {
   const formData = new FormData();
   if (file) {
     formData.append('docxFile', file.originFileObj);
     formData.append('version', `${versionId}`);
+    formData.append('model', `${model}`);
   }
   return request('/api/llm-service/upload/dir', {
     method: 'POST',
@@ -365,12 +366,13 @@ export async function getDirList(params: any, options?: { [key: string]: any }) 
 /**
  * 上传目录下的单独版本
  */
-export async function uploadVersion(file: File, dirId: string, versionId) {
+export async function uploadVersion(file: File, dirId: string, model: string, versionId: string) {
   const formData = new FormData();
   if (file) {
     formData.append('docxFile', file.originFileObj);
     formData.append('dir', dirId);
     formData.append('version', versionId);
+    formData.append('model', model);
   }
   return request('/api/llm-service/upload/file', {
     method: 'POST',
@@ -417,5 +419,14 @@ export function getContractVersionList(dirId: number) {
       current: 1,
       size: 999,
     },
+  });
+}
+
+// 获取模型列表
+// http://localhost:11086/api/llm-service/support/model
+
+export function getSupportModels() {
+  return request('/api/llm-service/support/model', {
+    method: 'GET',
   });
 }
