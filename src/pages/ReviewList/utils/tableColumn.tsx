@@ -62,7 +62,7 @@ const statusMap = {
     fontColor: '#1d4ed8',
   },
   '2': {
-    text: '审核失败',
+    text: '审查失败',
     iconColor: '#f43f5e',
     bgColor: '#ffe4e6',
     fontColor: '#be123c',
