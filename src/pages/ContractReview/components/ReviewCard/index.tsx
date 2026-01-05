@@ -1,8 +1,7 @@
 import RiskLevel, { RiskLevelType } from '@/components/RiskLevel';
-import { useWebOffice } from '@/store/wps';
+import { useWebOffice } from '@/utils/wps/context';
 import { Check, ChevronDown, ChevronUp, Edit2, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { accept, locate, reject } from '../../utils/WPSHandler';
 import AddLabel from './AddLabel';
 import ExpandableText from './ExpandableText';
 import ReviewBasisCard, { ReviewBasisItem } from './ReviewBasisCard';
@@ -41,7 +40,7 @@ const ReviewCard = ({
 
   const [revisedText, setRevisedText] = useState(data.revisedContent);
   const [compareContent, setCompareContent] = useState(data.compareContent);
-  const { instance } = useWebOffice() as { instance: any };
+  const { accept, locate, reject } = useWebOffice();
   const [revised, setRevised] = useState<boolean>(false);
   const [editVisible, setEditVisible] = useState<boolean>(false);
 
@@ -51,11 +50,9 @@ const ReviewCard = ({
 
   function handleRevise() {
     if (revised) {
-      reject(instance?.Application, data.id, () => setRevised(false));
+      reject(data.id, () => setRevised(false));
     } else {
-      accept(instance?.Application, data.originalContent, revisedText, data.id, () =>
-        setRevised(true),
-      );
+      accept(data.originalContent, revisedText, data.id, () => setRevised(true));
     }
   }
 
@@ -108,9 +105,7 @@ const ReviewCard = ({
             <div className="flex justify-between items-center">
               <button
                 type="button"
-                onClick={() =>
-                  locate(instance?.Application, revised, data.id, data.originalContent)
-                }
+                onClick={() => locate(revised, data.id, data.originalContent)}
                 className="min-w-[20px]"
               >
                 <div

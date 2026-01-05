@@ -1,4 +1,4 @@
-import WebOfficeProvider from '@/store/wpsProvider';
+import WebOfficeProvider from '@/utils/wps/wpsProvider';
 import { PageContainer } from '@ant-design/pro-components';
 import { useParams } from '@umijs/max';
 import React, { useMemo } from 'react';

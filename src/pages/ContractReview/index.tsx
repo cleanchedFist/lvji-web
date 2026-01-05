@@ -1,5 +1,5 @@
 import PageContainer from '@/components/PageContainer';
-import WebOfficeProvider from '@/store/wpsProvider';
+import WebOfficeProvider from '@/utils/wps/wpsProvider';
 import { useParams, useSearchParams } from '@umijs/max';
 import { Col, Row } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';

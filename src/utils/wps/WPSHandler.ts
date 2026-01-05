@@ -2,7 +2,9 @@ import { message } from 'antd';
 import { diffChars } from 'diff';
 import findLongestCommonSubstring from './findLongestCommonSubstring';
 
-export async function focusTextInfo(Application: any, text: string) {
+// 这个文件里所有导出方法的第一个参数 Application 不需要在使用的时候传递
+
+async function focusTextInfo(Application: any, text: string) {
   if (!Application) {
     return;
   }
@@ -23,11 +25,10 @@ export async function focusTextInfo(Application: any, text: string) {
   return r?.[0];
 }
 
-export async function focusText(Application: any, text: string) {
+async function focusText(Application: any, text: string) {
   if (!Application) {
     return;
   }
-
   // 搜索并高亮文本
   const focusInfo = await focusTextInfo(Application, text);
 
@@ -49,7 +50,7 @@ export async function locate(Application: any, revised: boolean, id: number, tex
   }
 }
 
-export async function find(Application: any, text: string) {
+async function find(Application: any, text: string) {
   if (!Application) {
     return;
   }

@@ -1,14 +1,14 @@
 // components/WebOfficeProvider.jsx
-import WebOfficeSDK from '@/utils/web-office-sdk-solution-v1.1.27.es.js';
 import { useEffect, useState } from 'react';
-import WebOfficeContext from './wps';
+import WebOfficeSDK from '../web-office-sdk-solution-v1.1.27.es.js';
+import WebOfficeContext from './context';
 
-const WebOfficeProvider = ({ children, config }) => {
+const WebOfficeProvider = ({ children, config }: { children: React.ReactNode; config: any }) => {
   const [sdkInstance, setSdkInstance] = useState(null);
   const [fileName, setFileName] = useState('');
   const [status, setStatus] = useState({
     isInitialized: false,
-    error: null,
+    error: null as string | null,
   });
 
   // 初始化SDK的函数
@@ -31,7 +31,7 @@ const WebOfficeProvider = ({ children, config }) => {
       return instance;
     } catch (err) {
       console.error('SDK初始化失败:', err);
-      setStatus({ isInitialized: false, error: err.message });
+      setStatus({ isInitialized: false, error: (err as Error).message });
       return null;
     }
   };
