@@ -1,7 +1,7 @@
 // components/WebOfficeProvider.jsx
 import { useEffect, useState } from 'react';
 import WebOfficeSDK from '../web-office-sdk-solution-v1.1.27.es.js';
-import WebOfficeContext from './context';
+import { WebOfficeContext } from './context';
 
 const WebOfficeProvider = ({ children, config }: { children: React.ReactNode; config: any }) => {
   const [sdkInstance, setSdkInstance] = useState(null);

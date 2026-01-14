@@ -8,6 +8,7 @@ interface OfficeContextState {
   error: string | null;
   initializeSDK: () => void;
   fileName: string;
+  isAppReady: boolean;
 }
 
 // 2. 定义 Hook 返回的完整接口（状态 + 操作方法）
@@ -15,15 +16,17 @@ export interface WebOfficeHookResult extends OfficeContextState {
   locate: (revised: boolean, id: number, text: string) => Promise<void>;
   accept: (text: string, revisedText: string, id: number, onEnd: () => void) => Promise<void>;
   reject: (id: number, onEnd: () => void) => Promise<void>;
+  linkToReviewCard: (id: number, text: string) => Promise<void>;
 }
 
 // 3. 创建 Context，给定完整的初始值
-const WebOfficeContext = React.createContext<OfficeContextState>({
+export const WebOfficeContext = React.createContext<OfficeContextState>({
   instance: null,
   isInitialized: false,
   error: null,
   initializeSDK: () => {},
   fileName: '',
+  isAppReady: false,
 });
 
 /**
@@ -44,7 +47,7 @@ export const useWebOffice = (): WebOfficeHookResult => {
       return (...args: any[]) => {
         const app = context?.instance?.Application;
         if (!app) {
-          console.error(`[WebOffice] 操作失败：SDK 尚未初始化或 Application 不可用`);
+          console.error(`${fn.name} [WebOffice] 操作失败：SDK 尚未初始化或 Application 不可用`);
           return Promise.reject('SDK not initialized');
         }
         // 自动将 app 作为第一个参数注入
@@ -69,5 +72,3 @@ export const useWebOffice = (): WebOfficeHookResult => {
     };
   }, [context?.instance?.Application, context]);
 };
-
-export default WebOfficeContext;
