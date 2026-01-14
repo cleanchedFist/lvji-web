@@ -1,7 +1,7 @@
 import { contractView } from '@/services/ant-design-pro/api';
 import { useEffect, useState } from 'react';
 import { ReviewAnalysisData } from '../components/AnalysisPanel';
-import { LoadingTask } from '../components/ReviewLodaing';
+import { LoadingTask } from '../components/ReviewLoading';
 import { ReviewData } from '../components/ReviewPanel';
 
 const defaultTaskQueue: LoadingTask[] = [

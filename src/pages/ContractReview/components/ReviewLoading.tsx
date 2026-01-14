@@ -9,12 +9,14 @@ export type LoadingTask = {
   }[];
 };
 
-const ReviewLodaing = ({ taskQueue }: { taskQueue: LoadingTask[] }) => {
+const ReviewLoading = ({ taskQueue }: { taskQueue: LoadingTask[] }) => {
   return (
     <div className="w-full flex-1 flex-col  overflow-y-auto bg-white p-4 rounded-xl shadow-md">
       <div className="flex items-center gap-3 p-3 rounded-lg bg-indigo-100 text-indigo-600 from-[#4F46E5] to-[#E0E7FF]">
         <Spin className="[&_.ant-spin-dot-item]:bg-indigo-800" size="small" />
-        <span>审核中，若关闭页面会以短信方式通知审查完成。</span>
+        <span>
+          系统正在对合同进行深度审查，因合同内容复杂度存在差异，审查预计耗时 5-10 分钟，敬请耐心等候
+        </span>
       </div>
       <div>
         {taskQueue.map((item, index) => {
@@ -41,4 +43,4 @@ const ReviewLodaing = ({ taskQueue }: { taskQueue: LoadingTask[] }) => {
   );
 };
 
-export default ReviewLodaing;
+export default ReviewLoading;

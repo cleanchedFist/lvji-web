@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from '@umijs/max';
 import { Col, Row } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
 import AnalysisPanel from './components/AnalysisPanel';
-import ReviewLodaing from './components/ReviewLodaing';
+import ReviewLoading from './components/ReviewLoading';
 import ReviewPanel from './components/ReviewPanel';
 import SiderMenu from './components/SiderMenu';
 import UseRequestFetch from './utils/UseRequestFetch';
@@ -51,7 +51,7 @@ const ContractView: React.FC = () => {
               <Col span={8} className="h-[calc(100vh-102px)] flex overflow-hidden">
                 {!isLoading && mode === 0 && <ReviewPanel data={reviewChunkRespDTOList} />}
                 {!isLoading && mode === 1 && <AnalysisPanel data={reviewResultNewRespDTO} />}
-                {isLoading && <ReviewLodaing taskQueue={taskQueue} />}
+                {isLoading && <ReviewLoading taskQueue={taskQueue} />}
               </Col>
               <Col span={1}>
                 {/* 预留右侧操作栏 */}
