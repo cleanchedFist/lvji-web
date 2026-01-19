@@ -15,11 +15,13 @@ const ContractView: React.FC = () => {
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const isNewReview = searchParams.get('loading') === '1';
+
   const { fileId, isLoading, reviewChunkRespDTOList, reviewResultNewRespDTO, taskQueue } =
-    searchParams.get('loading') === '1' ? UseWebsockFetch(params.id!) : UseRequestFetch(params.id!);
+    isNewReview ? UseWebsockFetch(params.id!) : UseRequestFetch(params.id!);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && isNewReview) {
       setSearchParams({});
     }
   }, [isLoading]);
