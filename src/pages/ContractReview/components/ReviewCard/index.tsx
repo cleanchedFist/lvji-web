@@ -1,5 +1,7 @@
 import RiskLevel, { RiskLevelType } from '@/components/RiskLevel';
+import { updateAdvice } from '@/services/ant-design-pro/api';
 import { useWebOffice } from '@/utils/wps/context';
+import { message } from 'antd';
 import { Check, ChevronDown, ChevronUp, Edit2, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AddLabel from './AddLabel';
@@ -48,12 +50,38 @@ const ReviewCard = ({
     setRevised(data.accept === 0 ? false : true);
   }, [data.accept]);
 
-  function handleRevise() {
-    if (revised) {
-      reject(data.id, () => setRevised(false));
+  function handleWpsRevise(runAccept: boolean, onEnd: any) {
+    if (runAccept) {
+      accept(data.originalContent, revisedText, data.id, onEnd);
     } else {
-      accept(data.originalContent, revisedText, data.id, () => setRevised(true));
+      reject(data.id, onEnd);
     }
+  }
+
+  function UpdateReviseState(chunkId: number, accept: boolean) {
+    updateAdvice({
+      chunkId: chunkId,
+      accept: accept ? 1 : 0,
+    })
+      .then((res) => {
+        if (res.success) {
+          setRevised(accept);
+        } else {
+          handleWpsRevise(!accept, () =>
+            message.error(`${accept ? '接受' : '撤销'}修订失败，请重试`),
+          );
+        }
+      })
+      .catch(() => {
+        handleWpsRevise(!accept, () =>
+          message.error(`${accept ? '接受' : '撤销'}修订失败，请重试`),
+        );
+      });
+  }
+
+  function handleRevise() {
+    // revised 当前是需要接受修订状态，因此，执行accept 以及设置为
+    handleWpsRevise(!revised, () => UpdateReviseState(data.id, !revised));
   }
 
   function handleEditRevise() {
