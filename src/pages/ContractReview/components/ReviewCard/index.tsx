@@ -81,7 +81,11 @@ const ReviewCard = ({
 
   function handleRevise() {
     // revised 当前是需要接受修订状态，因此，执行accept 以及设置为
-    handleWpsRevise(!revised, () => UpdateReviseState(data.id, !revised));
+    handleWpsRevise(!revised, (success: boolean) => {
+      if (success) {
+        UpdateReviseState(data.id, !revised);
+      }
+    });
   }
 
   function handleEditRevise() {

@@ -1,10 +1,31 @@
 import { message } from 'antd';
 import { diffChars } from 'diff';
-import findLongestCommonSubstring from './findLongestCommonSubstring';
+import fuzzyMatching from './fuzzyMatching';
 
 // 这个文件里所有导出方法的第一个参数 Application 不需要在使用的时候传递
 
-async function focusTextInfo(Application: any, text: string) {
+// async function focusTextInfo(Application: any, text: string) {
+//   if (!Application) {
+//     return;
+//   }
+
+//   // 搜索并高亮文本
+//   const r = await Application.ActiveDocument?.Find?.Execute(text, true);
+
+//   // 判断是否有查找结果，如果没有的话，使用公共子串矫正查找对象
+//   if (!r || !r[0]) {
+//     message.warning('因排版或格式差异，未发现完全一致的内容，已为您匹配最长关联片段。');
+//     const range = await Application.ActiveDocument.Content;
+//     const content = await range.Text;
+//     const fixedText = findLongestCommonSubstring(content, text);
+//     const r = await Application.ActiveDocument?.Find?.Execute(fixedText, true);
+//     return r?.[0];
+//   }
+
+//   return r?.[0];
+// }
+
+async function fixText(Application: any, text: string) {
   if (!Application) {
     return;
   }
@@ -14,15 +35,21 @@ async function focusTextInfo(Application: any, text: string) {
 
   // 判断是否有查找结果，如果没有的话，使用公共子串矫正查找对象
   if (!r || !r[0]) {
-    message.warning('因排版或格式差异，未发现完全一致的内容，已为您匹配最长关联片段。');
+    message.warning('因排版或格式差异，未发现完全一致的内容，通过模糊匹配为您匹配到对应内容。');
     const range = await Application.ActiveDocument.Content;
     const content = await range.Text;
-    const fixedText = findLongestCommonSubstring(content, text);
-    const r = await Application.ActiveDocument?.Find?.Execute(fixedText, true);
-    return r?.[0];
+    const fixedText = fuzzyMatching(text, content);
+    return fixedText;
   }
+  return text;
+}
 
-  return r?.[0];
+async function find(Application: any, text: string) {
+  if (!Application) {
+    return;
+  }
+  const r = await Application.ActiveDocument.Find.Execute(text, true);
+  return r;
 }
 
 async function focusText(Application: any, text: string) {
@@ -30,10 +57,15 @@ async function focusText(Application: any, text: string) {
     return;
   }
   // 搜索并高亮文本
-  const focusInfo = await focusTextInfo(Application, text);
+  const fixedText = await fixText(Application, text);
+  if (!fixedText) {
+    message.warning('因格式问题匹配原文失败，请手动定位查找');
+    return;
+  }
+  const r = await find(Application, fixedText);
 
-  if (focusInfo) {
-    const { pos, len } = focusInfo;
+  if (r?.[0]) {
+    const { pos, len } = r[0];
     const range = await Application.ActiveDocument.Range(pos, pos + len);
     // 滚动文档窗口, 显示指定的区域
     await Application.ActiveDocument.ActiveWindow.ScrollIntoView(range);
@@ -44,20 +76,13 @@ async function focusText(Application: any, text: string) {
 
 export async function locate(Application: any, revised: boolean, id: number, text: string) {
   if (revised) {
-    await Application.ActiveDocument.Bookmarks.Item('WebOffice' + id).Select();
+    const bookmark = await Application.ActiveDocument.Bookmarks.Item('WebOffice' + id);
+    const range = bookmark.Range;
+    await Application.ActiveDocument.ActiveWindow.ScrollIntoView(range);
+    await bookmark.Select();
   } else {
     focusText(Application, text);
   }
-}
-
-async function find(Application: any, text: string) {
-  if (!Application) {
-    return;
-  }
-  const app = Application;
-
-  const r = await app.ActiveDocument.Find.Execute(text, true);
-  return r;
 }
 
 export async function accept(
@@ -65,14 +90,21 @@ export async function accept(
   text: string,
   revisedText: string,
   id: number,
-  onEnd: () => void,
+  onEnd: (success: boolean) => void,
 ) {
   const hide = message.loading('修订中...');
   const app = Application;
-  const r = await find(Application, text);
+  const fixedText = await fixText(Application, text);
+  if (!fixedText) {
+    message.warning('因格式问题匹配原文失败，修订失败');
+    onEnd(false);
+    return;
+  }
+  const r = await find(Application, fixedText);
   if (r[0]) {
     const { pos } = r[0];
-    const diff = diffChars(text, revisedText);
+
+    const diff = diffChars(fixedText, revisedText);
     let start = pos;
     for (let i = 0; i < diff.length; i++) {
       const item = diff[i];
@@ -98,12 +130,16 @@ export async function accept(
         End: start,
       },
     });
-    onEnd();
+    onEnd(true);
+    hide();
+  } else {
+    message.warning('因格式问题匹配原文失败，修订失败');
+    onEnd(false);
     hide();
   }
 }
 
-export async function reject(Application: any, id: number, onEnd: () => void) {
+export async function reject(Application: any, id: number, onEnd: (success: boolean) => void) {
   const hide = message.loading('撤销中...');
   const app = Application;
   const bookmark = await app.ActiveDocument.Bookmarks.Item('WebOffice' + id);
@@ -130,6 +166,6 @@ export async function reject(Application: any, id: number, onEnd: () => void) {
     });
   }
 
-  onEnd();
+  onEnd(true);
   hide();
 }
