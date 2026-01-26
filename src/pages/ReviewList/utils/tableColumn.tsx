@@ -95,6 +95,11 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
     },
   },
   {
+    title: '模型',
+    dataIndex: 'model',
+    search: false,
+  },
+  {
     title: '分析主体',
     dataIndex: 'contractParty',
     search: false,
