@@ -1,12 +1,13 @@
 import { regist } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProFormText } from '@ant-design/pro-components';
+import { LoginForm, ProForm, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history } from '@umijs/max';
 import { message } from 'antd';
 import { createStyles } from 'antd-style';
 import React from 'react';
 import Settings from '../../../../config/defaultSettings';
+import RegistType from './components/RegistType';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -88,6 +89,9 @@ const Regist: React.FC = () => {
           }}
         >
           <div className="h-4"></div>
+          <ProForm.Item name="type" initialValue="lawyer">
+            <RegistType />
+          </ProForm.Item>
           <ProFormText
             name="phoneNumber"
             fieldProps={{
