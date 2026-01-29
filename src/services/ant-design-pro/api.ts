@@ -430,3 +430,19 @@ export function getSupportModels() {
     method: 'GET',
   });
 }
+
+// 获取律师列表
+
+export function getLawyerList() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const data: API.lawyerInfo[] = [
+        { id: 1, name: '张伟律师' },
+        { id: 2, name: '张伟2律师' },
+      ];
+      resolve({
+        data,
+      });
+    }, 2000);
+  });
+}

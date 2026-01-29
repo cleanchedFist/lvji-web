@@ -56,4 +56,5 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
   'menu.cataloge': '合同目录',
+  'menu.userCataloge': '合同目录',
 };

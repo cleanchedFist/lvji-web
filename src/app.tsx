@@ -29,6 +29,7 @@ export async function getInitialState(): Promise<{
         skipErrorHandler: true,
       });
       return {
+        type: 'user',
         name: msg.data.username,
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       };
@@ -55,6 +56,33 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+  if (initialState?.currentUser?.type === 'user') {
+    return {
+      menuRender: () => <></>,
+      onPageChange: () => {
+        const { location } = history;
+        const pathname = location.pathname;
+
+        const userPermissionPath = '/user/cataloge';
+
+        // 1. 根目录 / 的动态重定向逻辑
+        if (pathname === '/') {
+          history.replace(userPermissionPath);
+        }
+
+        // 仅允许访问路径
+        if (
+          pathname !== userPermissionPath &&
+          pathname !== '/login' // 始终允许去登录页
+        ) {
+          history.replace(userPermissionPath);
+          return; // 命中锁定逻辑后直接返回，不再执行后续重定向
+        }
+      },
+      footerRender: () => <Footer />,
+      ...initialState?.settings,
+    };
+  }
   // eslint-disable-next-line
   const trackPageChange = usePageHistory();
   const editBtnStorageKey = 'editingDocId';

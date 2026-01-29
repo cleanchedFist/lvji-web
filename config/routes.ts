@@ -33,7 +33,6 @@ export default [
     icon: 'FundOutlined',
     component: './Dashboard',
   },
-
   {
     path: '/cataloge',
     icon: 'FileTextOutlined',
@@ -42,6 +41,21 @@ export default [
       {
         path: '/cataloge',
         component: './ContractCataloge',
+      },
+      // {
+      //   path: '/cataloge/contract/reivew/:id',
+      //   component: './ContractReview',
+      // },
+    ],
+  },
+  {
+    path: '/user',
+    icon: 'FileTextOutlined',
+    name: 'userCataloge',
+    routes: [
+      {
+        path: 'cataloge',
+        component: './ContractCataloge/UserList.tsx',
       },
       // {
       //   path: '/cataloge/contract/reivew/:id',

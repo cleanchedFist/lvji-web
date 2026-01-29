@@ -3,6 +3,7 @@
 
 declare namespace API {
   type CurrentUser = {
+    type?: string;
     username?: string;
     avatar?: string;
     userid?: string;
@@ -238,5 +239,10 @@ declare namespace API {
     checked: boolean;
     createTimeStamp: number;
     reviewId: number;
+  };
+
+  type lawyerInfo = {
+    id: number;
+    name: string;
   };
 }
