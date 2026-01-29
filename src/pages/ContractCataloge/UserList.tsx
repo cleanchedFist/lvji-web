@@ -13,6 +13,7 @@ const UserList: React.FC = () => {
   const actionRef = useRef<ActionType>();
 
   const ActionsHandler = {
+    isUser: true,
     viewHandler: () => {},
     downloadHandler: () => {},
     versionHandler: (data: API.CatalogeCardProps) => {
@@ -23,6 +24,7 @@ const UserList: React.FC = () => {
   };
 
   const ContractVersionsHandler = {
+    isUser: true,
     onUploadDirBtnClick: () => {
       modalRef.current?.openModal(1);
     },

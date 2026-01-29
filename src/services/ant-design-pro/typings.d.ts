@@ -220,6 +220,7 @@ declare namespace API {
     checked: boolean;
     createTimeStamp: number;
     reviewId: number;
+    reviewState?: string;
   };
 
   type ContractDownloadProps = {
@@ -239,6 +240,7 @@ declare namespace API {
     checked: boolean;
     createTimeStamp: number;
     reviewId: number;
+    reviewState?: string;
   };
 
   type lawyerInfo = {

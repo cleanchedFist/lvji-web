@@ -63,20 +63,18 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         const { location } = history;
         const pathname = location.pathname;
 
-        const userPermissionPath = '/user/cataloge';
+        const whiteList = [
+          '/user/cataloge',
+          '/user/login',
+          '/user/regist',
+          '/clm/reviews/file/:id',
+        ];
+        const rootPath = whiteList[0];
+        const isAllowed = whiteList.some((p) => matchPath({ path: p }, pathname));
 
-        // 1. 根目录 / 的动态重定向逻辑
-        if (pathname === '/') {
-          history.replace(userPermissionPath);
-        }
-
-        // 仅允许访问路径
-        if (
-          pathname !== userPermissionPath &&
-          pathname !== '/login' // 始终允许去登录页
-        ) {
-          history.replace(userPermissionPath);
-          return; // 命中锁定逻辑后直接返回，不再执行后续重定向
+        // 1. 根目录 / 的动态重定向逻辑 和 路由限制逻辑
+        if (pathname === '/' || !isAllowed) {
+          history.replace(rootPath);
         }
       },
       footerRender: () => <Footer />,
@@ -87,7 +85,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
   const trackPageChange = usePageHistory();
   const editBtnStorageKey = 'editingDocId';
   // eslint-disable-next-line
-  const editBtnStorage = useSessionStorage(editBtnStorageKey);
+  const editBtnStorage = useSessionStorage(editBtnStorageKey, '');
   const setSiderCollapsed = (collapsed?: boolean) => {
     let collapsedSetting = { collapsed };
     if (collapsed !== void 0) {

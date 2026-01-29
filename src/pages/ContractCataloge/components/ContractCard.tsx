@@ -4,6 +4,8 @@ import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { message, Modal } from 'antd';
 import { FileText } from 'lucide-react';
+import { useContext, useMemo } from 'react';
+import { ContractVersionsContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
 
 const ContractCard = ({
@@ -15,8 +17,12 @@ const ContractCard = ({
   isCurrent: boolean;
   updateList: (id?: number) => Promise<void>;
 }) => {
+  const contractVersionsContext = useContext(ContractVersionsContext);
+  const allowDown = useMemo(() => {
+    return contract.reviewState === '已审查';
+  }, [contract.reviewState]);
   const handleViewContract = (data: API.ContractVersionItem) => {
-    if (data.reviewId) {
+    if (data.reviewId && !contractVersionsContext.isUser) {
       history.push(`/clm/reviews/result/${data.reviewId}`, { name: data.name });
     } else {
       history.push(`/clm/reviews/file/${data.id}`);
@@ -66,6 +72,11 @@ const ContractCard = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">v{contract.version || '1.0.0'}</span>
+            {contractVersionsContext.isUser && (
+              <span className="bg-indigo-50 text-indigo-600 text-xs px-1.5 py-0.5 rounded">
+                审查中
+              </span>
+            )}
             {isCurrent ? (
               <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
                 Current
@@ -92,15 +103,33 @@ const ContractCard = ({
         >
           下载
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleReviewContract(contract.id);
-          }}
-          className="px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm"
-        >
-          智能审查
-        </button>
+        {!contractVersionsContext.isUser && (
+          <button
+            type="button"
+            onClick={() => {
+              handleReviewContract(contract.id);
+            }}
+            className="px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm"
+          >
+            智能审查
+          </button>
+        )}
+        {contractVersionsContext.isUser && (
+          <button
+            type="button"
+            onClick={() => {
+              handleReviewContract(contract.id);
+            }}
+            disabled={!allowDown}
+            className={`px-3 py-1.5 text-xs font-medium  ${
+              allowDown
+                ? 'text-white bg-indigo-600 hover:bg-indigo-700'
+                : 'bg-[#F5F5F5] text-gray-400 cursor-not-allowed'
+            } rounded shadow-sm`}
+          >
+            下载审查版本
+          </button>
+        )}
         <button
           type="button"
           onClick={() => {

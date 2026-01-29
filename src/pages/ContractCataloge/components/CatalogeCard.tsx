@@ -8,23 +8,14 @@ import { Download, Trash2 } from 'lucide-react';
 import { useContext } from 'react';
 import { ActionContext, ContractVersionsContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
+import CatalogeCardBtn from './CatalogeCardBtn';
 /**
  * 合同卡片组件
  * @param {{ contract: Contract }} props
  */
-const buttonClassNames =
-  'flex-1 py-1.5 text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded transition-colors';
 const handleDownload = (data: API.CatalogeCardProps) => {
   const contractName = data.name;
   contractDownload({ contractName, reviewId: data.reviewId });
-};
-
-const handleViewContract = (data: API.CatalogeCardProps) => {
-  if (data.reviewId) {
-    history.push(`/clm/reviews/result/${data.reviewId}`, { name: data.name });
-  } else {
-    history.push(`/clm/reviews/file/${data.latestFileId}`);
-  }
 };
 
 const handleReview = (data: API.CatalogeCardProps) => {
@@ -34,7 +25,13 @@ const handleReview = (data: API.CatalogeCardProps) => {
 const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
   const actionContext = useContext(ActionContext);
   const contractVersionsContext = useContext(ContractVersionsContext);
-
+  const handleViewContract = (data: API.CatalogeCardProps) => {
+    if (data.reviewId && !actionContext.isUser) {
+      history.push(`/clm/reviews/result/${data.reviewId}`, { name: data.name });
+    } else {
+      history.push(`/clm/reviews/file/${data.latestFileId}`);
+    }
+  };
   const handleDelete = (id: number) => {
     deleteContractDir(`${id}`)
       .then(() => {
@@ -67,9 +64,13 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
               <FileText />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors cursor-pointer">
+              <h3 className="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
                 {contract.name}
+                <span className="ml-2 bg-indigo-50 p-1.5 text-sm font-medium text-indigo-600 rounded-lg">
+                  审查中
+                </span>
               </h3>
+
               <div className="flex items-center gap-3 mt-1 text-sm text-slate-400">
                 <span>创建时间: {formatTime(contract.createTimeStamp)}</span>
                 {/* <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">履约中</span> */}
@@ -123,30 +124,27 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
 
       {/* 底部导航区域：版本、记录和审查 */}
       <div className="mt-4 flex gap-2 border-t border-slate-100 py-3">
-        <button
-          type="button"
-          onClick={() => handleViewContract(contract)}
-          className={buttonClassNames}
-        >
-          查看最新版本
-        </button>
+        <CatalogeCardBtn onClick={() => handleViewContract(contract)}>查看最新版本</CatalogeCardBtn>
         <div className="w-px bg-slate-200"></div>
-        <button
-          type="button"
-          onClick={() => actionContext.versionHandler(contract)}
-          className={buttonClassNames}
-        >
+        <CatalogeCardBtn onClick={() => actionContext.versionHandler(contract)}>
           历史版本记录
-        </button>
+        </CatalogeCardBtn>
         <div className="w-px bg-slate-200"></div>
-        <button
-          type="button"
-          onClick={() => handleReview(contract)}
-          className={`${buttonClassNames} text-indigo-600 hover:bg-indigo-50 flex items-center justify-center gap-1`}
-        >
-          <Guard />
-          智能审查
-        </button>
+        {actionContext.isUser && (
+          <CatalogeCardBtn
+            onClick={() => handleReview(contract)}
+            disabled={contract.reviewState !== '审查完成'}
+          >
+            <Guard />
+            下载审查版本
+          </CatalogeCardBtn>
+        )}
+        {!actionContext.isUser && (
+          <CatalogeCardBtn onClick={() => handleReview(contract)}>
+            <Guard />
+            智能审查
+          </CatalogeCardBtn>
+        )}
       </div>
     </div>
   );
