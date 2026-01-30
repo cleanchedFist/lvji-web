@@ -50,6 +50,7 @@ export default [
   },
   {
     path: '/user',
+    hideInMenu: true,
     icon: 'FileTextOutlined',
     name: 'userCataloge',
     routes: [

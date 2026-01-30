@@ -29,7 +29,7 @@ export async function getInitialState(): Promise<{
         skipErrorHandler: true,
       });
       return {
-        type: 'user',
+        // type: 'user',
         name: msg.data.username,
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       };
@@ -62,6 +62,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       onPageChange: () => {
         const { location } = history;
         const pathname = location.pathname;
+
+        // 如果没有登录，重定向到 login
+        if (!initialState?.currentUser && location.pathname !== loginPath) {
+          history.push(loginPath);
+        }
 
         const whiteList = [
           '/user/cataloge',
@@ -140,6 +145,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         if (params.id) {
           editBtnStorage.setValue(params.id);
         }
+      }
+
+      // 如果是用户页面，重定向到律师页面
+      const userPath = '/user/cataloge';
+      if (matchPath({ path: userPath }, location.pathname)) {
+        history.push('/');
       }
     },
 

@@ -13,6 +13,7 @@ const ContractCataloge: React.FC = () => {
   const actionRef = useRef<ActionType>();
 
   const ActionsHandler = {
+    isUser: false,
     viewHandler: () => {},
     downloadHandler: () => {},
     versionHandler: (data: API.CatalogeCardProps) => {
@@ -23,6 +24,7 @@ const ContractCataloge: React.FC = () => {
   };
 
   const ContractVersionsHandler = {
+    isUser: false,
     onUploadDirBtnClick: () => {
       modalRef.current?.openModal(1);
     },

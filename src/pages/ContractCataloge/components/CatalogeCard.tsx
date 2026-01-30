@@ -52,9 +52,8 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
       },
     });
   };
-
   return (
-    <div className="bg-white hover:shadow-md rounded-xl w-full">
+    <div className="bg-white hover:shadow-md rounded-xl w-full border border-gray-100">
       {/* 头部区域：标题、元数据和操作按钮 */}
       <div className="pt-6 pb-1 px-8">
         <div className="flex justify-between items-start mb-4">
@@ -66,9 +65,11 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
             <div>
               <h3 className="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
                 {contract.name}
-                <span className="ml-2 bg-indigo-50 p-1.5 text-sm font-medium text-indigo-600 rounded-lg">
-                  审查中
-                </span>
+                {actionContext.isUser && (
+                  <span className="ml-2 bg-indigo-50 p-1.5 text-sm font-medium text-indigo-600 rounded-lg">
+                    审查中
+                  </span>
+                )}
               </h3>
 
               <div className="flex items-center gap-3 mt-1 text-sm text-slate-400">
