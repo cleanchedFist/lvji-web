@@ -1,11 +1,11 @@
-import { regist } from '@/services/ant-design-pro/api';
+import { lawyerRegist, regist } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
-import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MobileOutlined, SwitcherOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProForm, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history } from '@umijs/max';
 import { message } from 'antd';
 import { createStyles } from 'antd-style';
-import React from 'react';
+import React, { useState } from 'react';
 import Settings from '../../../../config/defaultSettings';
 import RegistType from './components/RegistType';
 
@@ -48,15 +48,28 @@ const useStyles = createStyles(({ token }) => {
 const Regist: React.FC = () => {
   const { styles } = useStyles();
   const { styles: loginStyle } = UseLoginStyles();
+  const [codeVisible, setCodeVisible] = useState(true);
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      await regist({ ...values });
+      if (values?.type === 'lawyer') {
+        await lawyerRegist({ ...values });
+      } else {
+        await regist({ ...values });
+      }
       message.success('注册成功！');
       history.push('/user/login');
     } catch (error) {
       console.log('xxx', error);
+    }
+  };
+
+  const handleValuesChange = (value: any) => {
+    if (value.type === 'lawyer') {
+      setCodeVisible(true);
+    } else if (value.type === 'user') {
+      setCodeVisible(false);
     }
   };
 
@@ -87,6 +100,7 @@ const Regist: React.FC = () => {
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
           }}
+          onValuesChange={handleValuesChange}
         >
           <div className="h-4"></div>
           <ProForm.Item name="type" initialValue="lawyer">
@@ -138,6 +152,22 @@ const Regist: React.FC = () => {
               },
             ]}
           />
+          {codeVisible && (
+            <ProFormText
+              name="invitationCode"
+              fieldProps={{
+                size: 'large',
+                prefix: <SwitcherOutlined />,
+              }}
+              placeholder="邀请码"
+              rules={[
+                {
+                  required: true,
+                  message: '请输入邀请码!',
+                },
+              ]}
+            />
+          )}
         </LoginForm>
       </div>
       {/* <Footer /> */}

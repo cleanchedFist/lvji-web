@@ -1,10 +1,10 @@
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { Files } from 'lucide-react';
 import React, { useContext } from 'react';
-import { ContractVersionsContext } from '../utils/context';
+import { CatalogePageContext } from '../utils/context';
 
 const NewCataloge: React.FC = () => {
-  const contractVersionsContext = useContext(ContractVersionsContext);
+  const catalogePageContext = useContext(CatalogePageContext);
   const baseCardClasses = 'p-6 rounded-xl shadow-lg transition-all duration-300';
   return (
     <div
@@ -24,7 +24,7 @@ const NewCataloge: React.FC = () => {
       <div className="relative z-10 mt-6">
         <button
           type="button"
-          onClick={() => contractVersionsContext.onUploadDirBtnClick()}
+          onClick={() => catalogePageContext.onUploadDirBtnClick()}
           className="flex items-center space-x-2 px-6 py-2 bg-white text-indigo-700 rounded-lg shadow-md hover:bg-gray-100 transition duration-150"
         >
           <CloudUploadOutlined className="w-5 h-5" />

@@ -12,6 +12,7 @@ const ContractStep = ({ step }: { step: number }) => {
       })),
     [step],
   );
+
   return (
     <div className="relative flex justify-between">
       <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -z-10 -translate-y-1/2"></div>

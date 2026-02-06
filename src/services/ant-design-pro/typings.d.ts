@@ -3,7 +3,6 @@
 
 declare namespace API {
   type CurrentUser = {
-    type?: string;
     username?: string;
     avatar?: string;
     userid?: string;
@@ -22,6 +21,8 @@ declare namespace API {
     };
     address?: string;
     phone?: string;
+    role: string;
+    type?: string;
   };
 
   type LoginResult = {
@@ -221,6 +222,7 @@ declare namespace API {
     createTimeStamp: number;
     reviewId: number;
     reviewState?: string;
+    stage?: number;
   };
 
   type ContractDownloadProps = {
@@ -236,7 +238,7 @@ declare namespace API {
     parta: string;
     partb: string;
     status: number;
-    stage: string;
+    stage: number;
     checked: boolean;
     createTimeStamp: number;
     reviewId: number;

@@ -65,29 +65,6 @@ export default [
     ],
   },
   {
-    path: '/clm/contract', // 废弃
-    icon: 'CheckSquareOutlined',
-    hideChildrenInMenu: true,
-    routes: [
-      {
-        path: '/clm/contract', // 之前的合同列表页
-        component: './Contract',
-      },
-      {
-        path: '/clm/contract/step/:id',
-        component: './ContractStep',
-      },
-      // {
-      //   path: '/clm/contract/detail/:id', // 审查操作后跳转的页面
-      //   component: './ContractDetail',
-      // },
-      // {
-      //   path: '/clm/contract/view/:id', // 审查结果页
-      //   component: './ContractView',
-      // },
-    ],
-  },
-  {
     name: 'reviews.list',
     icon: 'CheckSquareOutlined',
     path: '/clm/reviews',

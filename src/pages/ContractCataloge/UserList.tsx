@@ -1,19 +1,18 @@
 import PageContainer from '@/components/PageContainer';
 import { ActionType } from '@ant-design/pro-components';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import CatalogeList from './components/CatalogeList';
 import ContractSummary from './components/ContractSummary';
 import ContractVersionList, { ContractVersionListRef } from './components/ContractVersionList';
 import UploadContractModal, { UploadContractModalRef } from './components/UploadContractModal';
-import { ActionContext, ContractVersionsContext } from './utils/context';
+import { ActionContext, CatalogePageContext } from './utils/context';
 
 const UserList: React.FC = () => {
   const modalRef = useRef<UploadContractModalRef>(null);
   const versionListRef = useRef<ContractVersionListRef>(null);
   const actionRef = useRef<ActionType>();
-
+  const [listType, setListType] = useState(1);
   const ActionsHandler = {
-    isUser: true,
     viewHandler: () => {},
     downloadHandler: () => {},
     versionHandler: (data: API.CatalogeCardProps) => {
@@ -23,8 +22,8 @@ const UserList: React.FC = () => {
     uploadVersionHandler: () => {},
   };
 
-  const ContractVersionsHandler = {
-    isUser: true,
+  const CatalogePageContextValue = {
+    listType,
     onUploadDirBtnClick: () => {
       modalRef.current?.openModal(1);
     },
@@ -34,11 +33,14 @@ const UserList: React.FC = () => {
     reloadList: () => {
       actionRef.current?.reload();
     },
+    updateListType: (type: number) => {
+      setListType(type);
+    },
   };
 
   return (
     <PageContainer>
-      <ContractVersionsContext.Provider value={ContractVersionsHandler}>
+      <CatalogePageContext.Provider value={CatalogePageContextValue}>
         <ContractSummary />
         <div className="mt-4">
           <ActionContext.Provider value={ActionsHandler}>
@@ -46,8 +48,8 @@ const UserList: React.FC = () => {
           </ActionContext.Provider>
         </div>
         <ContractVersionList ref={versionListRef}></ContractVersionList>
-        <UploadContractModal isUser={true} ref={modalRef}></UploadContractModal>
-      </ContractVersionsContext.Provider>
+        <UploadContractModal ref={modalRef}></UploadContractModal>
+      </CatalogePageContext.Provider>
     </PageContainer>
   );
 };

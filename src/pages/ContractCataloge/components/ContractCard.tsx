@@ -1,12 +1,15 @@
-import { removeContract } from '@/services/ant-design-pro/api';
-import { contractDownload } from '@/utils/contractHandle';
+import { removeContract, setReviewDown } from '@/services/ant-design-pro/api';
+import { Contract_Type } from '@/utils/const';
+import { clientFileDownload, contractDownload } from '@/utils/contractHandle';
 import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { message, Modal } from 'antd';
 import { FileText } from 'lucide-react';
-import { useContext, useMemo } from 'react';
-import { ContractVersionsContext } from '../utils/context';
+import { useContext } from 'react';
+import { CatalogePageContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
+import reviewStageText from '../utils/reviewStageText';
+import CatalogeCardBtn from './ContractCardBtn';
 
 const ContractCard = ({
   contract,
@@ -17,12 +20,10 @@ const ContractCard = ({
   isCurrent: boolean;
   updateList: (id?: number) => Promise<void>;
 }) => {
-  const contractVersionsContext = useContext(ContractVersionsContext);
-  const allowDown = useMemo(() => {
-    return contract.reviewState === '已审查';
-  }, [contract.reviewState]);
+  const { listType } = useContext(CatalogePageContext);
+
   const handleViewContract = (data: API.ContractVersionItem) => {
-    if (data.reviewId && !contractVersionsContext.isUser) {
+    if (data.reviewId && listType !== Contract_Type.ClientUpload) {
       history.push(`/clm/reviews/result/${data.reviewId}`, { name: data.name });
     } else {
       history.push(`/clm/reviews/file/${data.id}`);
@@ -30,6 +31,15 @@ const ContractCard = ({
   };
 
   const handleDownloadContract = (data: API.ContractVersionItem) => {
+    const contractName = data.name;
+    if (listType === Contract_Type.ClientUpload) {
+      clientFileDownload({ fileId: data.id, contractName });
+    } else {
+      contractDownload({ contractName, reviewId: data.reviewId });
+    }
+  };
+
+  const downloadReviewVersion = (data: API.ContractVersionItem) => {
     const contractName = data.name;
     contractDownload({ contractName, reviewId: data.reviewId });
   };
@@ -59,6 +69,16 @@ const ContractCard = ({
     history.push(`/clm/reviews/step/${id}`);
   };
 
+  const handleReviewDown = async (id: number) => {
+    setReviewDown(id)
+      .then(() => {
+        updateList();
+      })
+      .catch(() => {
+        message.error('设置失败，请重试');
+      });
+  };
+
   return (
     <div
       className={`${
@@ -72,9 +92,9 @@ const ContractCard = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">v{contract.version || '1.0.0'}</span>
-            {contractVersionsContext.isUser && (
+            {[Contract_Type.ClientUpload, Contract_Type.ClientAssigned].includes(listType) && (
               <span className="bg-indigo-50 text-indigo-600 text-xs px-1.5 py-0.5 rounded">
-                审查中
+                {contract.stage !== void 0 ? reviewStageText(contract.stage) : ''}
               </span>
             )}
             {isCurrent ? (
@@ -87,58 +107,53 @@ const ContractCard = ({
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={() => handleViewContract(contract)}
-          className="px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 rounded"
-        >
-          查看
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleDownloadContract(contract);
-          }}
-          className="px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 rounded"
-        >
-          下载
-        </button>
-        {!contractVersionsContext.isUser && (
-          <button
-            type="button"
+        {listType !== Contract_Type.ClientUpload && (
+          <CatalogeCardBtn onClick={() => handleViewContract(contract)}>查看</CatalogeCardBtn>
+        )}
+        <CatalogeCardBtn onClick={() => handleDownloadContract(contract)}>下载</CatalogeCardBtn>
+
+        {listType !== Contract_Type.ClientUpload && (
+          <CatalogeCardBtn
+            type="primary"
+            disabled={contract.stage === 2}
             onClick={() => {
               handleReviewContract(contract.id);
             }}
-            className="px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm"
           >
             智能审查
-          </button>
+          </CatalogeCardBtn>
         )}
-        {contractVersionsContext.isUser && (
-          <button
-            type="button"
+        {listType === Contract_Type.ClientUpload && (
+          <CatalogeCardBtn
+            type="primary"
+            disabled={contract.stage !== 2}
             onClick={() => {
-              handleReviewContract(contract.id);
+              downloadReviewVersion(contract);
             }}
-            disabled={!allowDown}
-            className={`px-3 py-1.5 text-xs font-medium  ${
-              allowDown
-                ? 'text-white bg-indigo-600 hover:bg-indigo-700'
-                : 'bg-[#F5F5F5] text-gray-400 cursor-not-allowed'
-            } rounded shadow-sm`}
           >
             下载审查版本
-          </button>
+          </CatalogeCardBtn>
         )}
-        <button
-          type="button"
+
+        {listType === Contract_Type.ClientAssigned && (
+          <CatalogeCardBtn
+            type="primary"
+            disabled={contract.stage !== 1}
+            onClick={() => {
+              handleReviewDown(contract.id);
+            }}
+          >
+            设置审查完成
+          </CatalogeCardBtn>
+        )}
+
+        <CatalogeCardBtn
           onClick={() => {
             handleDeleteClick(contract);
           }}
-          className="px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 rounded"
         >
           删除
-        </button>
+        </CatalogeCardBtn>
       </div>
     </div>
   );

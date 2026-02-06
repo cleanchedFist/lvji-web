@@ -8,6 +8,13 @@ const Mask = ({ children, visible }: { children: React.ReactNode; visible: boole
       document.body.style.overflow = '';
     }
   }, [visible]);
+
+  useEffect(() => {
+    return () => {
+      // 这里执行销毁时的操作
+      document.body.style.overflow = '';
+    };
+  }, []);
   return (
     <div
       className={`${

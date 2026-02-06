@@ -87,6 +87,7 @@ const Login: React.FC = () => {
         setInitialState((s) => ({
           ...s,
           currentUser: userInfo,
+          isUserRole: userInfo?.role === 'user',
         }));
       });
     }
@@ -96,9 +97,10 @@ const Login: React.FC = () => {
     try {
       // 登录
       const res = await login({ ...values });
-      window.localStorage.setItem('token', res.data);
+      window.localStorage.setItem('token', res.data.token);
       message.success('登录成功！');
       await fetchUserInfo();
+
       const urlParams = new URL(window.location.href).searchParams;
       history.push(urlParams.get('redirect') || '/');
     } catch (error) {}

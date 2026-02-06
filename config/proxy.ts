@@ -25,6 +25,12 @@ export default {
       // 配置了这个可以从 http 代理到 https
       changeOrigin: true,
     },
+    '/cos-proxy': {
+      target: 'https://yema-1252530263.cos.ap-chengdu.myqcloud.com',
+      changeOrigin: true,
+      // 关键：将路径中的 /cos-proxy 替换为空，还原回 COS 的真实路径
+      pathRewrite: { '^/cos-proxy': '' },
+    },
     '/test/': {
       target: 'https://yema-1252530263.cos.ap-chengdu.myqcloud.com',
       changeOrigin: true,

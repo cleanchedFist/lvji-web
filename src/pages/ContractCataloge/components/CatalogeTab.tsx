@@ -16,7 +16,7 @@ const Btn = ({ active, onClick, children }: BtnProps) => {
     <button
       onClick={onClick}
       type="button"
-      className={`pb-4 text-sm font-medium border-b-2 ${
+      className={`pb-4 text-sm font-medium border-b-2 focus:outline-none ${
         active
           ? 'border-blue-600 text-blue-600'
           : 'border-transparent text-slate-500 hover:text-slate-700'
@@ -38,7 +38,7 @@ const CatalogeTab = ({ onChange, tabId }: CatalogeTabProps) => {
       </Btn>
       <Btn onClick={() => handleClick(1)} active={tabId === 1}>
         <LayoutGrid className="w-[18px] h-[18px]" />
-        待办客户审核
+        待办客户审查
       </Btn>
     </div>
   );

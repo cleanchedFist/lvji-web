@@ -1,17 +1,25 @@
 import Mask from '@/components/Mask';
-import { contractDetail, getContractVersionList } from '@/services/ant-design-pro/api';
+import {
+  contractDetail,
+  getAssignedVersionList,
+  getContractVersionList,
+} from '@/services/ant-design-pro/api';
+import { Contract_Type } from '@/utils/const';
 import { List, message } from 'antd';
 import { CircleX, Clock4, FileText } from 'lucide-react';
-import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
+import { forwardRef, useContext, useImperativeHandle, useState } from 'react';
+import { CatalogePageContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
 import ContractCard from './ContractCard';
-import ContractStep from './ContractStep';
 
 export interface ContractVersionListRef {
   openModal: (data: API.CatalogeCardProps) => void;
 }
 
 const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref) => {
+  // 获取列表类型
+  const { listType } = useContext(CatalogePageContext);
+
   const [focusVersionParseData, setFocusVersionParseData] = useState<API.ContractListItem>(
     {} as API.ContractListItem,
   );
@@ -24,6 +32,14 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
   };
 
   function updateList(id?: number) {
+    if (listType === Contract_Type.ClientAssigned) {
+      return getAssignedVersionList(id || dirInfo.id).then((res) => {
+        setVersionList(res.data.records);
+        contractDetail(`${res.data.records[0].id}`).then((res) => {
+          setFocusVersionParseData(res.data);
+        });
+      });
+    }
     return getContractVersionList(id || dirInfo.id).then((res) => {
       setVersionList(res.data.records);
       contractDetail(`${res.data.records[0].id}`).then((res) => {
@@ -40,12 +56,11 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
     },
   }));
 
-  const step = useMemo(() => {
-    return ['起草中', '审核中', '签订中', '履约中', '已完成'].indexOf(
-      focusVersionParseData?.stage || '',
-    );
-  }, [focusVersionParseData]);
-
+  // const step = useMemo(() => {
+  //   return ['起草中', '审核中', '签订中', '履约中', '已完成'].indexOf(
+  //     focusVersionParseData?.stage || '',
+  //   );
+  // }, [focusVersionParseData]);
   const handleItemClick = (id: number) => {
     const hide = message.loading('加载中');
     contractDetail(`${id}`).then((res) => {
@@ -85,11 +100,11 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
                   </span>
                 </div>
               </div>
-              <div className="text-right">
+              {/* <div className="text-right">
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">
                   {focusVersionParseData.stage}
                 </span>
-              </div>
+              </div> */}
             </div>
             <div className="grid grid-cols-2 gap-8 bg-slate-50 p-6 rounded-xl border border-slate-100">
               <div>
@@ -109,10 +124,10 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
                 </div>
               </div>
             </div>
-            <div>
+            {/* <div>
               <h3 className="text-sm font-bold text-slate-800 mb-6">合同阶段</h3>
               <ContractStep step={step} />
-            </div>
+            </div> */}
             <div>
               <div className="flex items-center gap-4 border-b border-slate-200 mb-4">
                 <button

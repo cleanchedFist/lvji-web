@@ -22,6 +22,7 @@ export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  isUserRole?: boolean;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -29,7 +30,7 @@ export async function getInitialState(): Promise<{
         skipErrorHandler: true,
       });
       return {
-        // type: 'user',
+        role: msg?.data.type !== '律师' ? 'user' : 'lawyer',
         name: msg.data.username,
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       };
@@ -46,6 +47,7 @@ export async function getInitialState(): Promise<{
       fetchUserInfo,
       currentUser,
       settings: defaultSettings as Partial<LayoutSettings>,
+      isUserRole: currentUser?.role === 'user',
     };
   }
   return {
@@ -56,7 +58,7 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
-  if (initialState?.currentUser?.type === 'user') {
+  if (initialState?.isUserRole) {
     return {
       menuRender: () => <></>,
       onPageChange: () => {

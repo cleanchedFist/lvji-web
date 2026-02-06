@@ -41,6 +41,16 @@ export async function regist(body: API.LoginParams) {
   });
 }
 
+export async function lawyerRegist(body: API.LoginParams) {
+  return request<API.LoginResult>('/api/user-service/register/lawyer', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+  });
+}
+
 /** 此处后端没有提供注释 GET /api/notices */
 export async function getNotices(options?: { [key: string]: any }) {
   return request<API.NoticeIconList>('/api/notices', {
@@ -316,12 +326,16 @@ export async function scenarioAdd(options?: { [key: string]: any }) {
 /**
  * 上传文件
  */
-export async function uploadContract(file: File, model: string, versionId?: string) {
+export async function uploadContract(
+  file: File,
+  { model, versionId, reviewerId }: { model: string; versionId?: string; reviewerId?: number },
+) {
   const formData = new FormData();
   if (file) {
     formData.append('docxFile', file.originFileObj);
     formData.append('version', `${versionId}`);
     formData.append('model', `${model}`);
+    reviewerId && formData.append('reviewerId', `${reviewerId}`);
   }
   return request('/api/llm-service/upload/dir', {
     method: 'POST',
@@ -363,16 +377,37 @@ export async function getDirList(params: any, options?: { [key: string]: any }) 
   });
 }
 
+export async function getAssignedDirList(params: any, options?: { [key: string]: any }) {
+  const { pageSize, name: words, ...rest } = params;
+  return request('/api/llm-service/dir/all/lawyer/list', {
+    method: 'GET',
+    params: {
+      size: params.pageSize,
+      words,
+      ...rest,
+    },
+  });
+}
+
 /**
  * 上传目录下的单独版本
  */
-export async function uploadVersion(file: File, dirId: string, model: string, versionId: string) {
+export async function uploadVersion(
+  file: File,
+  {
+    dirId,
+    model,
+    versionId,
+    reviewerId,
+  }: { dirId: string; model: string; versionId: string; reviewerId?: number },
+) {
   const formData = new FormData();
   if (file) {
     formData.append('docxFile', file.originFileObj);
     formData.append('dir', dirId);
     formData.append('version', versionId);
     formData.append('model', model);
+    reviewerId && formData.append('reviewerId', `${reviewerId}`);
   }
   return request('/api/llm-service/upload/file', {
     method: 'POST',
@@ -422,9 +457,18 @@ export function getContractVersionList(dirId: number) {
   });
 }
 
-// 获取模型列表
-// http://localhost:11086/api/llm-service/support/model
+export function getAssignedVersionList(dirId: number) {
+  return request('/api/llm-service/dir/one/lawyer/list', {
+    method: 'GET',
+    params: {
+      dir: dirId,
+      current: 1,
+      size: 999,
+    },
+  });
+}
 
+// 获取模型列表
 export function getSupportModels() {
   return request('/api/llm-service/support/model', {
     method: 'GET',
@@ -432,17 +476,41 @@ export function getSupportModels() {
 }
 
 // 获取律师列表
-
 export function getLawyerList() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const data: API.lawyerInfo[] = [
-        { id: 1, name: '张伟律师' },
-        { id: 2, name: '张伟2律师' },
-      ];
-      resolve({
-        data,
-      });
-    }, 2000);
+  return request('/api/user-service/lawyers', {
+    method: 'GET',
+  });
+}
+
+export function getInvationCode() {
+  return request('/api/user-service/invitation', {
+    method: 'GET',
+  });
+}
+
+// 设置审查完成
+export function setReviewDown(fileId: number) {
+  return request('/api/llm-service/update/file/stage', {
+    method: 'POST',
+    params: {
+      fileId,
+    },
+  });
+}
+
+// 用户下载源文件
+export function downloadClientFile(fileId: number) {
+  return request('/api/llm-service/file/path', {
+    method: 'GET',
+    params: {
+      fileId,
+    },
+  });
+}
+
+export function getFileBlob(url: string) {
+  return request(url, {
+    method: 'GET',
+    responseType: 'blob',
   });
 }

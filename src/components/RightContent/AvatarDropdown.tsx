@@ -1,12 +1,18 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  LogoutOutlined,
+  NodeIndexOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import { Spin } from 'antd';
 import { createStyles } from 'antd-style';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { flushSync } from 'react-dom';
 import HeaderDropdown from '../HeaderDropdown';
+import InvitationModal from './InvitationCode';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -59,8 +65,14 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
     }
   };
   const { styles } = useStyles();
-
   const { initialState, setInitialState } = useModel('@@initialState');
+  const [invitationVisible, setInvitationVisible] = useState(false);
+
+  // start modal 处理
+  const onModalCancel = () => {
+    setInvitationVisible(false);
+  };
+  // end modal处理
 
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
@@ -70,6 +82,9 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
           setInitialState((s) => ({ ...s, currentUser: undefined }));
         });
         loginOut();
+        return;
+      } else if (key === 'invite') {
+        setInvitationVisible(true);
         return;
       }
       history.push(`/account/${key}`);
@@ -123,6 +138,13 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
       label: '退出登录',
     },
   ];
+  if (currentUser.role === 'lawyer') {
+    menuItems.push({
+      key: 'invite',
+      icon: <NodeIndexOutlined />,
+      label: '获取邀请码',
+    });
+  }
 
   return (
     <HeaderDropdown
@@ -132,7 +154,12 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
         items: menuItems,
       }}
     >
-      {children}
+      <div>
+        {children}
+        {currentUser.role === 'lawyer' && (
+          <InvitationModal visible={invitationVisible} onCancel={onModalCancel}></InvitationModal>
+        )}
+      </div>
     </HeaderDropdown>
   );
 };

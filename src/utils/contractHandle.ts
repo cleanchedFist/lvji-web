@@ -1,32 +1,52 @@
-import { downloadReview } from '@/services/ant-design-pro/api';
+import { downloadClientFile, downloadReview, getFileBlob } from '@/services/ant-design-pro/api';
 import { message } from 'antd';
 export const contractDownload = async (props: API.ContractDownloadProps) => {
   const hide = message.loading('正在导出');
-  if (!props) return true;
   try {
+    if (!props) return true;
     const data = await downloadReview(props.reviewId);
+    const result = fileDownload(data, props.contractName);
+    hide();
+    return result;
+  } catch (e) {
+    hide();
+    return false;
+  }
+};
+
+export const fileDownload = (data: BlobPart, name: string) => {
+  try {
     const blob = new Blob([data], { type: 'application/octet-stream' });
     const url = window.URL.createObjectURL(blob);
-
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${props.contractName}.docx`;
+    link.id = '22342eafhajkfnasjfd';
+    link.download = `${name}.docx`;
     document.body.appendChild(link);
     link.click();
 
     // 释放资源
     window.URL.revokeObjectURL(url);
     document.body.removeChild(link);
-    hide();
     message.success('导出成功');
     return true;
   } catch (error) {
-    hide();
     message.error('导出失败，请重试');
     return false;
   }
 };
 
-export default {
-  contractDownload,
+export const clientFileDownload = async (props: { fileId: number; contractName: string }) => {
+  const hide = message.loading('正在导出');
+  try {
+    const { data: url } = await downloadClientFile(props.fileId);
+    const _url = url.replace('https://yema-1252530263.cos.ap-chengdu.myqcloud.com', '/cos-proxy');
+    const data = await getFileBlob(_url);
+    const result = fileDownload(data, props.contractName);
+    hide();
+    return result;
+  } catch (e) {
+    hide();
+    return false;
+  }
 };

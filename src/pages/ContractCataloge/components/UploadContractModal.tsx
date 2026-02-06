@@ -8,7 +8,7 @@ import {
   uploadVersion,
 } from '@/services/ant-design-pro/api';
 import { ModalButtonConfig } from '@/utils/modalConfig';
-import { useRequest } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import {
   Checkbox,
   CheckboxChangeEvent,
@@ -20,7 +20,7 @@ import {
   message,
 } from 'antd';
 import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
-import { ContractVersionsContext } from '../utils/context';
+import { CatalogePageContext } from '../utils/context';
 import LawyerSelector from './LawyerSelector';
 export interface UploadContractModalRef {
   openModal: (ut: number, dirId?: number) => void;
@@ -31,223 +31,222 @@ export enum UploadType {
   version = 2,
 }
 
-type UploadContractModalProps = {
-  isUser?: boolean;
-};
+const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
+  const { initialState } = useModel('@@initialState');
+  const catalogePageContext = useContext(CatalogePageContext);
+  const [uploadModalVisible, setUploadModalVisible] = useState<boolean>(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [nextVersionName, setNextVersionName] = useState('1.0.0');
+  const [model, setModel] = useState<string>('');
+  const [lawyerId, setLawyerId] = useState<number>();
 
-const UploadContractModal = forwardRef<UploadContractModalRef, UploadContractModalProps>(
-  (props, ref) => {
-    const contractVersionsContext = useContext(ContractVersionsContext);
-    const [uploadModalVisible, setUploadModalVisible] = useState<boolean>(false);
-    const [fileList, setFileList] = useState<UploadFile[]>([]);
-    const [uploading, setUploading] = useState(false);
-    const [nextVersionName, setNextVersionName] = useState('1.0.0');
-    const [model, setModel] = useState<string>('');
+  const { data: modelList } = useRequest(getSupportModels);
 
-    const { data: modelList } = useRequest(getSupportModels);
+  const onLawyerChange = (id: number) => {
+    setLawyerId(id);
+  };
 
-    useEffect(() => {
-      if (modelList) {
-        setModel(modelList[0]);
-      }
-    }, [modelList]);
-    const [uploadType, setUploadType] = useState<number>();
-    const [dirId, setDirId] = useState<number>();
-    let ifParse = false;
-
-    function onChange(e: CheckboxChangeEvent) {
-      ifParse = e.target.checked;
+  useEffect(() => {
+    if (modelList) {
+      setModel(modelList[0]);
     }
+  }, [modelList]);
+  const [uploadType, setUploadType] = useState<number>();
+  const [dirId, setDirId] = useState<number>();
+  let ifParse = false;
 
-    function handleShowModal(ut: number, _dirId?: number) {
-      setUploadType(ut);
-      if (ut === UploadType.dir) {
-        setUploadModalVisible(true);
-      } else if (_dirId) {
-        setDirId(_dirId);
-        getDirCount(_dirId).then((res) => {
-          const { success, data } = res;
-          if (success) {
-            setNextVersionName(`${data + 1}.0.0`);
-            setUploadModalVisible(true);
-          }
-        });
-      }
+  function onChange(e: CheckboxChangeEvent) {
+    ifParse = e.target.checked;
+  }
+
+  function handleShowModal(ut: number, _dirId?: number) {
+    setUploadType(ut);
+    if (ut === UploadType.dir) {
+      setUploadModalVisible(true);
+    } else if (_dirId) {
+      setDirId(_dirId);
+      getDirCount(_dirId).then((res) => {
+        const { success, data } = res;
+        if (success) {
+          setNextVersionName(`${data + 1}.0.0`);
+          setUploadModalVisible(true);
+        }
+      });
     }
+  }
 
-    useImperativeHandle(ref, () => ({
-      openModal(ut: number, dirId?: number) {
-        handleShowModal(ut, dirId);
-      },
-    }));
-    const uploadProps: UploadProps = {
-      onRemove: (file) => {
-        const index = fileList.indexOf(file);
-        const newFileList = fileList.slice();
-        newFileList.splice(index, 1);
-        setFileList(newFileList);
-      },
-      beforeUpload: (file) => {
-        setFileList([...fileList, file]);
+  useImperativeHandle(ref, () => ({
+    openModal(ut: number, dirId?: number) {
+      handleShowModal(ut, dirId);
+    },
+  }));
+  const uploadProps: UploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
 
-        return false;
-      },
-      onChange(files) {
-        setFileList([...files.fileList]);
-      },
-      fileList,
-      style: {
-        border: '2px dashed rgb(129, 140, 248)',
-        borderRadius: '8px',
-        background: 'transparent',
-      },
-      className: 'bg-indigo-50 hover:bg-indigo-100 block',
-    };
+      return false;
+    },
+    onChange(files) {
+      setFileList([...files.fileList]);
+    },
+    fileList,
+    style: {
+      border: '2px dashed rgb(129, 140, 248)',
+      borderRadius: '8px',
+      background: 'transparent',
+    },
+    className: 'bg-indigo-50 hover:bg-indigo-100 block',
+  };
 
-    function handleUploadDir() {
-      setUploading(true);
-      const fileRequest = fileList.map((item) =>
-        uploadContract(item as unknown as File, model, '1.0.0'),
-      );
-      Promise.all(fileRequest)
+  function handleUploadDir() {
+    setUploading(true);
+    const fileRequest = fileList.map((item) => {
+      const params = { model, versionId: '1.0.0', reviewerId: lawyerId };
+      return uploadContract(item as unknown as File, params);
+    });
+    Promise.all(fileRequest)
+      .then(() => {
+        setFileList([]);
+        message.success('上传成功');
+        setUploadModalVisible(false);
+      })
+      .catch(() => {
+        message.error('上传失败，请重试');
+      })
+      .finally(() => {
+        catalogePageContext.reloadList();
+        setUploading(false);
+      });
+  }
+
+  function handleParseVersion(fileId: number) {
+    if (dirId) {
+      const fileRequest = parseContract(dirId, fileId);
+      fileRequest
         .then(() => {
           setFileList([]);
           message.success('上传成功');
           setUploadModalVisible(false);
+          catalogePageContext.reloadList();
         })
         .catch(() => {
           message.error('上传失败，请重试');
         })
         .finally(() => {
-          contractVersionsContext.reloadList();
           setUploading(false);
         });
     }
+  }
 
-    function handleParseVersion(fileId: number) {
-      if (dirId) {
-        const fileRequest = parseContract(dirId, fileId);
-        fileRequest
-          .then(() => {
-            setFileList([]);
-            message.success('上传成功');
-            setUploadModalVisible(false);
-            contractVersionsContext.reloadList();
-          })
-          .catch(() => {
-            message.error('上传失败，请重试');
-          })
-          .finally(() => {
-            setUploading(false);
-          });
-      }
+  function handleUploadVersion() {
+    setUploading(true);
+
+    const file = fileList[0];
+
+    const fileRequest = uploadVersion(file as unknown as File, {
+      dirId: `${dirId}`,
+      model,
+      versionId: nextVersionName,
+      reviewerId: lawyerId,
+    });
+    fileRequest
+      .then((res) => {
+        if (ifParse) {
+          handleParseVersion(res.data);
+        } else {
+          setFileList([]);
+          message.success('上传成功');
+          setUploadModalVisible(false);
+          catalogePageContext.reloadList();
+          setUploading(false);
+        }
+      })
+      .catch(() => {
+        message.error('上传失败，请重试');
+      })
+      .finally(() => {
+        // UploadFinally.handler()
+        // todo 更新数据 onUploadEnd()
+      });
+  }
+
+  const handleUpload = () => {
+    if (uploadType === UploadType.dir) {
+      handleUploadDir();
+    } else if (uploadType === UploadType.version) {
+      handleUploadVersion();
     }
+  };
 
-    function handleUploadVersion() {
-      setUploading(true);
-
-      const file = fileList[0];
-      const fileRequest = uploadVersion(
-        file as unknown as File,
-        `${dirId}`,
-        model,
-        nextVersionName,
-      );
-      fileRequest
-        .then((res) => {
-          if (ifParse) {
-            handleParseVersion(res.data);
-          } else {
-            setFileList([]);
-            message.success('上传成功');
-            setUploadModalVisible(false);
-            contractVersionsContext.reloadList();
-            setUploading(false);
-          }
-        })
-        .catch(() => {
-          message.error('上传失败，请重试');
-        })
-        .finally(() => {
-          // UploadFinally.handler()
-          // todo 更新数据 onUploadEnd()
-        });
-    }
-
-    const handleUpload = () => {
-      if (uploadType === UploadType.dir) {
-        handleUploadDir();
-      } else if (uploadType === UploadType.version) {
-        handleUploadVersion();
-      }
-    };
-
-    return (
-      <>
-        <Modal
-          title="上传合同"
-          destroyOnHidden={true}
-          width={600}
-          open={uploadModalVisible}
-          onOk={handleUpload}
-          okButtonProps={{ ...ModalButtonConfig.okButtonProps, loading: uploading }}
-          cancelButtonProps={ModalButtonConfig.cancelButtonProps}
-          onCancel={() => setUploadModalVisible(false)}
-        >
-          <div className="py-4">
-            <div className="mb-2 flex items-center">
-              <span className="text-black/45 font-normal text-[14px] leading-[1.5714] text-start">
-                模型：
-              </span>
-              <div className="flex-1">
-                <CustomSelect
-                  value={model}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-                    setModel(e.target.value)
-                  }
-                  placeholder="选择一个策略"
-                  options={modelList?.map((i: string) => ({ label: i, value: i }))}
-                />
-              </div>
+  return (
+    <>
+      <Modal
+        title="上传合同"
+        destroyOnHidden={true}
+        width={600}
+        open={uploadModalVisible}
+        onOk={handleUpload}
+        okButtonProps={{ ...ModalButtonConfig.okButtonProps, loading: uploading }}
+        cancelButtonProps={ModalButtonConfig.cancelButtonProps}
+        onCancel={() => setUploadModalVisible(false)}
+      >
+        <div className="py-4">
+          <div className="mb-2 flex items-center">
+            <span className="text-black/45 font-normal text-[14px] leading-[1.5714] text-start">
+              模型：
+            </span>
+            <div className="flex-1">
+              <CustomSelect
+                value={model}
+                onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+                  setModel(e.target.value)
+                }
+                placeholder="选择一个策略"
+                options={modelList?.map((i: string) => ({ label: i, value: i }))}
+              />
             </div>
-
-            <Descriptions
-              className="mb-2"
-              style={{ display: uploadType === UploadType.dir ? 'none' : 'block' }}
-            >
-              <Descriptions.Item label="版本号">{nextVersionName}</Descriptions.Item>
-            </Descriptions>
-            {props.isUser === true ? <LawyerSelector /> : <></>}
-            <Upload.Dragger
-              {...uploadProps}
-              multiple={uploadType === UploadType.dir ? true : false}
-            >
-              <div className="ant-upload-drag-icon flex flex-col items-center justify-center">
-                <UploadIcon className="text-indigo-600 mb-4" />
-              </div>
-              <p className="text-base font-medium text-[#71717a]">
-                {`在这里拖拽${uploadType === UploadType.dir ? '多个' : ''}文件或者点击上传文件`}
-              </p>
-              <p className="text-[#71717a]/75 text-sm">
-                {uploadType === UploadType.dir
-                  ? '你可以上传 10 个文件 (最大 10 MB 每个)'
-                  : '文件大小不超过 10M'}
-              </p>
-            </Upload.Dragger>
-            <Checkbox
-              style={{
-                margin: '10px 0 0 0',
-                display: uploadType === UploadType.dir ? 'none' : 'flex',
-              }}
-              onChange={onChange}
-            >
-              是否解析合同
-            </Checkbox>
           </div>
-        </Modal>
-      </>
-    );
-  },
-);
+
+          <Descriptions
+            className="mb-2"
+            style={{ display: uploadType === UploadType.dir ? 'none' : 'block' }}
+          >
+            <Descriptions.Item label="版本号">{nextVersionName}</Descriptions.Item>
+          </Descriptions>
+          {initialState?.isUserRole ? <LawyerSelector onChange={onLawyerChange} /> : <></>}
+          <Upload.Dragger {...uploadProps} multiple={uploadType === UploadType.dir ? true : false}>
+            <div className="ant-upload-drag-icon flex flex-col items-center justify-center">
+              <UploadIcon className="text-indigo-600 mb-4" />
+            </div>
+            <p className="text-base font-medium text-[#71717a]">
+              {`在这里拖拽${uploadType === UploadType.dir ? '多个' : ''}文件或者点击上传文件`}
+            </p>
+            <p className="text-[#71717a]/75 text-sm">
+              {uploadType === UploadType.dir
+                ? '你可以上传 10 个文件 (最大 10 MB 每个)'
+                : '文件大小不超过 10M'}
+            </p>
+          </Upload.Dragger>
+          <Checkbox
+            style={{
+              margin: '10px 0 0 0',
+              display: uploadType === UploadType.dir ? 'none' : 'flex',
+            }}
+            onChange={onChange}
+          >
+            是否解析合同
+          </Checkbox>
+        </div>
+      </Modal>
+    </>
+  );
+});
 
 export default UploadContractModal;
