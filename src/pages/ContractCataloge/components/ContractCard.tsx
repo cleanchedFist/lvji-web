@@ -69,13 +69,17 @@ const ContractCard = ({
     history.push(`/clm/reviews/step/${id}`);
   };
 
-  const handleReviewDown = async (id: number) => {
+  const handleReviewDone = async (id: number) => {
+    const hide = message.loading('正在更新');
     setReviewDown(id)
       .then(() => {
         updateList();
       })
       .catch(() => {
         message.error('设置失败，请重试');
+      })
+      .finally(() => {
+        hide();
       });
   };
 
@@ -140,7 +144,7 @@ const ContractCard = ({
             type="primary"
             disabled={contract.stage !== 1}
             onClick={() => {
-              handleReviewDown(contract.id);
+              handleReviewDone(contract.id);
             }}
           >
             设置审查完成

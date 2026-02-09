@@ -68,10 +68,18 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
     });
   };
 
-  const handleReviewDown = (id: number) => {
-    setReviewDown(id).catch(() => {
-      message.error('状态更新失败，请重试');
-    });
+  const handleReviewDone = (id: number) => {
+    const hide = message.loading('正在更新');
+    setReviewDown(id)
+      .then(() => {
+        catalogePageContext.reloadList();
+      })
+      .catch(() => {
+        message.error('状态更新失败，请重试');
+      })
+      .finally(() => {
+        hide();
+      });
   };
   return (
     <div className="bg-white hover:shadow-md rounded-xl w-full border border-gray-100">
@@ -129,7 +137,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
             {listType === Contract_Type.ClientAssigned && (
               <NormalBtn
                 disabled={contract.stage !== 1}
-                onClick={() => handleReviewDown(contract.latestFileId)}
+                onClick={() => handleReviewDone(contract.latestFileId)}
               >
                 设置审查完成
               </NormalBtn>
