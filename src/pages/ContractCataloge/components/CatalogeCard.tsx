@@ -151,7 +151,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
             {/* 设置审查完成 */}
             {listType === Contract_Type.ClientAssigned && (
               <NormalBtn
-                disabled={contract.stage !== 1}
+                disabled={contract.stage === 2}
                 onClick={() => handleReviewDone(contract.latestFileId)}
               >
                 设置审查完成

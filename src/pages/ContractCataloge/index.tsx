@@ -37,8 +37,14 @@ const ContractCataloge: React.FC = () => {
         latestVersion: version,
       });
     },
-    reloadList: () => {
-      actionRef.current?.reload();
+    reloadList: async () => {
+      // 获取当前滚动位置
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      await actionRef.current?.reload();
+      // 滚动到当前位置
+      setTimeout(() => {
+        window.scrollTo(0, scrollPosition);
+      });
     },
     updateListType: (type: number) => {
       setListType(type);

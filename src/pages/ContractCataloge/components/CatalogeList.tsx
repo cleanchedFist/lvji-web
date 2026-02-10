@@ -65,7 +65,7 @@ const CatalogeList = forwardRef((props: any, ref) => {
 
   useImperativeHandle(ref, () => ({
     reload() {
-      loadData('', 1);
+      return loadData('', 1);
     },
   }));
 

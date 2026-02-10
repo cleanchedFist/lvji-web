@@ -18,7 +18,7 @@ export interface ContractVersionListRef {
 
 const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref) => {
   // 获取列表类型
-  const { listType } = useContext(CatalogePageContext);
+  const { listType, reloadList: reloadCatalogeList } = useContext(CatalogePageContext);
 
   const [focusVersionParseData, setFocusVersionParseData] = useState<API.ContractListItem>(
     {} as API.ContractListItem,
@@ -29,6 +29,7 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
 
   const hideModal = () => {
     setModalVisible(false);
+    reloadCatalogeList();
   };
 
   function updateList(id?: number) {
@@ -148,6 +149,7 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
                   <div key={i.id} onClick={() => handleItemClick(i.id)}>
                     <ContractCard
                       isCurrent={+focusVersionParseData.id === i.id}
+                      isLastOne={versionList.length === 1}
                       contract={i}
                       updateList={updateList}
                     ></ContractCard>

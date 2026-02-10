@@ -15,13 +15,14 @@ const ContractCard = ({
   contract,
   isCurrent,
   updateList,
+  isLastOne,
 }: {
   contract: API.ContractVersionItem;
   isCurrent: boolean;
+  isLastOne: boolean;
   updateList: (id?: number) => Promise<void>;
 }) => {
   const { listType } = useContext(CatalogePageContext);
-
   const handleViewContract = (data: API.ContractVersionItem) => {
     if (data.reviewId && listType !== Contract_Type.ClientUpload) {
       history.push(`/clm/reviews/result/${data.reviewId}`, { name: data.name });
@@ -142,7 +143,7 @@ const ContractCard = ({
         {listType === Contract_Type.ClientAssigned && (
           <CatalogeCardBtn
             type="primary"
-            disabled={contract.stage !== 1}
+            disabled={contract.stage === 2}
             onClick={() => {
               handleReviewDone(contract.id);
             }}
@@ -152,6 +153,7 @@ const ContractCard = ({
         )}
 
         <CatalogeCardBtn
+          disabled={isLastOne}
           onClick={() => {
             handleDeleteClick(contract);
           }}

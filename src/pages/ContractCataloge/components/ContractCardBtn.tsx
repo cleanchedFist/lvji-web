@@ -11,13 +11,12 @@ const btnClassMap = {
   default: {
     normal: 'px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 rounded',
     disabled:
-      'px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 cursor-not-allowed rounded',
+      'px-3 py-1.5 text-xs font-medium bg-[#F5F5F5] text-gray-400 cursor-not-allowed rounded shadow-sm',
   },
   primary: {
     normal:
       'px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm',
-    disabled:
-      'px-3 py-1.5 text-xs font-medium bg-[#F5F5F5] text-gray-400 cursor-not-allowed rounded shadow-sm',
+    disabled: 'px-3 py-1.5 text-xs font-medium text-white bg-indigo-400 cursor-not-allowed rounded',
   },
 };
 const CatalogeCardBtn = ({
