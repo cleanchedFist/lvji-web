@@ -111,21 +111,13 @@ const useUploadLogic = (catalogePageContext: any) => {
     const uploadFn = uploadType === UploadType.dir ? handleUploadDir : handleUploadVersion;
 
     const result = await uploadFn(fileds, features);
+    setUploading(false);
 
     if (result === true) {
       setFileList([]);
       setVisible(false);
       catalogePageContext.reloadList();
     }
-
-    setUploading(false);
-    // // 实际开发中根据 uploadType 调用 uploadContract 或 uploadVersion
-    // setTimeout(() => {
-    //   setUploading(false);
-    //   message.success('上传成功');
-    //   setVisible(false);
-    //   catalogePageContext?.reloadList?.();
-    // }, 1500);
   };
 
   const hasFeature = (feature: UploadFeature) => features.includes(feature);

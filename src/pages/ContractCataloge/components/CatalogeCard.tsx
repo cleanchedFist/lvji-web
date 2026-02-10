@@ -7,10 +7,10 @@ import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { Modal, message } from 'antd';
 import { Download, Trash2 } from 'lucide-react';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { ActionContext, CatalogePageContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
-import reviewStageText from '../utils/reviewStageText';
+import { reviewStageText, reviewStageTheme } from '../utils/reviewStageText';
 import CatalogeCardBtn from './CatalogeCardBtn';
 /**
  * 合同卡片组件
@@ -81,6 +81,13 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
         hide();
       });
   };
+
+  const tagPrefix = useMemo(() => {
+    if (contract.stage === 0 && contract.version !== '1.0.0') {
+      return '新版本';
+    }
+    return '';
+  }, [contract.stage, contract.version]);
   return (
     <div className="bg-white hover:shadow-md rounded-xl w-full border border-gray-100">
       {/* 头部区域：标题、元数据和操作按钮 */}
@@ -95,8 +102,12 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
               <h3 className="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
                 {contract.name}
                 {[Contract_Type.ClientUpload, Contract_Type.ClientAssigned].includes(listType) && (
-                  <span className="ml-2 bg-indigo-50 p-1.5 text-sm font-medium text-indigo-600 rounded-lg">
-                    {contract.stage !== void 0 ? reviewStageText(contract.stage) : ''}
+                  <span
+                    className={`ml-2 p-1.5 text-sm font-medium rounded-lg ${reviewStageTheme(
+                      contract.stage,
+                    )}`}
+                  >
+                    {`${tagPrefix}${reviewStageText(contract.stage)}`}
                   </span>
                 )}
               </h3>

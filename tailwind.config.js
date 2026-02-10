@@ -20,6 +20,12 @@ module.exports = {
     '[&_.ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked):hover]:!text-indigo-600',
 
     // 4. 修复 Antd 内部的分割线颜色冲突
-    '[&_.ant-radio-button-wrapper-checked]:before:!bg-indigo-600'
+    '[&_.ant-radio-button-wrapper-checked]:before:!bg-indigo-600',
+    'bg-orange-50',
+    'text-orange-600',
+    'bg-indigo-50',
+    'text-indigo-600',
+    'bg-emerald-50',
+    'text-emerald-600'
   ]
 };

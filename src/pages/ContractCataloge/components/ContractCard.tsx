@@ -8,7 +8,7 @@ import { FileText } from 'lucide-react';
 import { useContext } from 'react';
 import { CatalogePageContext } from '../utils/context';
 import formatTime from '../utils/formatTime';
-import reviewStageText from '../utils/reviewStageText';
+import { reviewStageText, reviewStageTheme } from '../utils/reviewStageText';
 import CatalogeCardBtn from './ContractCardBtn';
 
 const ContractCard = ({
@@ -97,8 +97,8 @@ const ContractCard = ({
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">v{contract.version || '1.0.0'}</span>
             {[Contract_Type.ClientUpload, Contract_Type.ClientAssigned].includes(listType) && (
-              <span className="bg-indigo-50 text-indigo-600 text-xs px-1.5 py-0.5 rounded">
-                {contract.stage !== void 0 ? reviewStageText(contract.stage) : ''}
+              <span className={`text-xs px-1.5 py-0.5 rounded ${reviewStageTheme(contract.stage)}`}>
+                {reviewStageText(contract.stage)}
               </span>
             )}
             {isCurrent ? (
