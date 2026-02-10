@@ -129,7 +129,11 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
               <Trash2 className="w-[20px] h-[20px]" />
             </button>
             {/* 上传新版本按钮 */}
-            <NormalBtn onClick={() => catalogePageContext.onUploadDVersionBtnClick(contract.id)}>
+            <NormalBtn
+              onClick={() =>
+                catalogePageContext.onUploadDVersionBtnClick(contract.id, contract.version)
+              }
+            >
               上传新版本
             </NormalBtn>
             {/* 开始审查之后才允许点击 */}

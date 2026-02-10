@@ -1,6 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
+import { UploadFile } from 'antd';
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
@@ -323,19 +324,30 @@ export async function scenarioAdd(options?: { [key: string]: any }) {
   });
 }
 
+interface FieldsValueType {
+  model?: string;
+  versionId?: string;
+  reviewerId?: number;
+  requirement?: string;
+  party?: string;
+  dirId?: number;
+}
+
 /**
  * 上传文件
  */
 export async function uploadContract(
-  file: File,
-  { model, versionId, reviewerId }: { model: string; versionId?: string; reviewerId?: number },
+  file: UploadFile,
+  { model, versionId, reviewerId, requirement, party }: FieldsValueType,
 ) {
   const formData = new FormData();
-  if (file) {
+  if (file && file.originFileObj) {
     formData.append('docxFile', file.originFileObj);
-    formData.append('version', `${versionId}`);
-    formData.append('model', `${model}`);
+    versionId && formData.append('version', `${versionId}`);
+    model && formData.append('model', `${model}`);
     reviewerId && formData.append('reviewerId', `${reviewerId}`);
+    requirement && formData.append('requirement', `${requirement}`);
+    party && formData.append('party', `${party}`);
   }
   return request('/api/llm-service/upload/dir', {
     method: 'POST',
@@ -393,21 +405,18 @@ export async function getAssignedDirList(params: any, options?: { [key: string]:
  * 上传目录下的单独版本
  */
 export async function uploadVersion(
-  file: File,
-  {
-    dirId,
-    model,
-    versionId,
-    reviewerId,
-  }: { dirId: string; model: string; versionId: string; reviewerId?: number },
+  file: UploadFile,
+  { dirId, model, versionId, reviewerId, requirement, party }: FieldsValueType,
 ) {
   const formData = new FormData();
-  if (file) {
+  if (file && file.originFileObj) {
     formData.append('docxFile', file.originFileObj);
-    formData.append('dir', dirId);
-    formData.append('version', versionId);
-    formData.append('model', model);
+    formData.append('dir', `${dirId}`);
+    versionId && formData.append('version', `${versionId}`);
+    model && formData.append('model', `${model}`);
     reviewerId && formData.append('reviewerId', `${reviewerId}`);
+    requirement !== void 0 && formData.append('requirement', `${requirement}`);
+    party && formData.append('party', `${party}`);
   }
   return request('/api/llm-service/upload/file', {
     method: 'POST',

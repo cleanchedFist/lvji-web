@@ -4,7 +4,9 @@ import React, { useRef, useState } from 'react';
 import CatalogeList from './components/CatalogeList';
 import ContractSummary from './components/ContractSummary';
 import ContractVersionList, { ContractVersionListRef } from './components/ContractVersionList';
-import UploadContractModal, { UploadContractModalRef } from './components/UploadContractModal';
+import UploadContractModal, {
+  UploadContractModalRef,
+} from './components/UploadContractModal/index';
 import { ActionContext, CatalogePageContext } from './utils/context';
 
 const ContractCataloge: React.FC = () => {
@@ -26,10 +28,14 @@ const ContractCataloge: React.FC = () => {
   const CatalogePageContextValue = {
     listType,
     onUploadDirBtnClick: () => {
-      modalRef.current?.openModal(1);
+      modalRef.current?.openModal(['model'], { uploadType: 1 });
     },
-    onUploadDVersionBtnClick: (id: number) => {
-      modalRef.current?.openModal(2, id);
+    onUploadDVersionBtnClick: (id: number, version: string) => {
+      modalRef.current?.openModal(['version', 'model', 'parse'], {
+        uploadType: 2,
+        dirId: id,
+        latestVersion: version,
+      });
     },
     reloadList: () => {
       actionRef.current?.reload();

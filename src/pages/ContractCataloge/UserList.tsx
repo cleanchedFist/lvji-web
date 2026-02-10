@@ -4,7 +4,10 @@ import React, { useRef, useState } from 'react';
 import CatalogeList from './components/CatalogeList';
 import ContractSummary from './components/ContractSummary';
 import ContractVersionList, { ContractVersionListRef } from './components/ContractVersionList';
-import UploadContractModal, { UploadContractModalRef } from './components/UploadContractModal';
+// import UploadContractModal, { UploadContractModalRef } from './components/UploadContractModal';
+import UploadContractModal1, {
+  UploadContractModalRef,
+} from './components/UploadContractModal/index';
 import { ActionContext, CatalogePageContext } from './utils/context';
 
 const UserList: React.FC = () => {
@@ -25,10 +28,14 @@ const UserList: React.FC = () => {
   const CatalogePageContextValue = {
     listType,
     onUploadDirBtnClick: () => {
-      modalRef.current?.openModal(1);
+      modalRef.current?.openModal(['lawyer', 'requirement', 'side'], { uploadType: 1 });
     },
-    onUploadDVersionBtnClick: (id: number) => {
-      modalRef.current?.openModal(2, id);
+    onUploadDVersionBtnClick: (id: number, version: string) => {
+      modalRef.current?.openModal(['version', 'lawyer', 'requirement', 'parse', 'side'], {
+        uploadType: 2,
+        dirId: id,
+        latestVersion: version,
+      });
     },
     reloadList: () => {
       actionRef.current?.reload();
@@ -48,7 +55,8 @@ const UserList: React.FC = () => {
           </ActionContext.Provider>
         </div>
         <ContractVersionList ref={versionListRef}></ContractVersionList>
-        <UploadContractModal ref={modalRef}></UploadContractModal>
+        {/* <UploadContractModal ref={modalRef}></UploadContractModal> */}
+        <UploadContractModal1 ref={modalRef}></UploadContractModal1>
       </CatalogePageContext.Provider>
     </PageContainer>
   );

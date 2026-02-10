@@ -7,7 +7,7 @@ export const CatalogePageContext = React.createContext({
   updateListType(type: number) {},
   onUploadDirBtnClick() {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onUploadDVersionBtnClick(id: number) {},
+  onUploadDVersionBtnClick(id: number, version: string) {},
   reloadList() {},
 });
 
