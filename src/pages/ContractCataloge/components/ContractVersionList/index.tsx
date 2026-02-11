@@ -6,11 +6,11 @@ import {
 } from '@/services/ant-design-pro/api';
 import { Contract_Type } from '@/utils/const';
 import { List, message } from 'antd';
-import { CircleX, Clock4, FileText } from 'lucide-react';
+import { CircleX } from 'lucide-react';
 import { forwardRef, useContext, useImperativeHandle, useState } from 'react';
-import { CatalogePageContext } from '../utils/context';
-import formatTime from '../utils/formatTime';
-import ContractCard from './ContractCard';
+import { CatalogePageContext } from '../../utils/context';
+import ContractCard from '../ContractCard';
+import VersionHeaderCard from './VersionHeaderCard';
 
 export interface ContractVersionListRef {
   openModal: (data: API.CatalogeCardProps) => void;
@@ -18,7 +18,7 @@ export interface ContractVersionListRef {
 
 const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref) => {
   // 获取列表类型
-  const { listType, reloadList: reloadCatalogeList } = useContext(CatalogePageContext);
+  const { listType } = useContext(CatalogePageContext);
 
   const [focusVersionParseData, setFocusVersionParseData] = useState<API.ContractListItem>(
     {} as API.ContractListItem,
@@ -29,7 +29,6 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
 
   const hideModal = () => {
     setModalVisible(false);
-    reloadCatalogeList();
   };
 
   function updateList(id?: number) {
@@ -83,52 +82,9 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
             <CircleX />
           </button>
         </div>
-        <div className="overflow-y-auto p-6 bg-slate-50 flex-1">
+        <div className="overflow-y-auto p-6 bg-slate-100 flex-1">
+          <VersionHeaderCard data={focusVersionParseData}></VersionHeaderCard>
           <div className="space-y-8">
-            <div className="flex justify-between items-start">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">
-                  {focusVersionParseData.name}
-                </h2>
-                <div className="flex gap-4 text-xs text-slate-500">
-                  <span className="flex items-center gap-1">
-                    <FileText className="w-[14px] h-[14px]" />
-                    合同类型: {focusVersionParseData.type}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock4 className="w-[14px] h-[14px]" />
-                    创建日期: {formatTime(focusVersionParseData.createTimeStamp)}
-                  </span>
-                </div>
-              </div>
-              {/* <div className="text-right">
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">
-                  {focusVersionParseData.stage}
-                </span>
-              </div> */}
-            </div>
-            <div className="grid grid-cols-2 gap-8 bg-slate-50 p-6 rounded-xl border border-slate-100">
-              <div>
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">
-                  合同主体 - 甲方
-                </span>
-                <div className="font-semibold text-slate-800 text-lg">
-                  {focusVersionParseData.parta || '-'}
-                </div>
-              </div>
-              <div>
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">
-                  合同主体 - 乙方
-                </span>
-                <div className="font-semibold text-slate-800 text-lg">
-                  {focusVersionParseData.partb || '-'}
-                </div>
-              </div>
-            </div>
-            {/* <div>
-              <h3 className="text-sm font-bold text-slate-800 mb-6">合同阶段</h3>
-              <ContractStep step={step} />
-            </div> */}
             <div>
               <div className="flex items-center gap-4 border-b border-slate-200 mb-4">
                 <button

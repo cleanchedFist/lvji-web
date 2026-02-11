@@ -1,3 +1,4 @@
+import scrollYTo from '@/utils/resetScroll';
 import './pagination.css';
 import ProtableCustomRender from './ProtableCustomRender';
 import ProtablePagination from './ProtablePagination';
@@ -10,6 +11,7 @@ const ProtableConfig = {
     showSizeChanger: false,
     showTotal: () => null,
     rootClassName: 'justify-center custom-pagination',
+    onChange: () => scrollYTo(0),
     itemRender: (current: any, type: string, originalElement: React.ReactNode) => {
       return <ProtablePagination current={current} type={type} originalElement={originalElement} />;
     },

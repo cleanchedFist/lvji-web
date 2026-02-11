@@ -8,7 +8,8 @@ export const CatalogePageContext = React.createContext({
   onUploadDirBtnClick() {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onUploadDVersionBtnClick(id: number, version: string) {},
-  reloadList() {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  reloadList(resetPosition?: boolean) {},
 });
 
 export const ActionContext = React.createContext({

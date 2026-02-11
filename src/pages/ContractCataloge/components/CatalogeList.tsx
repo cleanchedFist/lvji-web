@@ -1,5 +1,6 @@
 import { getAssignedDirList, getDirList } from '@/services/ant-design-pro/api';
 import { Contract_Type } from '@/utils/const';
+import scrollYTo from '@/utils/resetScroll';
 import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { forwardRef, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react';
@@ -91,6 +92,7 @@ const CatalogeList = forwardRef((props: any, ref) => {
     if (newPage >= 1 && newPage <= Math.ceil(total / PAGE_SIZE)) {
       loadData(searchTerm, newPage);
       setCurrentPage(newPage);
+      scrollYTo(0);
     }
   };
 

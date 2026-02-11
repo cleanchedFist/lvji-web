@@ -22,7 +22,7 @@ const ContractCard = ({
   isLastOne: boolean;
   updateList: (id?: number) => Promise<void>;
 }) => {
-  const { listType } = useContext(CatalogePageContext);
+  const { listType, reloadList: reloadCatalogeList } = useContext(CatalogePageContext);
   const handleViewContract = (data: API.ContractVersionItem) => {
     if (data.reviewId && listType !== Contract_Type.ClientUpload) {
       history.push(`/clm/reviews/result/${data.reviewId}`, { name: data.name });
@@ -49,6 +49,7 @@ const ContractCard = ({
     removeContract(`${id}`)
       .then(() => {
         updateList();
+        reloadCatalogeList(true);
       })
       .catch(() => {
         message.error('删除失败，请重试');
@@ -75,6 +76,7 @@ const ContractCard = ({
     setReviewDown(id)
       .then(() => {
         updateList();
+        reloadCatalogeList(true);
       })
       .catch(() => {
         message.error('设置失败，请重试');

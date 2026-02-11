@@ -126,6 +126,8 @@ declare namespace API {
     partb: string;
     reviewer: string;
     status?: number;
+    chooseParty?: string;
+    demand?: string;
   };
   type ContractList = {
     data?: {

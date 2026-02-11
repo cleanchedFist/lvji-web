@@ -1,4 +1,5 @@
 import PageContainer from '@/components/PageContainer';
+import scrollYTo from '@/utils/resetScroll';
 import { ActionType } from '@ant-design/pro-components';
 import React, { useRef, useState } from 'react';
 import CatalogeList from './components/CatalogeList';
@@ -37,14 +38,14 @@ const ContractCataloge: React.FC = () => {
         latestVersion: version,
       });
     },
-    reloadList: async () => {
+    reloadList: async (resetPosition = false) => {
       // 获取当前滚动位置
       const scrollPosition = window.scrollY || document.documentElement.scrollTop;
       await actionRef.current?.reload();
       // 滚动到当前位置
-      setTimeout(() => {
-        window.scrollTo(0, scrollPosition);
-      });
+      if (resetPosition) {
+        scrollYTo(scrollPosition);
+      }
     },
     updateListType: (type: number) => {
       setListType(type);
