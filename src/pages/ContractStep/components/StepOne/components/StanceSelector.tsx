@@ -1,35 +1,33 @@
 import React from 'react';
+import { allowedScale } from '../../../dataSchema';
 
 // ------------------------------------
 // 组件：立场选择按钮 (Stance Selector)
 // ------------------------------------
 type StanceSelectorProps = {
-  selectedStance: number;
-  setSelectedStance: React.Dispatch<number>;
+  selectedStance: string;
+  setSelectedStance: React.Dispatch<string>;
 };
 const StanceSelector = ({ selectedStance, setSelectedStance }: StanceSelectorProps) => {
   const stances = [
     {
-      key: 0,
-      label: '强势',
+      label: allowedScale.Strong,
       description:
         '你代表贵方的谈判利益，对贵方利益做出最大的保护，可能导致审查结果相对激进，但能争取到较多有利条款。',
     },
     {
-      key: 1,
-      label: '中立',
+      label: allowedScale.Neutral,
       description:
         '你将基于行业标准和法律公平性进行审查，目标是平衡双方利益，确保合同条款公正合理，减少潜在风险。',
     },
     {
-      key: 2,
-      label: '弱势',
+      label: allowedScale.Weak,
       description:
         '你代表对方的谈判利益，以降低交易阻力为主要目标，审查结果将倾向于接受大部分条款，仅对重大法律风险提出建议。',
     },
   ];
 
-  const currentStance = stances.find((s) => s.key === selectedStance) || stances[0];
+  const currentStance = stances.find((s) => s.label === selectedStance) || stances[0];
 
   return (
     <div className="space-y-4">
@@ -38,10 +36,10 @@ const StanceSelector = ({ selectedStance, setSelectedStance }: StanceSelectorPro
         {stances.map((stance) => (
           <button
             type="button"
-            key={stance.key}
-            onClick={() => setSelectedStance(stance.key)}
+            key={stance.label}
+            onClick={() => setSelectedStance(stance.label)}
             className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
-              selectedStance === stance.key
+              selectedStance === stance.label
                 ? 'bg-white text-indigo-600 shadow-md' // 选中状态：白色背景，主色调文字，带阴影
                 : 'text-gray-600 hover:bg-gray-200' // 未选中状态：灰色背景，悬停变深
             }`}

@@ -1,9 +1,11 @@
 import PageContainer from '@/components/PageContainer';
 import { contractPre } from '@/services/ant-design-pro/api';
 import { useNavigate, useParams, useRequest } from '@umijs/max';
+import { Form } from 'antd';
 import React, { useState } from 'react';
-import StepOne, { FormData as StepOneFormData } from './components/StepOne';
+import StepOne, { FormData as StepOneFormData } from './components/StepOne/index';
 import StepTwo from './components/StepTwo';
+import { initialForm } from './dataSchema';
 
 const ContractStep: React.FC = () => {
   const [step, setStep] = useState(0);
@@ -12,26 +14,19 @@ const ContractStep: React.FC = () => {
   const { data } = useRequest(contractPre, {
     defaultParams: [params.id!],
   });
-  const [step1Form, setStep1Form] = useState<StepOneFormData>({});
 
-  function next(value: any) {
-    setStep1Form(value);
-    setStep(1);
-  }
-
-  function back() {
-    setStep(0);
-  }
+  const [form] = Form.useForm<StepOneFormData>();
 
   function finish(value: any) {
+    const formData = form.getFieldsValue(true);
     const reviewParams = {
       partyA: data.partyA,
       partyB: data.partyB,
       contractType: data.contractType,
-      ...step1Form,
+      ...formData,
       ...value,
       reviewStance:
-        step1Form?.reviewStance === '甲方' ? `甲方: ${data.partyA}` : `乙方: ${data.partyB}`,
+        formData?.reviewStance === '甲方' ? `甲方: ${data.partyA}` : `乙方: ${data.partyB}`,
     };
     localStorage.setItem('reviewParams', JSON.stringify(reviewParams));
     if (data.reviewResultNewId) {
@@ -42,11 +37,14 @@ const ContractStep: React.FC = () => {
   if (!data) {
     return null;
   }
-
   return (
     <PageContainer>
-      {step === 0 && <StepOne formData={step1Form} data={data} onOk={next}></StepOne>}
-      {step === 1 && <StepTwo onOk={finish} onBack={back} />}
+      <Form form={form} initialValues={initialForm} preserve={true}>
+        {step === 0 && (
+          <StepOne formData={form} data={{ ...data }} onOk={() => setStep(1)}></StepOne>
+        )}
+        {step === 1 && <StepTwo onOk={finish} onBack={() => setStep(0)} />}
+      </Form>
     </PageContainer>
   );
 };
