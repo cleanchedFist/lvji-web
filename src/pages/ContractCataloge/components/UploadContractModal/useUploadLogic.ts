@@ -35,7 +35,8 @@ const useUploadLogic = (catalogePageContext: any) => {
   const [shouldParse, setShouldParse] = useState<boolean>(false);
   const [requirement, setRequirement] = useState<string>('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [side, setSide] = useState<'party_a' | 'party_b'>('party_a');
+  const [side, setSide] = useState<'甲方' | '乙方'>('甲方');
+  console.log(333, side);
 
   const handleOpen = async (
     _features: UploadFeature[],
@@ -82,7 +83,7 @@ const useUploadLogic = (catalogePageContext: any) => {
       setFileList([]);
       setRequirement('');
       setShouldParse(false);
-      setSide('party_a'); // 重置立场为甲方
+      setSide('甲方'); // 重置立场为甲方
       setFeatures(_features);
       setNextVersion(latestVersion ? updateMajorVersion(latestVersion) : '1.0.0');
 
@@ -112,6 +113,7 @@ const useUploadLogic = (catalogePageContext: any) => {
 
     const result = await uploadFn(fileds, features);
     setUploading(false);
+    console.log(3333, 'uploading result', result);
 
     if (result === true) {
       setFileList([]);

@@ -33,12 +33,12 @@ interface FormattedResult {
 function formatFieldsValue(fields: FieldsValueType, features: UploadFeature[]): FormattedResult {
   // 建立 feature 与 结果 key 及 来源 key 的映射关系
   // [结果Key, 来源Key]
-  const map: Partial<Record<UploadFeature, [keyof FormattedResult, keyof FieldsValueType]>> = {
+  const map: Partial<Record<UploadFeature, [string, keyof FieldsValueType]>> = {
     model: ['model', 'model'],
     version: ['versionId', 'nextVersion'],
     lawyer: ['reviewerId', 'lawyerId'],
-    requirement: ['requirement', 'requirement'],
-    side: ['party', 'side'],
+    requirement: ['demand', 'requirement'],
+    side: ['chooseParty', 'side'],
   };
 
   return features.reduce((acc, feature) => {

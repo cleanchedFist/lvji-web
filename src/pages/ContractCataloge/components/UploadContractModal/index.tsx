@@ -118,8 +118,8 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
                   buttonStyle="solid"
                   className={radioStyles}
                 >
-                  <Radio.Button value="party_a">甲方</Radio.Button>
-                  <Radio.Button value="party_b">乙方</Radio.Button>
+                  <Radio.Button value="甲方">甲方</Radio.Button>
+                  <Radio.Button value="乙方">乙方</Radio.Button>
                 </Radio.Group>
               </ConfigProvider>
             </ConfigItem>

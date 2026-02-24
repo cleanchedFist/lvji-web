@@ -328,8 +328,8 @@ interface FieldsValueType {
   model?: string;
   versionId?: string;
   reviewerId?: number;
-  requirement?: string;
-  party?: string;
+  demand?: string;
+  chooseParty?: string;
   dirId?: number;
 }
 
@@ -338,7 +338,7 @@ interface FieldsValueType {
  */
 export async function uploadContract(
   file: UploadFile,
-  { model, versionId, reviewerId, requirement, party }: FieldsValueType,
+  { model, versionId, reviewerId, demand, chooseParty }: FieldsValueType,
 ) {
   const formData = new FormData();
   if (file && file.originFileObj) {
@@ -346,8 +346,8 @@ export async function uploadContract(
     versionId && formData.append('version', `${versionId}`);
     model && formData.append('model', `${model}`);
     reviewerId && formData.append('reviewerId', `${reviewerId}`);
-    requirement && formData.append('requirement', `${requirement}`);
-    party && formData.append('party', `${party}`);
+    demand && formData.append('demand', `${demand}`);
+    chooseParty && formData.append('chooseParty', `${chooseParty}`);
   }
   return request('/api/llm-service/upload/dir', {
     method: 'POST',
@@ -406,7 +406,7 @@ export async function getAssignedDirList(params: any, options?: { [key: string]:
  */
 export async function uploadVersion(
   file: UploadFile,
-  { dirId, model, versionId, reviewerId, requirement, party }: FieldsValueType,
+  { dirId, model, versionId, reviewerId, demand, chooseParty }: FieldsValueType,
 ) {
   const formData = new FormData();
   if (file && file.originFileObj) {
@@ -415,8 +415,8 @@ export async function uploadVersion(
     versionId && formData.append('version', `${versionId}`);
     model && formData.append('model', `${model}`);
     reviewerId && formData.append('reviewerId', `${reviewerId}`);
-    requirement !== void 0 && formData.append('requirement', `${requirement}`);
-    party && formData.append('party', `${party}`);
+    demand !== void 0 && formData.append('demand', `${demand}`);
+    chooseParty && formData.append('chooseParty', `${chooseParty}`);
   }
   return request('/api/llm-service/upload/file', {
     method: 'POST',
