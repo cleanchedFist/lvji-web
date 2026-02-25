@@ -22,7 +22,7 @@ declare namespace API {
     address?: string;
     phone?: string;
     role: string;
-    type?: string;
+    type?: number;
   };
 
   type LoginResult = {

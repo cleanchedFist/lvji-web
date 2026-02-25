@@ -22,7 +22,7 @@ type StepOneProps = {
     partyA: string;
     partyB: string;
     contractType: string;
-    isAssigned?: boolean;
+    isAssigned?: number;
   };
   onOk: () => void;
 };
@@ -106,7 +106,7 @@ const StepOne = (props: StepOneProps) => {
 
       {/* 3. 设置审查模型 */}
 
-      {data.isAssigned && (
+      {data.isAssigned === 1 && (
         <Form.Item name="model" noStyle>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
             <h2 className="text-lg font-semibold text-gray-800 flex items-center mb-2">

@@ -30,7 +30,7 @@ export async function getInitialState(): Promise<{
         skipErrorHandler: true,
       });
       return {
-        role: msg?.data.type !== '律师' ? 'user' : 'lawyer',
+        role: msg?.data.type === 0 ? 'user' : 'lawyer',
         name: msg.data.username,
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       };
