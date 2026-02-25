@@ -36,7 +36,6 @@ const useUploadLogic = (catalogePageContext: any) => {
   const [requirement, setRequirement] = useState<string>('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [side, setSide] = useState<'甲方' | '乙方'>('甲方');
-  console.log(333, side);
 
   const handleOpen = async (
     _features: UploadFeature[],
@@ -113,7 +112,6 @@ const useUploadLogic = (catalogePageContext: any) => {
 
     const result = await uploadFn(fileds, features);
     setUploading(false);
-    console.log(3333, 'uploading result', result);
 
     if (result === true) {
       setFileList([]);
