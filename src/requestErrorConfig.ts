@@ -88,6 +88,7 @@ export const errorConfig: RequestConfig = {
   requestInterceptors: [
     (config: RequestOptions) => {
       const token = window.localStorage.getItem('token');
+      // const url = config.url
       if (token) {
         config.headers = {
           Authorization: token,
@@ -95,6 +96,8 @@ export const errorConfig: RequestConfig = {
           ...(config.headers || {}),
         };
       }
+
+      // const _url = process.env.API_URL && url && url.startsWith('/api') ? process.env.API_URL + url : url
       return { ...config };
     },
   ],
