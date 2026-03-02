@@ -19,8 +19,12 @@ const UseWebsockFetch = (id: string) => {
       return;
     }
 
+    const protocol = window.location.protocol;
+
     const ws = new WebSocket(
-      `ws://175.27.214.13:11086/api/llm-service/review-contract/${id}?Authorization=${token.slice(
+      `${
+        protocol === 'https' ? 'wss' : 'ws'
+      }://175.27.214.13:11086/api/llm-service/review-contract/${id}?Authorization=${token.slice(
         7,
       )}`,
     );
