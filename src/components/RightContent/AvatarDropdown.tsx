@@ -138,7 +138,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
       label: '退出登录',
     },
   ];
-  if (currentUser.role === 'lawyer') {
+  if (currentUser.type === 2) {
     menuItems.push({
       key: 'invite',
       icon: <NodeIndexOutlined />,
@@ -156,7 +156,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
     >
       <div>
         {children}
-        {currentUser.role === 'lawyer' && (
+        {currentUser.type === 2 && (
           <InvitationModal visible={invitationVisible} onCancel={onModalCancel}></InvitationModal>
         )}
       </div>

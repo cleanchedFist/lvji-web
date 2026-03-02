@@ -31,6 +31,7 @@ export async function getInitialState(): Promise<{
       });
       return {
         role: msg?.data.type === 0 ? 'user' : 'lawyer',
+        type: msg?.data.type,
         name: msg.data.username,
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       };
