@@ -1,4 +1,4 @@
-import { downloadClientFile, downloadReview, getFileBlob } from '@/services/ant-design-pro/api';
+import { downloadClientFile, downloadReview } from '@/services/ant-design-pro/api';
 import { message } from 'antd';
 export const contractDownload = async (props: API.ContractDownloadProps) => {
   const hide = message.loading('正在导出');
@@ -39,9 +39,9 @@ export const fileDownload = (data: BlobPart, name: string) => {
 export const clientFileDownload = async (props: { fileId: number; contractName: string }) => {
   const hide = message.loading('正在导出');
   try {
-    const { data: url } = await downloadClientFile(props.fileId);
-    const _url = url.replace('https://yema-1252530263.cos.ap-chengdu.myqcloud.com', '/cos-proxy');
-    const data = await getFileBlob(_url);
+    const data = await downloadClientFile(props.fileId);
+    // const _url = url.replace('https://yema-1252530263.cos.ap-chengdu.myqcloud.com', '/cos-proxy');
+    // const data = await getFileBlob(_url);
     const result = fileDownload(data, props.contractName);
     hide();
     return result;

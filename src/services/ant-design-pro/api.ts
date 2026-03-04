@@ -511,6 +511,7 @@ export function setReviewDown(fileId: number) {
 export function downloadClientFile(fileId: number) {
   return request('/api/llm-service/file/path', {
     method: 'GET',
+    responseType: 'blob',
     params: {
       fileId,
     },

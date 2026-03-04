@@ -35,7 +35,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
 
   const handleDownload = (data: API.CatalogeCardProps) => {
     const contractName = data.name;
-    if (listType === Contract_Type.ClientUpload) {
+    if (listType === Contract_Type.ClientUpload || !data.reviewId) {
       clientFileDownload({ contractName, fileId: data.latestFileId });
     } else {
       contractDownload({ contractName, reviewId: data.reviewId });

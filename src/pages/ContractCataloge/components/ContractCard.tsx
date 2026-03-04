@@ -33,7 +33,7 @@ const ContractCard = ({
 
   const handleDownloadContract = (data: API.ContractVersionItem) => {
     const contractName = data.name;
-    if (listType === Contract_Type.ClientUpload) {
+    if (listType === Contract_Type.ClientUpload || !data.reviewId) {
       clientFileDownload({ fileId: data.id, contractName });
     } else {
       contractDownload({ contractName, reviewId: data.reviewId });
