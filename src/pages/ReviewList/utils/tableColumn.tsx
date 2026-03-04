@@ -1,4 +1,4 @@
-import formatTime from '@/pages/ContractCataloge/utils/formatTime';
+import { formatDuration, formatTime } from '@/pages/ContractCataloge/utils/formatTime';
 import { removeReview } from '@/services/ant-design-pro/api';
 import { contractDownload } from '@/utils/contractHandle';
 import { deleteModalConfig } from '@/utils/modalConfig';
@@ -81,6 +81,7 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
   },
   {
     title: '文件名称',
+    width: '10%',
     dataIndex: 'fileName',
     fieldProps: {
       placeholder: '请输入文件名称查询...',
@@ -96,11 +97,13 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
   },
   {
     title: '模型',
+    width: '10%',
     dataIndex: 'model',
     search: false,
   },
   {
     title: '分析主体',
+    width: '12.5%',
     dataIndex: 'contractParty',
     search: false,
   },
@@ -134,10 +137,24 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
     title: '审查时间',
     dataIndex: 'createTimeStamp',
     valueType: 'dateTime',
+    width: '14%',
     search: false,
     render: (dom: any, entity) => {
       return (
         <div className="text-slate-400 font-mono text-xs">{formatTime(entity.createTimeStamp)}</div>
+      );
+    },
+  },
+  {
+    title: '用时',
+    dataIndex: 'llmCostTime',
+    width: '10%',
+    search: false,
+    render: (dom: any, entity) => {
+      return (
+        <div className="text-slate-400 font-mono text-xs">
+          {entity.llmCostTime ? formatDuration(entity.llmCostTime) : '-'}
+        </div>
       );
     },
   },

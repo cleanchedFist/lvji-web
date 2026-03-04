@@ -7,7 +7,7 @@ import { message, Modal } from 'antd';
 import { FileText } from 'lucide-react';
 import { useContext } from 'react';
 import { CatalogePageContext } from '../utils/context';
-import formatTime from '../utils/formatTime';
+import { formatTime } from '../utils/formatTime';
 import { reviewStageText, reviewStageTheme } from '../utils/reviewStageText';
 import CatalogeCardBtn from './ContractCardBtn';
 

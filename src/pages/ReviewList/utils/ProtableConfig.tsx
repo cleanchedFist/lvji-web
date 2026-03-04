@@ -22,6 +22,7 @@ const ProtableConfig = {
   searchFormRender: (props: any, defaultDom: JSX.Element) => {
     return <ProtableSearchForm defaultDom={defaultDom} />;
   },
+  tableLayout: 'fixed',
 };
 
 export default ProtableConfig;

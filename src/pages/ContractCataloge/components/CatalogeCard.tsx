@@ -9,7 +9,7 @@ import { Modal, message } from 'antd';
 import { Download, Trash2 } from 'lucide-react';
 import { useContext, useMemo } from 'react';
 import { ActionContext, CatalogePageContext } from '../utils/context';
-import formatTime from '../utils/formatTime';
+import { formatTime } from '../utils/formatTime';
 import { reviewStageText, reviewStageTheme } from '../utils/reviewStageText';
 import CatalogeCardBtn from './CatalogeCardBtn';
 /**
@@ -151,7 +151,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
             {/* 设置审查完成 */}
             {listType === Contract_Type.ClientAssigned && (
               <NormalBtn
-                disabled={contract.stage === 2}
+                disabled={contract.stage === 3}
                 onClick={() => handleReviewDone(contract.latestFileId)}
               >
                 设置审查完成

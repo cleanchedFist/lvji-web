@@ -5,6 +5,8 @@ export const reviewStageText = (stage?: number) => {
     case 1:
       return '审查中';
     case 2:
+      return '大模型审查完成';
+    case 3:
       return '审查完成';
     default:
       return '';
@@ -18,6 +20,8 @@ export const reviewStageTheme = (stage?: number) => {
     case 1:
       return 'bg-indigo-50 text-indigo-600';
     case 2:
+      return 'bg-indigo-50 text-indigo-600';
+    case 3:
       return 'bg-emerald-50 text-emerald-600';
     default:
       return '';

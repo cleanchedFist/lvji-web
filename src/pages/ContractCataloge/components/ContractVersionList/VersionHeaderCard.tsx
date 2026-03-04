@@ -1,5 +1,5 @@
 import { Clock4, FileText, Target, User } from 'lucide-react';
-import formatTime from '../../utils/formatTime';
+import { formatTime } from '../../utils/formatTime';
 
 type VersionHeaderCardProps = {
   data: API.ContractListItem;

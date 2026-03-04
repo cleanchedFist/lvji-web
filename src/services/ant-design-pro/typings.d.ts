@@ -159,6 +159,7 @@ declare namespace API {
     finish_time: string;
     contractName: string;
     createTimeStamp: number;
+    llmCostTime: number;
     review_score: Array<{
       score: number;
       type: string;
