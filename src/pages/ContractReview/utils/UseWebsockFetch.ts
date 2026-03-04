@@ -20,13 +20,11 @@ const UseWebsockFetch = (id: string) => {
     }
 
     const protocol = window.location.protocol;
-
+    const hostName = window.location.hostname;
     const ws = new WebSocket(
       `${
-        protocol === 'https' ? 'wss' : 'ws'
-      }://175.27.214.13:11086/api/llm-service/review-contract/${id}?Authorization=${token.slice(
-        7,
-      )}`,
+        protocol === 'https:' ? 'wss' : 'ws'
+      }://${hostName}/api/llm-service/review-contract/${id}?Authorization=${token.slice(7)}`,
     );
     ws.onopen = function () {
       ws.send(wsParams);
