@@ -92,6 +92,7 @@
     "@umijs/lint": "^4.1.1",
     "@umijs/max": "^4.1.1",
     "cross-env": "^7.0.3",
+    "deploy": "npm run build && gh-pages -d dist",
     "eslint": "^8.56.0",
     "express": "^4.18.2",
     "gh-pages": "^3.2.3",
