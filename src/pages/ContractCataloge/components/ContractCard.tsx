@@ -122,7 +122,7 @@ const ContractCard = ({
         {listType !== Contract_Type.ClientUpload && (
           <CatalogeCardBtn
             type="primary"
-            disabled={contract.stage === 2}
+            disabled={contract.stage === 3}
             onClick={() => {
               handleReviewContract(contract.id);
             }}
@@ -133,7 +133,7 @@ const ContractCard = ({
         {listType === Contract_Type.ClientUpload && (
           <CatalogeCardBtn
             type="primary"
-            disabled={contract.stage !== 2}
+            disabled={contract.stage !== 3}
             onClick={() => {
               downloadReviewVersion(contract);
             }}

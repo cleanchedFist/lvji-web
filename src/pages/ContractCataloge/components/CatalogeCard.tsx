@@ -188,14 +188,14 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
         {listType === Contract_Type.ClientUpload && (
           <CatalogeCardBtn
             onClick={() => downloadReviewVersion(contract)}
-            disabled={contract.stage !== 2}
+            disabled={contract.stage !== 3}
           >
             <Guard />
             下载审查版本
           </CatalogeCardBtn>
         )}
         {listType !== Contract_Type.ClientUpload && (
-          <CatalogeCardBtn disabled={contract.stage === 2} onClick={() => handleReview(contract)}>
+          <CatalogeCardBtn disabled={contract.stage === 3} onClick={() => handleReview(contract)}>
             <Guard />
             智能审查
           </CatalogeCardBtn>
