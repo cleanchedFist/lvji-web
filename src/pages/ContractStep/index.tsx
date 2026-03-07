@@ -26,7 +26,9 @@ const ContractStep: React.FC = () => {
       ...formData,
       ...value,
       reviewStance:
-        formData?.reviewStance === '甲方' ? `甲方: ${data.partyA}` : `乙方: ${data.partyB}`,
+        formData?.reviewStance === '甲方'
+          ? `甲方: ${data.partyA || ''}`
+          : `乙方: ${data.partyB || ''}`,
     };
     localStorage.setItem('reviewParams', JSON.stringify(reviewParams));
     if (data.reviewResultNewId) {

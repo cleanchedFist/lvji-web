@@ -10,7 +10,7 @@ export type FormData = {
   // key值
   reviewStance: string; // step1
   scale: string; // step1
-  strategyId?: number; // step1
+  userReviewPoint?: number; // step1
   reviewer?: string;
   model?: string;
 };
@@ -36,7 +36,7 @@ const StepOne = (props: StepOneProps) => {
   const scale = Form.useWatch('scale', formData);
   const model = Form.useWatch('model', formData);
   const reviewer = Form.useWatch('reviewer', formData);
-  const strategyId = Form.useWatch('strategyId', formData);
+  const userReviewPoint = Form.useWatch('userReviewPoint', formData);
 
   const stanceCardOptions = useMemo(
     () => [
@@ -143,7 +143,7 @@ const StepOne = (props: StepOneProps) => {
       </Form.Item>
 
       {/* 5. 设置审阅重点  */}
-      <Form.Item name="strategyId" noStyle>
+      <Form.Item name="userReviewPoint" noStyle>
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold text-gray-800 flex items-center mb-2">
             <span className="text-indigo-600 text-xl mr-2">•</span> 设置审阅重点
@@ -153,8 +153,8 @@ const StepOne = (props: StepOneProps) => {
             rootClassName="hover:border-indigo-600 focus:border-indigo-600"
             placeholder="请输入审阅重点..."
             rows={3}
-            value={strategyId || ''}
-            onChange={(e) => formData.setFieldValue('strategyId', e.target.value)}
+            value={userReviewPoint || ''}
+            onChange={(e) => formData.setFieldValue('userReviewPoint', e.target.value)}
           />
         </div>
       </Form.Item>
