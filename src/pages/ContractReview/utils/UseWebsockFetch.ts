@@ -21,10 +21,10 @@ const UseWebsockFetch = (id: string) => {
 
     const protocol = window.location.protocol;
     const hostName = window.location.hostname;
+    // 开发环境url是固定的
+    const wsUrl = process.env.WS_URL || `${protocol === 'https:' ? 'wss' : 'ws'}://${hostName}`;
     const ws = new WebSocket(
-      `${
-        protocol === 'https:' ? 'wss' : 'ws'
-      }://${hostName}/api/llm-service/review-contract/${id}?Authorization=${token.slice(7)}`,
+      `${wsUrl}/api/llm-service/review-contract/${id}?Authorization=${token.slice(7)}`,
     );
     ws.onopen = function () {
       ws.send(wsParams);
