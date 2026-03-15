@@ -38,13 +38,13 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
     if (listType === Contract_Type.ClientUpload || !data.reviewId) {
       clientFileDownload({ contractName, fileId: data.latestFileId });
     } else {
-      contractDownload({ contractName, reviewId: data.reviewId });
+      contractDownload({ contractName, fileId: data.latestFileId, reviewId: data.reviewId });
     }
   };
 
   const downloadReviewVersion = (data: API.CatalogeCardProps) => {
     const contractName = data.name;
-    contractDownload({ contractName, reviewId: data.reviewId });
+    contractDownload({ contractName, fileId: data.latestFileId, reviewId: data.reviewId });
   };
 
   const handleDelete = (id: number) => {

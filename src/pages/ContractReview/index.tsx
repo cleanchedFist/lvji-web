@@ -57,7 +57,7 @@ const ContractView: React.FC = () => {
               </Col>
               <Col span={1}>
                 {/* 预留右侧操作栏 */}
-                <SiderMenu onChangeMode={(v: number) => setMode(v)} />
+                <SiderMenu fileId={fileId} onChangeMode={(v: number) => setMode(v)} />
               </Col>
             </Row>
           </WebOfficeProvider>

@@ -32,17 +32,17 @@ const ContractCard = ({
   };
 
   const handleDownloadContract = (data: API.ContractVersionItem) => {
-    const contractName = data.name;
+    const contractName = data.title;
     if (listType === Contract_Type.ClientUpload || !data.reviewId) {
       clientFileDownload({ fileId: data.id, contractName });
     } else {
-      contractDownload({ contractName, reviewId: data.reviewId });
+      contractDownload({ contractName, fileId: data.id, reviewId: data.reviewId });
     }
   };
 
   const downloadReviewVersion = (data: API.ContractVersionItem) => {
-    const contractName = data.name;
-    contractDownload({ contractName, reviewId: data.reviewId });
+    const contractName = data.title;
+    contractDownload({ contractName, fileId: data.id, reviewId: data.reviewId });
   };
 
   const handleDeleteContract = (id: number) => {

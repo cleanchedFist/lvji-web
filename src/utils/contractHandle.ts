@@ -1,11 +1,17 @@
-import { downloadClientFile, downloadReview } from '@/services/ant-design-pro/api';
+import { downloadClientFile, downloadReview, getFileInfo } from '@/services/ant-design-pro/api';
 import { message } from 'antd';
-export const contractDownload = async (props: API.ContractDownloadProps) => {
+
+export const contractDownload = async (props: {
+  fileId: number;
+  contractName: string;
+  reviewId: string | number;
+}) => {
   const hide = message.loading('正在导出');
   try {
     if (!props) return true;
+    const { data: fileInfo } = await getFileInfo(props.fileId);
     const data = await downloadReview(props.reviewId);
-    const result = fileDownload(data, props.contractName);
+    const result = blobFileDownload(data, props.contractName, fileInfo?.type);
     hide();
     return result;
   } catch (e) {
@@ -14,14 +20,14 @@ export const contractDownload = async (props: API.ContractDownloadProps) => {
   }
 };
 
-export const fileDownload = (data: BlobPart, name: string) => {
+const blobFileDownload = (data: BlobPart, name: string, type: string) => {
   try {
     const blob = new Blob([data], { type: 'application/octet-stream' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
     link.id = '22342eafhajkfnasjfd';
-    link.download = `${name}.docx`;
+    link.download = `${name}.${type || 'docx'}`;
     document.body.appendChild(link);
     link.click();
 
@@ -39,10 +45,11 @@ export const fileDownload = (data: BlobPart, name: string) => {
 export const clientFileDownload = async (props: { fileId: number; contractName: string }) => {
   const hide = message.loading('正在导出');
   try {
+    const { data: fileInfo } = await getFileInfo(props.fileId);
     const data = await downloadClientFile(props.fileId);
     // const _url = url.replace('https://yema-1252530263.cos.ap-chengdu.myqcloud.com', '/cos-proxy');
     // const data = await getFileBlob(_url);
-    const result = fileDownload(data, props.contractName);
+    const result = blobFileDownload(data, props.contractName, fileInfo?.type);
     hide();
     return result;
   } catch (e) {

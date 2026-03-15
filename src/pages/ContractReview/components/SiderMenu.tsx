@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 
 type SiderMenuProps = {
   onChangeMode: (v: number) => void;
+  fileId: number;
 };
 
 const Btn = ({
@@ -40,7 +41,7 @@ const Btn = ({
   );
 };
 
-const SiderMenu = ({ onChangeMode }: SiderMenuProps) => {
+const SiderMenu = ({ onChangeMode, fileId }: SiderMenuProps) => {
   const location = useLocation();
   const params = useParams();
   const [mode, setMode] = useState(0);
@@ -50,7 +51,7 @@ const SiderMenu = ({ onChangeMode }: SiderMenuProps) => {
     const contractData = location.state as { name: string };
     const contractName = fileName || contractData?.name || '合同文件';
     if (params.id) {
-      contractDownload({ contractName, reviewId: params.id });
+      contractDownload({ contractName, fileId, reviewId: params.id });
     }
   };
 

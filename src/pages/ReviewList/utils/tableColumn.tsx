@@ -37,7 +37,7 @@ function handleDel(row: API.AnalysisListItem, action: any) {
 }
 
 function handleExport(row: API.AnalysisListItem) {
-  contractDownload({ contractName: row.contractName, reviewId: row.reviewId });
+  contractDownload({ contractName: row.contractName, fileId: row.fileId, reviewId: row.reviewId });
 }
 
 function handleView(row: API.AnalysisListItem) {
