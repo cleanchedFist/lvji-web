@@ -51,7 +51,9 @@ const ContractView: React.FC = () => {
                 <div id="wps-container" className="border bg-white h-[calc(100vh-102px)]"></div>
               </Col>
               <Col span={8} className="h-[calc(100vh-102px)] flex overflow-hidden">
-                {!isLoading && mode === 0 && <ReviewPanel data={reviewChunkRespDTOList} />}
+                {!isLoading && mode === 0 && (
+                  <ReviewPanel fileType={sdkConfig.officeType} data={reviewChunkRespDTOList} />
+                )}
                 {!isLoading && mode === 1 && <AnalysisPanel data={reviewResultNewRespDTO} />}
                 {isLoading && <ReviewLoading taskQueue={taskQueue} />}
               </Col>

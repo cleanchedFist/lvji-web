@@ -8,6 +8,7 @@ export type ReviewData = BaseReviewData & {
 
 type ReviewPanelProps = {
   data: ReviewData[];
+  fileType: string;
 };
 
 const formReviewPanelData = (list: ReviewData[]) => {
@@ -45,7 +46,7 @@ const filterFn = (type: string) => {
   }
 };
 
-const ReviewPanel = ({ data }: ReviewPanelProps) => {
+const ReviewPanel = ({ fileType, data }: ReviewPanelProps) => {
   const [activeTab, setActiveTab] = useState('全部');
   const reviewItemsData = useMemo(() => {
     if (activeTab === '全部') {
@@ -65,7 +66,7 @@ const ReviewPanel = ({ data }: ReviewPanelProps) => {
         {' '}
         {/* 负边距和填充用于自定义滚动条区域 */}
         {reviewItemsData.map((item, index) => (
-          <ReviewCard key={item.id} index={index} data={item} />
+          <ReviewCard allowRevise={fileType !== 'f'} key={item.id} index={index} data={item} />
         ))}
         <div className="text-center text-gray-400 text-sm py-4">--- 审查项已加载完毕 ---</div>
       </div>

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 type SiderMenuProps = {
   onChangeMode: (v: number) => void;
-  fileId: number;
+  fileId?: number;
 };
 
 const Btn = ({
@@ -50,7 +50,7 @@ const SiderMenu = ({ onChangeMode, fileId }: SiderMenuProps) => {
   const handleExport = () => {
     const contractData = location.state as { name: string };
     const contractName = fileName || contractData?.name || '合同文件';
-    if (params.id) {
+    if (params.id && fileId) {
       contractDownload({ contractName, fileId, reviewId: params.id });
     }
   };

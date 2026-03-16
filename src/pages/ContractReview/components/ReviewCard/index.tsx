@@ -32,9 +32,11 @@ type ReviewCardProps = BaseReviewData & {
 };
 
 const ReviewCard = ({
+  allowRevise,
   index,
   data = {} as ReviewCardProps,
 }: {
+  allowRevise: boolean;
   index: number;
   data: ReviewCardProps;
 }) => {
@@ -160,14 +162,16 @@ const ReviewCard = ({
                   修改
                 </button>
 
-                <button
-                  type="button"
-                  onClick={handleRevise}
-                  className="flex items-center text-xs bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-1 px-3 rounded-full shadow-md shadow-indigo-300 transition-colors"
-                >
-                  <Check className="w-3 h-3 mr-1" />
-                  {revised ? '撤销修订' : '接受修订'}
-                </button>
+                {allowRevise && (
+                  <button
+                    type="button"
+                    onClick={handleRevise}
+                    className="flex items-center text-xs bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-1 px-3 rounded-full shadow-md shadow-indigo-300 transition-colors"
+                  >
+                    <Check className="w-3 h-3 mr-1" />
+                    {revised ? '撤销修订' : '接受修订'}
+                  </button>
+                )}
               </div>
             </div>
           </div>
