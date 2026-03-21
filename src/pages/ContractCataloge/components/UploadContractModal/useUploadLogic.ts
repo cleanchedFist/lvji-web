@@ -1,6 +1,8 @@
-import { getLawyerList, getSupportModels } from '@/services/ant-design-pro/api';
+import { getLawyerList, getSupportModels, parseFileOrder } from '@/services/ant-design-pro/api';
+import useBalance from '@/utils/payment/useBalance';
+import { useModel } from '@umijs/max';
 import { UploadFile, message } from 'antd';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { UploadFeature, handleUploadDir, handleUploadVersion, updateMajorVersion } from './utils';
 
 enum UploadType {
@@ -36,6 +38,14 @@ const useUploadLogic = (catalogePageContext: any) => {
   const [requirement, setRequirement] = useState<string>('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [side, setSide] = useState<'甲方' | '乙方'>('甲方');
+
+  // 用户确认订单信息
+  const { initialState } = useModel('@@initialState');
+  const [step, setStep] = useState(1); // 1 or 2
+  const [contractWordCount, setContractWordCount] = useState(0);
+  const [orderFileName, setOrderFileName] = useState('');
+  const [orderPrice, setOrderPrice] = useState('');
+  const { updateBalance } = useBalance();
 
   const handleOpen = async (
     _features: UploadFeature[],
@@ -109,7 +119,6 @@ const useUploadLogic = (catalogePageContext: any) => {
       dirId: uploadType === UploadType.version ? dirId : undefined,
     };
     const uploadFn = uploadType === UploadType.dir ? handleUploadDir : handleUploadVersion;
-
     const result = await uploadFn(fileds, features);
     setUploading(false);
 
@@ -121,6 +130,81 @@ const useUploadLogic = (catalogePageContext: any) => {
   };
 
   const hasFeature = (feature: UploadFeature) => features.includes(feature);
+  const reset = () => {
+    setUploading(false);
+  };
+
+  const handleClose = () => {
+    setVisible(false);
+    reset();
+  };
+
+  const queryOrderInfo = async () => {
+    try {
+      if (fileList.length === 0) {
+        message.warning('请选择要上传的文件');
+        throw '未选择文件';
+      }
+      // 同时发起两个请求，提高效率
+
+      const [fileOrderRes] = await Promise.all([parseFileOrder(fileList[0]), updateBalance()]);
+
+      // 合并结果
+      const combinedResult = {
+        orderFileName: fileList[0].name,
+        contractWordCount: fileOrderRes?.data?.contractWordCount || 0,
+        orderPrice: fileOrderRes?.data?.estimatedDeductionAmount || 0,
+      };
+
+      return combinedResult;
+    } catch (error) {
+      message.warning('请求订单信息失败，请重试');
+      throw error;
+    }
+  };
+
+  const btnHandler = useMemo(() => {
+    if (initialState?.isUserRole && step === 1) {
+      // 点击确认信息
+      return {
+        okText: '确认信息',
+        onOk: async () => {
+          setUploading(true);
+
+          // 请求余额
+          // 请求文件扣费信息
+          queryOrderInfo()
+            .then((res) => {
+              setContractWordCount(res.contractWordCount);
+              setOrderFileName(res.orderFileName);
+              setOrderPrice(res.orderPrice);
+              setStep(2);
+            })
+            .finally(() => {
+              setUploading(false);
+            });
+        },
+        cancelText: '取消',
+        onCancel: handleClose,
+      };
+    } else if (initialState?.isUserRole && step === 2) {
+      // 用户上传文件
+      return {
+        okText: '确认并提交',
+        onOk: handleUpload,
+        cancelText: '返回修改',
+        onCancel: () => setStep(1),
+      };
+    } else {
+      // 律师上传文件
+      return {
+        okText: '确定',
+        onOk: handleUpload,
+        cancelText: '取消',
+        onCancel: handleClose,
+      };
+    }
+  }, [catalogePageContext.listType, step, fileList]);
 
   return {
     state: {
@@ -136,6 +220,10 @@ const useUploadLogic = (catalogePageContext: any) => {
       side,
       lawyerOptions,
       modelOptions,
+      step,
+      contractWordCount,
+      orderFileName,
+      orderPrice,
     },
     actions: {
       setVisible,
@@ -148,7 +236,9 @@ const useUploadLogic = (catalogePageContext: any) => {
       handleOpen,
       handleUpload,
       hasFeature,
+      reset,
     },
+    btnHandler,
   };
 };
 

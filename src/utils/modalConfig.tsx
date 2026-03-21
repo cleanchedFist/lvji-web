@@ -16,7 +16,11 @@ export const ModalButtonConfig = {
   },
   okButtonProps: {
     className:
-      'px-6 py-5 mt-6 text-sm font-semibold rounded-lg text-white shadow-md bg-indigo-600 hover:!bg-indigo-700 transition duration-150 transform hover:scale-[1.01]',
+      'px-6 py-5 mt-6 text-sm font-semibold rounded-lg text-white shadow-md bg-indigo-600 hover:!bg-indigo-700 transition duration-150 transform hover:scale-[1.01] disabled:hover:!bg-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed',
+  },
+  okButtonDisabledProps: {
+    className:
+      'px-6 py-5 mt-6 text-sm font-semibold rounded-lg text-white shadow-md bg-indigo-600 transition duration-150 transform hover:scale-[1.01] hover:!bg-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed',
   },
 };
 export const deleteModalConfig = {

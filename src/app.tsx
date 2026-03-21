@@ -23,6 +23,7 @@ export async function getInitialState(): Promise<{
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
   isUserRole?: boolean;
+  balance?: number;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -49,6 +50,7 @@ export async function getInitialState(): Promise<{
       currentUser,
       settings: defaultSettings as Partial<LayoutSettings>,
       isUserRole: currentUser?.role === 'user',
+      balance: 0, // updateBalance手动更新
     };
   }
   return {

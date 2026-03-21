@@ -1,8 +1,8 @@
 import { AvatarDropdown, AvatarName } from '@/components';
-import { queryBalance } from '@/services/ant-design-pro/api';
-import { useModel, useRequest } from '@umijs/max';
+import useBalance from '@/utils/payment/useBalance';
+import { useModel } from '@umijs/max';
 import { PlusCircle, Wallet } from 'lucide-react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import PayModal, { PayModalHandle } from '../PayModal';
 
 const Avatar = () => {
@@ -50,16 +50,20 @@ const Balance = ({ value }: { value: number }) => {
         <PlusCircle size={16} />
         <span>充值</span>
       </button>
-      <PayModal baseAmount={21.95} ref={payModalRef} />
+      <PayModal ref={payModalRef} />
     </div>
   );
 };
 // 显示余额和充值入口
 const UserInfo = () => {
-  const { data: balanceInfo } = useRequest(queryBalance);
+  const { initialState } = useModel('@@initialState');
+  const { updateBalance } = useBalance();
+  useEffect(() => {
+    updateBalance();
+  }, []);
   return (
     <div className="flex items-center space-x-4">
-      <Balance value={balanceInfo?.balance || 0} />
+      <Balance value={initialState?.balance || 0} />
       <div className="flex cursor-pointer">
         <Avatar></Avatar>
       </div>

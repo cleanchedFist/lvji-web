@@ -21,14 +21,17 @@ const PayModal = forwardRef(({ baseAmount }: PayModalProps, ref) => {
   const quickAmounts = useMemo(() => {
     if (baseAmount && !isNaN(baseAmount)) {
       const result = [baseAmount];
+      const count = 6;
       // 1. 第二项：向上取整到最接近的 10 的倍数
       // Math.ceil(12.5 / 10) * 10 = 20
-      const nextTen = Math.ceil((baseAmount + 0.1) / 10) * 10;
-      if (nextTen > baseAmount) {
-        result.push(nextTen);
+      let nextFifty = Math.floor(baseAmount / 50) * 50 + 50;
+      // 填充剩余的槽位
+      while (result.length < count) {
+        result.push(nextFifty);
+        nextFifty += 50;
       }
 
-      return [baseAmount, nextTen * 2, nextTen * 5, nextTen * 10, nextTen * 20, nextTen * 50];
+      return result;
     }
     // 默认情况
     return [10, 50, 100, 200, 500, 1000];
@@ -155,12 +158,14 @@ const PayModal = forwardRef(({ baseAmount }: PayModalProps, ref) => {
                 </p>
               )}
             </div>
-            <PayOrderBox
-              ref={payOrderBoxRef}
-              baseAmount={baseAmount}
-              orderAmount={selectedAmount || +customAmount}
-              paymentMethod={paymentMethod}
-            />
+            {isModalOpen && (
+              <PayOrderBox
+                ref={payOrderBoxRef}
+                baseAmount={baseAmount}
+                orderAmount={selectedAmount || +customAmount}
+                paymentMethod={paymentMethod}
+              />
+            )}
           </div>
         </div>
       </div>

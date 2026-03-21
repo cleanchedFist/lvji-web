@@ -559,3 +559,15 @@ export function queryBalance() {
     method: 'GET',
   });
 }
+
+export function parseFileOrder(file: UploadFile) {
+  const formData = new FormData();
+  if (file && file.originFileObj) {
+    formData.append('docxFile', file.originFileObj);
+  }
+  return request('/api/llm-service/upload/preview', {
+    method: 'POST',
+    data: formData,
+    requestType: 'form',
+  });
+}
