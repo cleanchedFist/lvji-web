@@ -524,3 +524,38 @@ export function getFileBlob(url: string) {
     responseType: 'blob',
   });
 }
+
+export function getFileInfo(fileId: number) {
+  return request('/api/llm-service/file/info', {
+    method: 'GET',
+    params: {
+      fileId,
+    },
+  });
+}
+
+// 充值接口
+export function recharge({ amount, paymentMethod }: { amount: number; paymentMethod: string }) {
+  return request('/api/llm-service/payment/wallet/recharge/order', {
+    method: 'POST',
+    data: {
+      amount,
+      paymentMethod,
+      clientType: 'WEB',
+      subject: '钱包充值',
+    },
+  });
+}
+
+// 支付回调， 获取支付状态
+export function getPayStatus(orderNo: string) {
+  return request(`/api/llm-service/payment/query/${orderNo}`, {
+    method: 'GET',
+  });
+}
+
+export function queryBalance() {
+  return request('/api/llm-service//payment/wallet/balance', {
+    method: 'GET',
+  });
+}

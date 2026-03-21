@@ -252,4 +252,34 @@ declare namespace API {
     id: number;
     name: string;
   };
+
+  type PaymentInfo = {
+    codeUrl: string;
+    amount: number;
+    orderNo: string;
+    clientType: string;
+    bizType: string;
+    mchId: string;
+    subject: string;
+    appId: string;
+    notifyUrl: string;
+    templateMode: boolean;
+    prepayMethod: 'NATIVE' | string; // 如果确定是微信支付，通常是 NATIVE
+  };
+
+  type RechargeData = {
+    orderId: number;
+    orderNo: string;
+    amount: number;
+    contractLength: null | number;
+    paymentMethod: 'WECHAT' | 'ALIPAY' | string;
+    paymentParams: PaymentParams;
+    status: 'PENDING' | 'SUCCESS' | 'FAILED' | string;
+    createTime: number;
+    expireTime: number;
+  };
+
+  type RechargeResponse = {
+    data: RechargeData;
+  };
 }
