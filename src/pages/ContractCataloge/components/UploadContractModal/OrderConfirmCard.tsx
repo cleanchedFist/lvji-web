@@ -11,9 +11,9 @@ type OrderConfirmCardProps = {
 const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardProps) => {
   const payModalRef = useRef<PayModalHandle>(null);
   const { initialState } = useModel('@@initialState');
-  const { balance = 0 } = initialState || {};
-  const isBalanceEnough = +balance >= +totalPrice;
-  const remainingBalance = +balance - +totalPrice;
+  const { balance } = initialState || {};
+  const isBalanceEnough = +(balance?.availableBalance || '') >= +totalPrice;
+  const remainingBalance = +(balance?.totalBalance || '') - +totalPrice;
   const handleRecharge = () => payModalRef.current?.show();
   return (
     <>
@@ -55,7 +55,7 @@ const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardP
                 isBalanceEnough ? 'text-gray-700' : 'text-red-600'
               }`}
             >
-              ￥{(+balance).toFixed(2)}
+              ￥{(+(balance?.availableBalance || '')).toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between text-sm">

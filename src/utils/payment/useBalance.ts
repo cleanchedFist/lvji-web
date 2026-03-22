@@ -7,9 +7,10 @@ export default function useBalance() {
     try {
       const res = await queryBalance();
       if (![undefined, null].includes(res?.data.balance)) {
+        const { frozenBalance, availableBalance, totalBalance } = res.data || {};
         setInitialState((s) => ({
           ...s,
-          balance: res.data.balance,
+          balance: { frozenBalance, availableBalance, totalBalance },
         }));
       }
     } catch (e) {

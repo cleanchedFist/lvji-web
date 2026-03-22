@@ -63,7 +63,7 @@ const UserInfo = () => {
   }, []);
   return (
     <div className="flex items-center space-x-4">
-      <Balance value={initialState?.balance || 0} />
+      <Balance value={initialState?.balance?.totalBalance || 0} />
       <div className="flex cursor-pointer">
         <Avatar></Avatar>
       </div>

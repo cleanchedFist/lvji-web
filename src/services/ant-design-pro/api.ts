@@ -571,3 +571,13 @@ export function parseFileOrder(file: UploadFile) {
     requestType: 'form',
   });
 }
+
+export function getOrderList({ current, size }: { current: number; size: number }) {
+  return request('/api/llm-service/payment/wallet/transactions', {
+    method: 'GET',
+    params: {
+      current,
+      size,
+    },
+  });
+}

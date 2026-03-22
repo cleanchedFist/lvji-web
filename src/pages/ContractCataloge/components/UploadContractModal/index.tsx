@@ -39,7 +39,7 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
     return !!(
       state.orderPrice &&
       state.step === 2 &&
-      +(initialState?.balance || 0) < +state.orderPrice
+      +(initialState?.balance?.availableBalance || 0) < +state.orderPrice
     );
   }, [initialState?.balance, state.orderPrice, state.step]);
 
@@ -54,7 +54,7 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
 
     // 统一由 onChange 处理列表展示
     onChange: ({ file, fileList }) => {
-      if (state.uploadType === UploadType.dir) {
+      if (state.uploadType === UploadType.dir && !initialState?.isUserRole) {
         actions.setFileList(fileList);
       } else {
         const { status } = file;
@@ -67,7 +67,7 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
       }
     },
     fileList: state.fileList,
-    multiple: state.uploadType === UploadType.dir,
+    multiple: state.uploadType === UploadType.dir && !initialState?.isUserRole,
     style: {
       border: '2px dashed rgb(129, 140, 248)',
       borderRadius: '8px',
