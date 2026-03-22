@@ -125,6 +125,7 @@ const useUploadLogic = (catalogePageContext: any) => {
     if (result === true) {
       setFileList([]);
       setVisible(false);
+      setStep(1);
       catalogePageContext.reloadList();
     }
   };
@@ -132,6 +133,7 @@ const useUploadLogic = (catalogePageContext: any) => {
   const hasFeature = (feature: UploadFeature) => features.includes(feature);
   const reset = () => {
     setUploading(false);
+    setStep(1);
   };
 
   const handleClose = () => {
@@ -237,6 +239,7 @@ const useUploadLogic = (catalogePageContext: any) => {
       handleUpload,
       hasFeature,
       reset,
+      handleClose,
     },
     btnHandler,
   };

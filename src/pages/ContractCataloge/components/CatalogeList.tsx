@@ -130,7 +130,7 @@ const CatalogeList = forwardRef((props: any, ref) => {
                 type="button"
                 onClick={handleSearch}
                 disabled={loading}
-                className="flex items-center justify-center space-x-1 px-6 py-3 text-sm font-medium text-white bg-[#4f46e5] rounded-lg hover:bg-blue-700 transition duration-150 shadow-md disabled:opacity-50"
+                className="flex items-center justify-center space-x-1 px-6 py-3 text-sm font-medium text-white bg-[#4f46e5] rounded-lg hover:bg-indigo-700 transition duration-150 shadow-md disabled:opacity-50"
               >
                 {loading ? '查询中...' : '查询'}
               </button>

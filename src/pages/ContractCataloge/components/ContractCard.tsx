@@ -6,6 +6,7 @@ import { history } from '@umijs/max';
 import { message, Modal } from 'antd';
 import { FileText } from 'lucide-react';
 import { useContext } from 'react';
+import { useModel } from 'umi';
 import { CatalogePageContext } from '../utils/context';
 import { formatTime } from '../utils/formatTime';
 import { reviewStageText, reviewStageTheme } from '../utils/reviewStageText';
@@ -22,6 +23,7 @@ const ContractCard = ({
   isLastOne: boolean;
   updateList: (id?: number) => Promise<void>;
 }) => {
+  const { initialState } = useModel('@@initialState');
   const { listType, reloadList: reloadCatalogeList } = useContext(CatalogePageContext);
   const handleViewContract = (data: API.ContractVersionItem) => {
     if (data.reviewId && listType !== Contract_Type.ClientUpload) {
@@ -57,14 +59,18 @@ const ContractCard = ({
   };
 
   const handleDeleteClick = (data: API.ContractVersionItem) => {
-    Modal.confirm({
-      title: '确认删除合同目录?',
-      content: '删除后目录下的所有合同将不能再恢复数据.',
-      ...deleteModalConfig,
-      async onOk() {
-        await handleDeleteContract(data.id);
-      },
-    });
+    if (initialState?.isUserRole && data.stage !== 0) {
+      message.error('合同已开始审查，请勿删除');
+    } else {
+      Modal.confirm({
+        title: '确认删除合同目录?',
+        content: '删除后目录下的所有合同将不能再恢复数据.',
+        ...deleteModalConfig,
+        async onOk() {
+          await handleDeleteContract(data.id);
+        },
+      });
+    }
   };
 
   const handleReviewContract = (id: number) => {

@@ -13,7 +13,7 @@ const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardP
   const { initialState } = useModel('@@initialState');
   const { balance } = initialState || {};
   const isBalanceEnough = +(balance?.availableBalance || '') >= +totalPrice;
-  const remainingBalance = +(balance?.totalBalance || '') - +totalPrice;
+  const remainingBalance = +(balance?.availableBalance || '') - +totalPrice;
   const handleRecharge = () => payModalRef.current?.show();
   return (
     <>
@@ -48,6 +48,16 @@ const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardP
         </div>
 
         <div className="space-y-3">
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-500">当前冻结余额</span>
+            <span
+              className={`font-medium font-mono ${
+                isBalanceEnough ? 'text-gray-700' : 'text-red-600'
+              }`}
+            >
+              ￥{(+(balance?.frozenBalance || '')).toFixed(2)}
+            </span>
+          </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">当前可用余额</span>
             <span
@@ -115,7 +125,7 @@ const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardP
           </div>
         )}
       </div>
-      <PayModal baseAmount={+totalPrice} ref={payModalRef} />
+      <PayModal baseAmount={+totalPrice - +(balance?.availableBalance || '')} ref={payModalRef} />
     </>
   );
 };

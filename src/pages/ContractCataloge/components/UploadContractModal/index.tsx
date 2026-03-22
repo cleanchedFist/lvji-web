@@ -1,4 +1,3 @@
-import { ModalButtonConfig } from '@/utils/modalConfig';
 import { useModel } from '@umijs/max';
 import { Modal, UploadFile, UploadProps } from 'antd';
 import { forwardRef, useContext, useImperativeHandle, useMemo } from 'react';
@@ -13,11 +12,10 @@ import {
   UploadType,
   VersionField,
 } from './FieldBox';
+import { CancelBtn, OkBtn } from './FooterBtn';
 import OrderConfirmCard from './OrderConfirmCard';
 import useUploadLogic, { UploadExtraProps } from './useUploadLogic'; //逻辑层：useUploadLogic
 import { UploadFeature } from './utils';
-
-const { okButtonProps, cancelButtonProps, okButtonDisabledProps } = ModalButtonConfig;
 
 /** * ----------------------------------------------------------------
  * 展现层：UploadContractModal
@@ -35,7 +33,6 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
   const { hasFeature } = actions;
 
   const okBtnDisabled = useMemo(() => {
-    // 用户账户，存在价格，
     return !!(
       state.orderPrice &&
       state.step === 2 &&
@@ -81,14 +78,23 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
       title="上传合同"
       open={state.visible}
       width={600}
-      okButtonProps={{
-        ...(okBtnDisabled ? okButtonDisabledProps : okButtonProps),
-        loading: state.uploading,
-        disabled: okBtnDisabled,
-      }}
-      cancelButtonProps={cancelButtonProps}
       destroyOnHidden={true}
-      {...btnHandler}
+      onCancel={actions.handleClose}
+      footer={[
+        <CancelBtn
+          key="submit"
+          disabled={state.uploading}
+          text={btnHandler.cancelText}
+          onClick={btnHandler.onCancel}
+        />,
+        <OkBtn
+          key="back"
+          loading={state.uploading}
+          disabled={okBtnDisabled}
+          text={btnHandler.okText}
+          onClick={btnHandler.onOk}
+        />,
+      ]}
     >
       <div className="flex flex-col gap-y-4 py-2">
         <div className="relative">
