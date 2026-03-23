@@ -60,28 +60,28 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) =
   }
 
   return (
-    <HeaderDropdown
-      menu={{
-        selectedKeys: [],
-        onClick: menuHandler,
-        items: menuItems,
-      }}
-    >
-      <div>
-        {children}
-        {currentUser.type === 2 && (
-          <InvitationModal
-            visible={invitationModal.invitationVisible}
-            onCancel={() => invitationModal.setInvitationVisible(false)}
-          ></InvitationModal>
-        )}
-        {initialState.isUserRole && (
-          <OrderRecordsModal
-            visible={orderRecordsModal.orderRecordsVisible}
-            onCancel={() => orderRecordsModal.setOrderRecordsVisible(false)}
-          />
-        )}
-      </div>
-    </HeaderDropdown>
+    <>
+      <HeaderDropdown
+        menu={{
+          selectedKeys: [],
+          onClick: menuHandler,
+          items: menuItems,
+        }}
+      >
+        <div>{children}</div>
+      </HeaderDropdown>
+      {currentUser.type === 2 && (
+        <InvitationModal
+          visible={invitationModal.invitationVisible}
+          onCancel={() => invitationModal.setInvitationVisible(false)}
+        ></InvitationModal>
+      )}
+      {initialState.isUserRole && (
+        <OrderRecordsModal
+          visible={orderRecordsModal.orderRecordsVisible}
+          onCancel={() => orderRecordsModal.setOrderRecordsVisible(false)}
+        />
+      )}
+    </>
   );
 };
