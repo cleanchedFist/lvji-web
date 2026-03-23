@@ -3,6 +3,7 @@ import { useRequest } from '@umijs/max';
 import { ArrowDownLeft, ArrowUpRight, ChevronRight, Clock, Loader2, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import Mask from '../../Mask';
+import AmountCard from './AmountCard';
 import Pagination from './Pagination';
 type OrderRecordsModalProps = {
   visible: boolean;
@@ -106,6 +107,8 @@ const OrderRecordsModal = ({ visible, onCancel }: OrderRecordsModalProps) => {
 
         {/* 列表区域 */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50/50 relative">
+          <AmountCard />
+
           <div className="flex justify-between items-center px-1">
             <p className="text-[12px] font-bold text-gray-600 uppercase tracking-widest">
               记录列表 ({fullCount})

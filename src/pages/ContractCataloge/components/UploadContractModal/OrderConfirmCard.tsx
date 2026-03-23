@@ -14,7 +14,7 @@ const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardP
   const { balance } = initialState || {};
   const isBalanceEnough = +(balance?.availableBalance || '') >= +totalPrice;
   const remainingBalance = +(balance?.availableBalance || '') - +totalPrice;
-  const handleRecharge = () => payModalRef.current?.show();
+  const handleRecharge = () => payModalRef.current?.show?.();
   return (
     <>
       <div
@@ -121,11 +121,11 @@ const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardP
         {isBalanceEnough && (
           <div className="mt-5 flex items-center gap-2 p-3 bg-white/60 rounded-xl border border-indigo-50 text-[14px]">
             <CheckCircle2 size={14} className="shrink-0 text-emerald-500" />
-            <p>律师处理完成后将从余额中自动划扣。提交订单后无法撤销。</p>
+            <p>律师开始审查后将从余额中自动划扣，请确认后再提交。</p>
           </div>
         )}
       </div>
-      <PayModal baseAmount={+totalPrice - +(balance?.availableBalance || '')} ref={payModalRef} />
+      <PayModal defaultAmount={-remainingBalance} ref={payModalRef} />
     </>
   );
 };
