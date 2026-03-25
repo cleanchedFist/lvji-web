@@ -1,3 +1,4 @@
+import { Footer } from '@/components';
 import { lawyerRegist, regist } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, MobileOutlined, SwitcherOutlined, UserOutlined } from '@ant-design/icons';
@@ -170,7 +171,7 @@ const Regist: React.FC = () => {
           )}
         </LoginForm>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

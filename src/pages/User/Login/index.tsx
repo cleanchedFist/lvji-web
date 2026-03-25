@@ -1,3 +1,4 @@
+import { Footer } from '@/components';
 import { login } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -188,7 +189,7 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
