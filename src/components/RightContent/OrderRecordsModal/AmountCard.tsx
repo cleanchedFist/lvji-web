@@ -1,17 +1,14 @@
 import PayModal, { PayModalHandle } from '@/components/PayModal';
-import useBalance from '@/utils/payment/useBalance';
 import { useModel } from '@umijs/max';
 import { Lock, Wallet } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 const AmountCard = () => {
   const { initialState } = useModel('@@initialState');
-  const { updateBalance } = useBalance();
+
   const { availableBalance, frozenBalance } = initialState?.balance || {};
   const payModalRef = useRef<PayModalHandle>(null);
-  useEffect(() => {
-    updateBalance();
-  }, []);
+
   return (
     <>
       {' '}

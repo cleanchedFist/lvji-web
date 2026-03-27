@@ -1,10 +1,12 @@
 import { getOrderList } from '@/services/ant-design-pro/api';
+import useBalance from '@/utils/payment/useBalance';
 import { useRequest } from '@umijs/max';
 import { ArrowDownLeft, ArrowUpRight, ChevronRight, Clock, Loader2, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import Mask from '../../Mask';
 import AmountCard from './AmountCard';
 import Pagination from './Pagination';
+
 type OrderRecordsModalProps = {
   visible: boolean;
   onCancel: () => void;
@@ -47,6 +49,7 @@ const OrderRecordsModal = ({ visible, onCancel }: OrderRecordsModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [orderList, setOrderList] = useState<OrderItem[]>([]);
   const [fullCount, setFullCount] = useState(0);
+  const { updateBalance } = useBalance();
 
   const { run } = useRequest(getOrderList, {
     // 当接口请求成功时触发
@@ -81,6 +84,7 @@ const OrderRecordsModal = ({ visible, onCancel }: OrderRecordsModalProps) => {
 
   useEffect(() => {
     if (visible) {
+      updateBalance();
       run({ current: currentPage, size: pageSize });
     }
   }, [visible]);
