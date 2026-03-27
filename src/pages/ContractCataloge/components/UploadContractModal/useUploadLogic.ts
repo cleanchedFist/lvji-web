@@ -166,7 +166,7 @@ const useUploadLogic = (catalogePageContext: any) => {
   };
 
   const btnHandler = useMemo(() => {
-    if (initialState?.isUserRole && step === 1) {
+    if (initialState?.isUserRole && step === 1 && uploadType === UploadType.dir) {
       // 点击确认信息
       return {
         okText: '确认信息',
