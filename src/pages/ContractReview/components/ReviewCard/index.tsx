@@ -184,6 +184,7 @@ const ReviewCard = ({
         onSubmit={handleReviseSubmit}
         id={data.id}
         text={revisedText}
+        originalText={data.originalContent}
         visible={editVisible}
       />
     </div>

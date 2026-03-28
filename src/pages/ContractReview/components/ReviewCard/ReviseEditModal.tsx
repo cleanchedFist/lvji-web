@@ -10,10 +10,18 @@ type ReviseEditModalProps = {
   visible: boolean;
   text: string;
   id: number;
+  originalText: string;
 };
 
 // 主应用组件，包含重新设计的新增规则集模态框
-const ReviseEditModal = ({ onSubmit, onCancel, id, visible, text }: ReviseEditModalProps) => {
+const ReviseEditModal = ({
+  onSubmit,
+  onCancel,
+  id,
+  visible,
+  text,
+  originalText,
+}: ReviseEditModalProps) => {
   const [value, setValue] = useState(text || '');
   const [loading, setLoading] = useState(false);
 
@@ -47,7 +55,19 @@ const ReviseEditModal = ({ onSubmit, onCancel, id, visible, text }: ReviseEditMo
           <h2 className="text-xl font-semibold text-gray-800">修改建议</h2>
         </div>
 
-        <div className="px-6 space-y-6">
+        <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
+          <div className="text-[14px] font-bold text-gray-600 uppercase tracking-wider mb-2">
+            原文内容
+          </div>
+          <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">
+            {originalText}
+          </div>
+        </div>
+
+        <div className="px-6 mt-5">
+          <div className="text-[14px] font-bold text-indigo-500 uppercase tracking-wider mb-1">
+            修订建议
+          </div>
           <textarea
             id="ruleContent"
             rows={5}
