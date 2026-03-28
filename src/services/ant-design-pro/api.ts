@@ -587,3 +587,10 @@ export function getProcessingCount() {
     method: 'GET',
   });
 }
+
+export function downReviewReport(reviewId: number) {
+  return request(`/api/llm-service/reviewBook/download/${reviewId}`, {
+    method: 'GET',
+    responseType: 'blob',
+  });
+}

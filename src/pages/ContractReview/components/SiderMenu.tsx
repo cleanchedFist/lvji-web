@@ -1,6 +1,11 @@
-import { contractDownload } from '@/utils/contractHandle';
+import { contractDownload, reviewReportDownload } from '@/utils/contractHandle';
 import { useWebOffice, WebOfficeHookResult } from '@/utils/wps/context';
-import { DownloadOutlined, FileDoneOutlined, FireOutlined } from '@ant-design/icons';
+import {
+  DownloadOutlined,
+  FileDoneOutlined,
+  FileTextOutlined,
+  FireOutlined,
+} from '@ant-design/icons';
 import { useLocation, useParams } from '@umijs/max';
 import React, { useState } from 'react';
 
@@ -60,6 +65,14 @@ const SiderMenu = ({ onChangeMode, fileId }: SiderMenuProps) => {
     onChangeMode(v);
   };
 
+  const handleDownloadReport = () => {
+    const contractData = location.state as { name: string };
+    const contractName = fileName || contractData?.name || '合同文件';
+    if (params.id && fileId) {
+      reviewReportDownload({ contractName, fileId, reviewId: params.id });
+    }
+  };
+
   return (
     <div className="bg-white py-4 rounded-xl">
       <Btn
@@ -76,11 +89,18 @@ const SiderMenu = ({ onChangeMode, fileId }: SiderMenuProps) => {
         onClick={() => handleChangeMode(1)}
       />
       <Btn
-        text="导出"
+        text="导出合同"
         className="mt-5"
         icon={<DownloadOutlined />}
         active={false}
         onClick={handleExport}
+      />
+      <Btn
+        text="下载报告"
+        className="mt-5"
+        icon={<FileTextOutlined />}
+        active={false}
+        onClick={handleDownloadReport}
       />
     </div>
   );
