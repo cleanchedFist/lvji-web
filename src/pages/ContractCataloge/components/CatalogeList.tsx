@@ -1,8 +1,8 @@
-import { getAssignedDirList, getDirList } from '@/services/ant-design-pro/api';
+import { getAssignedDirList, getDirList, getProcessingCount } from '@/services/ant-design-pro/api';
 import { Contract_Type } from '@/utils/const';
 import scrollYTo from '@/utils/resetScroll';
 import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
-import { useModel } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import { forwardRef, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { CatalogePageContext } from '../utils/context';
 import CatalogeTab from './/CatalogeTab';
@@ -13,6 +13,9 @@ const PAGE_SIZE = 10;
 const CatalogeList = forwardRef((props: any, ref) => {
   const { initialState } = useModel('@@initialState');
   const { updateListType } = useContext(CatalogePageContext);
+
+  const { data: processingCount, run: updateProcessingCount } = useRequest(getProcessingCount);
+
   // 搜索和分页状态
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,6 +69,7 @@ const CatalogeList = forwardRef((props: any, ref) => {
 
   useImperativeHandle(ref, () => ({
     reload() {
+      updateProcessingCount();
       return loadData('', 1);
     },
   }));
@@ -105,7 +109,9 @@ const CatalogeList = forwardRef((props: any, ref) => {
     <>
       <h1 className="text-3xl font-bold text-gray-800 mb-6 hidden sm:block">合同列表</h1>
       <div className="bg-white rounded-2xl">
-        {!initialState?.isUserRole && <CatalogeTab tabId={tabId} onChange={handleTabChange} />}
+        {!initialState?.isUserRole && (
+          <CatalogeTab tabId={tabId} processingCount={processingCount} onChange={handleTabChange} />
+        )}
         <div className="p-3 pt-0">
           {/* 搜索/筛选/重置区域 */}
           <div className="bg-white py-6">

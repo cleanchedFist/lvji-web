@@ -581,3 +581,9 @@ export function getOrderList({ current, size }: { current: number; size: number 
     },
   });
 }
+
+export function getProcessingCount() {
+  return request('/api/llm-service/assigned/file/cnt', {
+    method: 'GET',
+  });
+}
