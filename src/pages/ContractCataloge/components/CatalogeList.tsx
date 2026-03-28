@@ -14,7 +14,10 @@ const CatalogeList = forwardRef((props: any, ref) => {
   const { initialState } = useModel('@@initialState');
   const { updateListType } = useContext(CatalogePageContext);
 
-  const { data: processingCount, run: updateProcessingCount } = useRequest(getProcessingCount);
+  const { data: processingCount, run: updateProcessingCount } = useRequest(async () => {
+    if (initialState?.isUserRole) return null;
+    return getProcessingCount();
+  });
 
   // 搜索和分页状态
   const [searchTerm, setSearchTerm] = useState('');
