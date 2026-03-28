@@ -1,49 +1,56 @@
 import PayModal, { PayModalHandle } from '@/components/PayModal';
 import { useModel } from '@umijs/max';
-import { Lock, Wallet } from 'lucide-react';
+import { Wallet } from 'lucide-react';
 import { useRef } from 'react';
 
 const AmountCard = () => {
   const { initialState } = useModel('@@initialState');
 
-  const { availableBalance, frozenBalance } = initialState?.balance || {};
+  const { availableBalance, frozenBalance, totalBalance } = initialState?.balance || {};
   const payModalRef = useRef<PayModalHandle>(null);
 
   return (
     <>
-      {' '}
       <div className="bg-indigo-600 rounded-3xl p-6 text-white shadow-xl shadow-indigo-100 mb-6 relative overflow-hidden">
         {/* 背景装饰 */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl" />
 
         <div className="flex flex-col sm:flex-row items-center gap-6 relative z-10">
-          {/* 可用余额 */}
-          <div className="flex-1 flex items-center gap-4 w-full">
-            <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-md">
-              <Wallet size={24} />
+          {/* 左侧：总余额 (核心突出) */}
+          <div className="flex items-center gap-4 flex-1">
+            <div className="bg-white/20 p-4 rounded-3xl backdrop-blur-md">
+              <Wallet className="w-8 h-8 text-white" />
             </div>
             <div>
-              <p className="text-indigo-100 text-[10px] uppercase tracking-widest font-bold">
-                当前可用余额
-              </p>
-              <p className="text-2xl font-bold font-mono">￥{availableBalance}</p>
+              <p className="text-indigo-100 text-sm mb-1 opacity-80">账户总余额</p>
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-medium">¥</span>
+                <span className="text-4xl font-bold tracking-tight">{totalBalance}</span>
+              </div>
             </div>
           </div>
 
-          {/* 竖向分割线 */}
-          <div className="hidden sm:block w-px h-10 bg-indigo-400/50" />
-          <div className="block sm:hidden w-full h-px bg-indigo-400/50" />
+          {/* 中间：分隔线 */}
+          <div className="w-px h-12 bg-white/50"></div>
 
-          {/* 冻结金额 */}
-          <div className="flex-1 flex items-center gap-4 w-full">
-            <div className="p-3 bg-black/10 rounded-2xl backdrop-blur-sm">
-              <Lock size={20} className="text-indigo-200" />
+          {/* 中间/右侧数据区域：可用与冻结 */}
+          <div className="flex flex-1 justify-around md:justify-start md:gap-6 w-full md:w-auto">
+            {/* 可用余额 */}
+            <div className="flex flex-col items-center md:items-start">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                <p className="text-indigo-100 text-xs">可用余额</p>
+              </div>
+              <p className="text-2xl font-semibold">¥ {availableBalance}</p>
             </div>
-            <div>
-              <p className="text-indigo-200 text-[10px] uppercase tracking-widest font-bold">
-                冻结中金额
-              </p>
-              <p className="text-xl font-bold font-mono text-indigo-50">￥{frozenBalance}</p>
+
+            {/* 冻结金额 */}
+            <div className="flex flex-col items-center md:items-start">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
+                <p className="text-indigo-100 text-xs">冻结中金额</p>
+              </div>
+              <p className="text-2xl font-semibold opacity-90">¥ {frozenBalance}</p>
             </div>
           </div>
 

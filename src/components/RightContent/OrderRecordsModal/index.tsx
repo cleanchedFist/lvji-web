@@ -84,6 +84,7 @@ const OrderRecordsModal = ({ visible, onCancel }: OrderRecordsModalProps) => {
 
   useEffect(() => {
     if (visible) {
+      setIsLoading(true);
       updateBalance();
       run({ current: currentPage, size: pageSize });
     }
