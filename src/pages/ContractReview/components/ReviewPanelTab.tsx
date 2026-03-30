@@ -3,7 +3,7 @@ type ReviewPanelTabProps = {
   onTabChange: (tab: string) => void;
 };
 const ReviewPanelTab = ({ activeTab, onTabChange }: ReviewPanelTabProps) => {
-  const tabs = ['全部', '高风险', '合同标的', '合同条款', '文字符号', '自定义策略'];
+  const tabs = ['全部', '高风险', '中风险', '低风险', '文字符号'];
 
   return (
     <div className="flex border-b border-gray-200 mb-6 -mx-6 px-6 overflow-x-auto">

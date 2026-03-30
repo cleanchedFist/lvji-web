@@ -33,14 +33,12 @@ const filterFn = (type: string) => {
   switch (type) {
     case '高风险':
       return (i: ReviewData) => i.riskLevel === '高风险';
-    case '合同标的':
-      return (i: ReviewData) => i.reviewType === '合同标的';
-    case '合同条款':
-      return (i: ReviewData) => i.reviewType === '合同条款';
+    case '中风险':
+      return (i: ReviewData) => i.riskLevel === '中风险';
+    case '低风险':
+      return (i: ReviewData) => i.riskLevel === '低风险';
     case '文字符号':
       return (i: ReviewData) => i.reviewType === '文字符号';
-    case '自定义策略':
-      return (i: ReviewData) => i.reviewType === '自定义策略';
     default:
       return (i: ReviewData) => i;
   }
