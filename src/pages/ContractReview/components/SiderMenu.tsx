@@ -31,7 +31,7 @@ const Btn = ({
     <div
       className={`flex flex-col items-center cursor-pointer text-center text-xs ${
         active && 'font-bold'
-      } ${className}`}
+      } ${className || ''}`}
       onClick={onClick}
     >
       <div
@@ -41,7 +41,7 @@ const Btn = ({
       >
         {icon}
       </div>
-      <div className="mt-1">{text}</div>
+      <div className="mt-1 w-[54px]">{text}</div>
     </div>
   );
 };

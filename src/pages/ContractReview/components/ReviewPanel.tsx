@@ -57,7 +57,7 @@ const ReviewPanel = ({ fileType, data }: ReviewPanelProps) => {
   }, [activeTab, data]);
 
   return (
-    <div className="w-full h-full flex flex-col bg-white border-l border-gray-100 shadow-xl rounded-2xl p-6">
+    <div className="w-full h-full flex flex-col bg-white border-l border-gray-100 rounded-2xl p-6">
       {/* 审查项分类 Tabs */}
       <ReviewPanelTab activeTab={activeTab} onTabChange={setActiveTab}></ReviewPanelTab>
 

@@ -1,19 +1,21 @@
 import PageContainer from '@/components/PageContainer';
 import WebOfficeProvider from '@/utils/wps/wpsProvider';
 import { useParams, useSearchParams } from '@umijs/max';
-import { Col, Row } from 'antd';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import AnalysisPanel from './components/AnalysisPanel';
 import ReviewLoading from './components/ReviewLoading';
 import ReviewPanel from './components/ReviewPanel';
 import SiderMenu from './components/SiderMenu';
 import UseRequestFetch from './utils/UseRequestFetch';
 import UseWebsockFetch from './utils/UseWebsockFetch';
+import useDragger from './utils/useDragger';
 
 const ContractView: React.FC = () => {
   const [mode, setMode] = useState(0);
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const containerRef = useRef(null);
+  const { startDragging, isDragging, leftWidth } = useDragger(containerRef);
 
   const isNewReview = searchParams.get('loading') === '1';
 
@@ -46,22 +48,48 @@ const ContractView: React.FC = () => {
       <PageContainer>
         {sdkConfig && (
           <WebOfficeProvider config={sdkConfig}>
-            <Row gutter={10} className="!m-0">
-              <Col span={15}>
-                <div id="wps-container" className="border bg-white h-[calc(100vh-102px)]"></div>
-              </Col>
-              <Col span={8} className="h-[calc(100vh-102px)] flex overflow-hidden">
+            <div
+              className="flex-1 flex items-stretch overflow-hidden relative !m-0"
+              ref={containerRef}
+            >
+              {/* 左侧：文档预览区 */}
+              <div
+                className={`bg-gray-100 overflow-auto flex flex-col items-center pt-8 ${
+                  isDragging ? 'pointer-events-none' : ''
+                }`}
+                style={{ width: `${leftWidth}%` }}
+              >
+                <div
+                  id="wps-container"
+                  className="w-full border bg-white h-[calc(100vh-102px)]"
+                ></div>
+              </div>
+              {/* 拖拽把手 (Resizer) */}
+              <div
+                onMouseDown={startDragging}
+                className={`w-1.5  cursor-col-resize flex items-center justify-center transition-colors group z-10 ${
+                  isDragging ? 'bg-blue-500' : 'bg-transparent hover:bg-blue-300'
+                }`}
+              >
+                <div
+                  className={`w-0.5 rounded-full ${
+                    isDragging ? 'bg-white' : 'bg-gray-300 group-hover:bg-blue-400'
+                  }`}
+                ></div>
+              </div>
+              {/* 右侧：审查区 */}
+              <div className="min-w-[350px] flex-1 flex h-[calc(100vh-102px)] overflow-hidden mr-2">
                 {!isLoading && mode === 0 && (
                   <ReviewPanel fileType={sdkConfig.officeType} data={reviewChunkRespDTOList} />
                 )}
                 {!isLoading && mode === 1 && <AnalysisPanel data={reviewResultNewRespDTO} />}
                 {isLoading && <ReviewLoading taskQueue={taskQueue} />}
-              </Col>
-              <Col span={1}>
+              </div>
+              <div className="ml-auto px-2 bg-white rounded-xl">
                 {/* 预留右侧操作栏 */}
                 <SiderMenu fileId={fileId} onChangeMode={(v: number) => setMode(v)} />
-              </Col>
-            </Row>
+              </div>
+            </div>
           </WebOfficeProvider>
         )}
       </PageContainer>
