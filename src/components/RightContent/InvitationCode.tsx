@@ -1,7 +1,9 @@
 import { getInvationCode } from '@/services/ant-design-pro/api';
-import { CheckCircleFilled, CopyOutlined, UserAddOutlined } from '@ant-design/icons';
+import { CopyOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useRequest } from '@umijs/max';
 import { Button, message, Modal, Typography } from 'antd';
+import { Loader2 } from 'lucide-react';
+import { useEffect } from 'react';
 
 const { Text, Title, Paragraph } = Typography;
 
@@ -10,7 +12,11 @@ type InvitationModalProps = {
   onCancel: () => void;
 };
 const InvitationModal = ({ visible, onCancel }: InvitationModalProps) => {
-  const { data: inviteCode } = useRequest(getInvationCode);
+  const {
+    data: inviteCode,
+    loading,
+    run: fetchInvatationCode,
+  } = useRequest(getInvationCode, { manual: true });
 
   // 复制功能
   const handleCopy = (text: string) => {
@@ -27,18 +33,14 @@ const InvitationModal = ({ visible, onCancel }: InvitationModalProps) => {
     document.body.removeChild(textArea);
   };
 
+  useEffect(() => {
+    if (visible) {
+      fetchInvatationCode();
+    }
+  }, [visible]);
+
   return (
     <Modal title={null} open={visible} onCancel={onCancel} footer={null} centered width={380}>
-      {/* 顶部装饰条 */}
-      <div
-        style={{
-          height: '6px',
-          borderRadius: '12px',
-          marginTop: '20px',
-          background: 'linear-gradient(90deg, #5C5CFF 0%, #8E8EFA 100%)',
-        }}
-      />
-
       <div className="p-8 text-center">
         {/* 图标展示 */}
         <div className="flex justify-center mb-6">
@@ -75,36 +77,38 @@ const InvitationModal = ({ visible, onCancel }: InvitationModalProps) => {
             borderRadius: '12px',
           }}
         >
-          <Text
-            type="secondary"
-            style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}
-          >
-            专属邀请码
-          </Text>
-          <div className="mt-2 mb-4">
-            <Text strong style={{ fontSize: '32px', color: '#5C5CFF', letterSpacing: '3px' }}>
-              {inviteCode}
-            </Text>
-          </div>
+          {!loading && (
+            <div>
+              <Text
+                type="secondary"
+                style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}
+              >
+                专属邀请码
+              </Text>
+              <div className="mt-2 mb-4">
+                <Text strong style={{ fontSize: '30px', color: '#5C5CFF', letterSpacing: '3px' }}>
+                  {inviteCode}
+                </Text>
+              </div>
 
-          <Button
-            type="primary"
-            icon={<CopyOutlined />}
-            size="large"
-            block
-            style={{ backgroundColor: '#5C5CFF', borderRadius: '8px', height: '45px' }}
-            onClick={() => handleCopy(inviteCode)}
-          >
-            复制邀请码
-          </Button>
-        </div>
-
-        {/* 底部提示 */}
-        <div className="mt-6 flex justify-center items-center">
-          <CheckCircleFilled style={{ color: '#52c41a', marginRight: '6px', fontSize: '14px' }} />
-          <Text type="secondary" style={{ fontSize: '12px' }}>
-            邀请码长期有效
-          </Text>
+              <Button
+                type="primary"
+                icon={<CopyOutlined />}
+                size="large"
+                block
+                style={{ backgroundColor: '#5C5CFF', borderRadius: '8px', height: '45px' }}
+                onClick={() => handleCopy(inviteCode)}
+              >
+                复制邀请码
+              </Button>
+            </div>
+          )}
+          {loading && (
+            <div className="bg-white/60 backdrop-blur-[2px] rounded-2xl flex flex-col items-center justify-center transition-all duration-500">
+              <Loader2 className="w-10 h-10 text-indigo-600 animate-spin mb-3" />
+              <p className="text-indigo-600 font-medium text-sm animate-pulse">正在生成专属码...</p>
+            </div>
+          )}
         </div>
       </div>
     </Modal>

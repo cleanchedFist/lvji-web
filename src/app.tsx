@@ -1,4 +1,4 @@
-import { AvatarDropdown, AvatarName, Footer, Question } from '@/components';
+import { AvatarDropdown, AvatarName, Footer } from '@/components';
 import usePageHistory from '@/hooks/usePageHistory';
 import useSessionStorage from '@/hooks/useSessionStorage';
 import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
@@ -122,7 +122,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onCollapse: (collapsed) => {
       setSiderCollapsed(collapsed);
     },
-    actionsRender: () => [<Question key="doc" />],
+    actionsRender: () => [],
     avatarProps: {
       src: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       title: <AvatarName />,

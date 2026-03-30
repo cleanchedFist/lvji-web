@@ -92,7 +92,7 @@ const Regist: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src="/logo.svg" />}
-          title="邦盛 AI"
+          title="合同 AI"
           submitter={{
             searchConfig: {
               submitText: '注册',

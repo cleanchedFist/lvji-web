@@ -122,7 +122,7 @@ const Login: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={null}
-          title="邦盛 AI"
+          title="合同 AI"
           //   subTitle="登录"
           initialValues={{
             autoLogin: true,
