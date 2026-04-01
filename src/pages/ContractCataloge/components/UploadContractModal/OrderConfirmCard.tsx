@@ -1,5 +1,5 @@
 import PayModal, { PayModalHandle } from '@/components/PayModal';
-import { AlertCircle, CheckCircle2, PlusCircle, Wallet } from 'lucide-react';
+import { AlertCircle, PlusCircle, Wallet } from 'lucide-react';
 import { useRef } from 'react';
 import { useModel } from 'umi';
 
@@ -115,13 +115,6 @@ const OrderConfirmCard = ({ totalPrice, fileName, wordCount }: OrderConfirmCardP
           <div className="mt-5 flex items-start gap-2 p-3 bg-white/60 rounded-xl border border-red-100 text-[11px] text-red-600">
             <AlertCircle size={14} className="shrink-0 text-red-500" />
             <p>您的余额不足以支付本次服务费，请充值后继续提交。</p>
-          </div>
-        )}
-
-        {isBalanceEnough && (
-          <div className="mt-5 flex items-center gap-2 p-3 bg-white/60 rounded-xl border border-indigo-50 text-[14px]">
-            <CheckCircle2 size={14} className="shrink-0 text-emerald-500" />
-            <p>律师开始审查后将从余额中自动划扣，请确认后再提交。</p>
           </div>
         )}
       </div>

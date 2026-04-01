@@ -19,7 +19,10 @@ export type UploadExtraProps = {
  * 逻辑层：useUploadLogic
  * ----------------------------------------------------------------
  */
-const useUploadLogic = (catalogePageContext: any) => {
+const useUploadLogic = (
+  catalogePageContext: any,
+  { handleClientConfirmOpen }: { handleClientConfirmOpen: () => void },
+) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [uploading, setUploading] = useState(false);
   const [uploadType, setUploadType] = useState<UploadType>(UploadType.dir);
@@ -193,7 +196,7 @@ const useUploadLogic = (catalogePageContext: any) => {
       // 用户上传文件
       return {
         okText: '确认并提交',
-        onOk: handleUpload,
+        onOk: handleClientConfirmOpen,
         cancelText: '返回修改',
         onCancel: () => setStep(1),
       };

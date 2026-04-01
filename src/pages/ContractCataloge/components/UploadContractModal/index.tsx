@@ -1,7 +1,8 @@
 import { useModel } from '@umijs/max';
 import { Modal, UploadFile, UploadProps } from 'antd';
-import { forwardRef, useContext, useImperativeHandle, useMemo } from 'react';
+import { forwardRef, useContext, useImperativeHandle, useMemo, useRef } from 'react';
 import { CatalogePageContext } from '../../utils/context';
+import ClientConfirmModal, { ClientConfirmModalHandler } from './ClientConfirmModal';
 import {
   LawyerField,
   ModelField,
@@ -27,9 +28,12 @@ export interface UploadContractModalRef {
 
 const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
   const catalogePageContext = useContext(CatalogePageContext);
+  const clientConfirmRef = useRef<ClientConfirmModalHandler>(null);
   const { initialState } = useModel('@@initialState');
 
-  const { state, actions, btnHandler } = useUploadLogic(catalogePageContext);
+  const { state, actions, btnHandler } = useUploadLogic(catalogePageContext, {
+    handleClientConfirmOpen: clientConfirmRef?.current?.openModal || (() => ({})),
+  });
   const { hasFeature } = actions;
 
   const okBtnDisabled = useMemo(() => {
@@ -139,6 +143,11 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
             wordCount={state.contractWordCount}
           />
         )}
+        <ClientConfirmModal
+          ref={clientConfirmRef}
+          onConfirm={actions.handleUpload}
+          uploading={state.uploading}
+        />
       </div>
     </Modal>
   );
