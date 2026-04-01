@@ -30,7 +30,7 @@ const Balance = ({ value }: { value: number }) => {
         </div>
         <div className="flex flex-col">
           <span className="text-[10px] text-gray-500 font-medium leading-none uppercase tracking-wider">
-            当前余额
+            当前可用余额
           </span>
           <div className="flex items-baseline gap-0.5">
             <span className="text-[12px] font-bold text-gray-900">¥</span>
@@ -63,7 +63,7 @@ const UserInfo = () => {
   }, []);
   return (
     <div className="flex items-center space-x-4">
-      <Balance value={initialState?.balance?.totalBalance || 0} />
+      <Balance value={initialState?.balance?.availableBalance || 0} />
       <div className="flex cursor-pointer">
         <Avatar></Avatar>
       </div>
