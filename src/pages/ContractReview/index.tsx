@@ -1,32 +1,22 @@
 import PageContainer from '@/components/PageContainer';
 import WebOfficeProvider from '@/utils/wps/wpsProvider';
-import { useParams, useSearchParams } from '@umijs/max';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useParams } from '@umijs/max';
+import React, { useMemo, useRef, useState } from 'react';
 import AnalysisPanel from './components/AnalysisPanel';
 import ReviewLoading from './components/ReviewLoading';
 import ReviewPanel from './components/ReviewPanel';
 import SiderMenu from './components/SiderMenu';
 import UseRequestFetch from './utils/UseRequestFetch';
-import UseWebsockFetch from './utils/UseWebsockFetch';
 import useDragger from './utils/useDragger';
 
 const ContractView: React.FC = () => {
   const [mode, setMode] = useState(0);
   const params = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
   const containerRef = useRef(null);
   const { startDragging, isDragging, leftWidth } = useDragger(containerRef);
 
-  const isNewReview = searchParams.get('loading') === '1';
-
   const { fileId, isLoading, reviewChunkRespDTOList, reviewResultNewRespDTO, taskQueue } =
-    isNewReview ? UseWebsockFetch(params.id!) : UseRequestFetch(params.id!);
-
-  useEffect(() => {
-    if (!isLoading && isNewReview) {
-      setSearchParams({});
-    }
-  }, [isLoading]);
+    UseRequestFetch(params.id!);
 
   const sdkConfig = useMemo(() => {
     const token = window.localStorage.getItem('token');

@@ -126,7 +126,7 @@ export async function contractPre(id: string) {
   });
 }
 
-export async function contractView(id: string) {
+export async function getContractReviewResult(id: string) {
   return request(`/api/llm-service/get/reviewed/${id}`, {
     method: 'GET',
   });
@@ -592,5 +592,25 @@ export function downReviewReport(reviewId: number) {
   return request(`/api/llm-service/reviewBook/download/${reviewId}`, {
     method: 'GET',
     responseType: 'blob',
+  });
+}
+
+// 获取审查状态
+export function queryReviewStatus(reviewId: number) {
+  return request(`/api/llm-service/isDone/${reviewId}`, {
+    method: 'GET',
+  });
+}
+
+export function queryFileId(reviewId: number) {
+  return request(`/api/llm-service/get/fileId/${reviewId}`, {
+    method: 'GET',
+  });
+}
+
+export function contractReview(reviewId: number, params: Record<string, any>) {
+  return request(`/api/llm-service/review-contract/${reviewId}`, {
+    method: 'POST',
+    data: params,
   });
 }

@@ -1,7 +1,7 @@
 import PageContainer from '@/components/PageContainer';
-import { contractPre } from '@/services/ant-design-pro/api';
+import { contractPre, contractReview } from '@/services/ant-design-pro/api';
 import { useNavigate, useParams, useRequest } from '@umijs/max';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 import React, { useState } from 'react';
 import StepOne, { FormData as StepOneFormData } from './components/StepOne/index';
 import StepTwo from './components/StepTwo';
@@ -30,9 +30,17 @@ const ContractStep: React.FC = () => {
           ? `甲方: ${data.partyA || ''}`
           : `乙方: ${data.partyB || ''}`,
     };
-    localStorage.setItem('reviewParams', JSON.stringify(reviewParams));
-    if (data.reviewResultNewId) {
-      navigate(`/clm/reviews/result/${data.reviewResultNewId}?loading=1`);
+    try {
+      contractReview(data.reviewResultNewId, { ...reviewParams, fileId: params.id }).then((res) => {
+        // 审查成功
+        if (res.data) {
+          navigate(`/clm/reviews/result/${data.reviewResultNewId}`);
+        } else {
+          message.warning('审查失败，请重试');
+        }
+      });
+    } catch (e) {
+      message.warning('审查失败，请重试');
     }
   }
 

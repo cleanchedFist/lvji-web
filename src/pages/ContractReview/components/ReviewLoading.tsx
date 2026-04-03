@@ -4,7 +4,7 @@ import { Spin } from 'antd';
 export type LoadingTask = {
   name: string;
   taskList: {
-    status: boolean;
+    status: string;
     message: string;
   }[];
 };
@@ -26,12 +26,14 @@ const ReviewLoading = ({ taskQueue }: { taskQueue: LoadingTask[] }) => {
               <div className="flex flex-col gap-2 mt-2">
                 {item.taskList.map((child, idx) => (
                   <div className="flex items-center gap-2" key={idx}>
-                    {!child.status ? (
+                    {child.status === 'pending' && (
                       <SyncOutlined spin style={{ color: '#86909c' }} />
-                    ) : (
+                    )}
+                    {child.status === 'finished' && (
                       <CheckCircleOutlined style={{ color: '#4f46e5' }} />
                     )}
-                    <span>{child.message}</span>
+
+                    {child.status !== 'waiting' && <span>{child.message}</span>}
                   </div>
                 ))}
               </div>
