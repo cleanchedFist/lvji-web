@@ -153,9 +153,16 @@ const StepOne = (props: StepOneProps) => {
             rootClassName="hover:border-indigo-600 focus:border-indigo-600"
             placeholder="请输入审阅重点..."
             rows={3}
+            maxLength={200}
             value={userReviewPoint || ''}
             onChange={(e) => formData.setFieldValue('userReviewPoint', e.target.value)}
           />
+          <div className="p-4 bg-indigo-50 border-l-4 border-indigo-300 rounded-r-lg text-sm text-gray-700 mt-4">
+            <p>填写建议:</p>
+            <p className="mt-2 text-xs text-indigo-600 font-medium">
+              请提供实质性的政策要求或决策偏好，无需包含序号、段落、字体等格式说明，系统将根据您的输入自动确保文档规范性。
+            </p>
+          </div>
         </div>
       </Form.Item>
       {/* 底部操作按钮 */}
