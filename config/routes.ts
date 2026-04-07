@@ -87,33 +87,7 @@ export default [
       },
     ],
   },
-  {
-    name: 'clm.config',
-    icon: 'SettingOutlined',
-    path: '/clm/config',
-    hideChildrenInMenu: true,
-    routes: [
-      {
-        path: '/clm/config',
-        component: './Config',
-      },
-      {
-        path: '/clm/config/strategy-edit/add',
-        name: 'strategy.add',
-        component: './StrategyEdit',
-      },
-      {
-        path: '/clm/config/strategy-edit/modify/:id',
-        name: 'strategy.modify',
-        component: './StrategyEdit',
-      },
-      {
-        path: '/clm/config/rule-edit/:id',
-        name: 'rule',
-        component: './Rule',
-      },
-    ],
-  },
+
   {
     path: '/',
     redirect: '/dashboard',
