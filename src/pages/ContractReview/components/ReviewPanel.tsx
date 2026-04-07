@@ -37,8 +37,8 @@ const filterFn = (type: string) => {
       return (i: ReviewData) => i.riskLevel === '中风险';
     case '低风险':
       return (i: ReviewData) => i.riskLevel === '低风险';
-    case '文字符号':
-      return (i: ReviewData) => i.reviewType === '文字符号';
+    // case '文字符号':
+    //   return (i: ReviewData) => i.reviewType === '文字符号';
     default:
       return (i: ReviewData) => i;
   }
