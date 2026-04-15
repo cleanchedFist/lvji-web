@@ -1,6 +1,7 @@
 import RiskLevel, { RiskLevelType } from '@/components/RiskLevel';
 import { updateAdvice } from '@/services/ant-design-pro/api';
 import { useWebOffice } from '@/utils/wps/context';
+import { LoadingOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import { Check, ChevronDown, ChevronUp, Edit2, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -47,6 +48,7 @@ const ReviewCard = ({
   const { accept, locate, reject } = useWebOffice();
   const [revised, setRevised] = useState<boolean>(false);
   const [editVisible, setEditVisible] = useState<boolean>(false);
+  const [reviseLoading, setReviseLoading] = useState(false);
 
   useEffect(() => {
     setRevised(data.accept === 0 ? false : true);
@@ -78,11 +80,15 @@ const ReviewCard = ({
         handleWpsRevise(!accept, () =>
           message.error(`${accept ? '接受' : '撤销'}修订失败，请重试`),
         );
+      })
+      .finally(() => {
+        setReviseLoading(false);
       });
   }
 
   function handleRevise() {
     // revised 当前是需要接受修订状态，因此，执行accept 以及设置为
+    setReviseLoading(true);
     handleWpsRevise(!revised, (success: boolean) => {
       if (success) {
         UpdateReviseState(data.id, !revised);
@@ -164,11 +170,17 @@ const ReviewCard = ({
 
                 {allowRevise && (
                   <button
+                    disabled={reviseLoading}
                     type="button"
                     onClick={handleRevise}
-                    className="flex items-center text-xs bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-1 px-3 rounded-full shadow-md shadow-indigo-300 transition-colors"
+                    className={`flex items-center text-xs font-medium py-1 px-3 rounded-full shadow-md shadow-indigo-300 transition-colors text-white ${
+                      reviseLoading
+                        ? 'bg-indigo-600 opacity-40 cursor-not-allowed'
+                        : 'bg-indigo-600 hover:bg-indigo-700'
+                    }`}
                   >
-                    <Check className="w-3 h-3 mr-1" />
+                    {!reviseLoading && <Check className="w-3 h-3 mr-1" />}
+                    {reviseLoading && <LoadingOutlined className="w-3 h-3 mr-1" />}
                     {revised ? '撤销修订' : '接受修订'}
                   </button>
                 )}

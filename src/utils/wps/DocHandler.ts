@@ -45,6 +45,7 @@ async function focusText(Application: any, text: string) {
   if (r?.[0]) {
     const { pos, len } = r[0];
     const range = await Application.ActiveDocument.Range(pos, pos + len);
+
     // 滚动文档窗口, 显示指定的区域
     await Application.ActiveDocument.ActiveWindow.ScrollIntoView(range);
   } else {
@@ -84,25 +85,44 @@ export async function accept(
     const normalize = (str: string) => str.replace(/[\r\n]/g, '\n');
 
     const diff = diffChars(normalize(fixedText), normalize(revisedText));
+    // 如果开始位置 === 数千位置，则 start + 1
+    // 如果 开始 到 count的位置包含 书签位置，则下一次的start + 1
+    const operatorsInfo = await app.ActiveDocument.GetComments({ Offset: 0, Limit: 100 });
 
+    const commentsPos: number[] = operatorsInfo.map((i: any) => i.pos + i.len);
     let start = pos;
     for (let i = 0; i < diff.length; i++) {
       const item = diff[i];
+      let isEndChange = false;
+      if (commentsPos.includes(start)) {
+        start += 1;
+      } else {
+        isEndChange = commentsPos.some((pos) => pos > start && pos < start + item.count);
+      }
       if (item.added) {
         const range = await app.ActiveDocument.Range(start, start);
         range.Text = item.value;
         start += item.count;
         await app.ActiveDocument.Save();
       } else if (item.removed) {
-        const range = await app.ActiveDocument.Range(start, start + item.count);
+        const range = await app.ActiveDocument.Range(
+          start,
+          isEndChange ? start + item.count + 1 : start + item.count,
+        );
         range.Text = '';
-        start += item.count;
+        start += isEndChange ? item.count + 1 : item.count;
         await app.ActiveDocument.Save();
       } else {
         start += item.count;
       }
     }
     const bookmarks = await app.ActiveDocument.Bookmarks;
+    // 判断书签是否存在，存在的话删除
+
+    const isExist = await app.ActiveDocument.Bookmarks.Exists('WebOffice' + id);
+    if (isExist) {
+      await app.ActiveDocument.Bookmarks.Item('WebOffice' + id).Delete();
+    }
     await bookmarks.Add({
       Name: 'WebOffice' + id,
       Range: {
@@ -129,7 +149,6 @@ export async function reject(Application: any, id: number, onEnd: (success: bool
   const count = await revisions.Count;
 
   let arr = [];
-
   for (let i = 1; i <= count; i++) {
     const revision = await revisions.Item(i);
     const range = await revision.Range;
