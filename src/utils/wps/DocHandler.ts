@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { diffChars } from 'diff';
-import fuzzyMatching from './fuzzyMatching';
+import { ultimateFuzzyMatch } from './fuzzyMatching';
 
 async function fixText(Application: any, text: string) {
   if (!Application) {
@@ -16,7 +16,7 @@ async function fixText(Application: any, text: string) {
     message.warning('因排版或格式差异，未发现完全一致的内容，通过模糊匹配为您匹配到对应内容。');
     const range = await Application.ActiveDocument.Content;
     const content = await range.Text;
-    const fixedText = fuzzyMatching(text, content);
+    const fixedText = ultimateFuzzyMatch(text, content)?.matchRange?.substring;
     return fixedText;
   }
   return text;
@@ -41,11 +41,9 @@ async function focusText(Application: any, text: string) {
     return;
   }
   const r = await find(Application, fixedText);
-
   if (r?.[0]) {
     const { pos, len } = r[0];
     const range = await Application.ActiveDocument.Range(pos, pos + len);
-
     // 滚动文档窗口, 显示指定的区域
     await Application.ActiveDocument.ActiveWindow.ScrollIntoView(range);
   } else {
