@@ -555,7 +555,7 @@ export function getPayStatus(orderNo: string) {
 }
 
 export function queryBalance() {
-  return request('/api/llm-service//payment/wallet/balance', {
+  return request('/api/llm-service/payment/wallet/balance', {
     method: 'GET',
   });
 }
