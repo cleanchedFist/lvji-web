@@ -8,7 +8,6 @@ interface OfficeContextState {
   error: string | null;
   initializeSDK: () => void;
   fileName: string;
-  isAppReady: boolean;
 }
 
 // 2. 定义 Hook 返回的完整接口（状态 + 操作方法）
@@ -26,7 +25,6 @@ export const WebOfficeContext = React.createContext<OfficeContextState>({
   error: null,
   initializeSDK: () => {},
   fileName: '',
-  isAppReady: false,
 });
 
 /**

@@ -1,7 +1,9 @@
 import PageContainer from '@/components/PageContainer';
-import WebOfficeProvider from '@/utils/wps/wpsProvider';
+import WpsSkeleton from '@/components/WpsSkeleton';
+import useWpsHidden from '@/utils/wps/useWpsHidden';
+import WebOfficeProvider, { ProviderRef } from '@/utils/wps/wpsProvider';
 import { useParams } from '@umijs/max';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import AnalysisPanel from './components/AnalysisPanel';
 import ReviewLoading from './components/ReviewLoading';
 import ReviewPanel from './components/ReviewPanel';
@@ -10,10 +12,13 @@ import UseRequestFetch from './utils/UseRequestFetch';
 import useDragger from './utils/useDragger';
 
 const ContractView: React.FC = () => {
+  const providerRef = useRef<ProviderRef>();
   const [mode, setMode] = useState(0);
   const params = useParams();
   const containerRef = useRef(null);
   const { startDragging, isDragging, leftWidth } = useDragger(containerRef);
+  const { showWps, resetAutoHide } = useWpsHidden();
+  const [reinitialize, setReinitialize] = useState(false);
 
   const { fileId, isLoading, reviewChunkRespDTOList, reviewResultNewRespDTO, taskQueue } =
     UseRequestFetch(params.id!);
@@ -33,11 +38,18 @@ const ContractView: React.FC = () => {
     };
   }, [fileId]);
 
+  useEffect(() => {
+    if (reinitialize) {
+      providerRef?.current?.initialize();
+      setReinitialize(false);
+    }
+  }, [reinitialize]);
+
   return (
     <div className="[&_.ant-pro-page-container-children-container]:pr-0">
       <PageContainer>
         {sdkConfig && (
-          <WebOfficeProvider config={sdkConfig}>
+          <WebOfficeProvider ref={providerRef} config={sdkConfig} resetAutoHide={resetAutoHide}>
             <div
               className="flex-1 flex items-stretch overflow-hidden relative !m-0"
               ref={containerRef}
@@ -49,10 +61,20 @@ const ContractView: React.FC = () => {
                 }`}
                 style={{ width: `${leftWidth}%` }}
               >
-                <div
-                  id="wps-container"
-                  className="w-full border bg-white h-[calc(100vh-102px)]"
-                ></div>
+                {showWps && (
+                  <div
+                    id="wps-container"
+                    className="w-full border bg-white h-[calc(100vh-102px)]"
+                  ></div>
+                )}
+                {!showWps && (
+                  <WpsSkeleton
+                    handleNext={() => {
+                      setReinitialize(true);
+                      resetAutoHide();
+                    }}
+                  />
+                )}
               </div>
               {/* 拖拽把手 (Resizer) */}
               <div
