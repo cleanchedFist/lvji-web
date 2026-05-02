@@ -53,6 +53,8 @@ const ViolateItem = ({ party, data }: { data: responsibilitie[]; party: string }
 };
 
 const ViolateCard = ({ data }: { data: ViolateCardData }) => {
+  if (!data || !(data.contractee && data.contractor)) return <></>;
+  console.log(333, data);
   return (
     <AnalysisBaseCard title="违约责任">
       {data ? (

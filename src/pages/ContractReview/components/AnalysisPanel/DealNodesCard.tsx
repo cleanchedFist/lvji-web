@@ -19,8 +19,9 @@ const getIcon = (index: number) => {
 };
 
 const DealNodesCard = ({ data }: { data: DealNodesCardData[] }) => {
+  if (!data || !data.length) return <></>;
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm max-w-2xl mx-auto mb-2">
+    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm w-full mx-auto mb-2">
       <h2 className="text-xl font-bold mb-8 text-gray-800">交易流程</h2>
 
       <div className="relative ml-4 border-l-2 border-gray-50">

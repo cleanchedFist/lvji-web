@@ -35,6 +35,7 @@ const PurposeItem = ({ data }: { data: PurposeCardData }) => {
 };
 
 const PurposeCard = ({ data }: { data: PurposeCardData[] }) => {
+  if (!data || !data.length) return <></>;
   return (
     <AnalysisBaseCard title="合同目的">
       {data?.map((i, k) => (
