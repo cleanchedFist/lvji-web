@@ -177,6 +177,8 @@ export default defineConfig({
         ? 'http://175.27.214.13:11086' // 生产环境接口地址
         : '', // 开发环境留空，走 proxy.ts 转发
     'process.env.WS_URL': process.env.NODE_ENV === 'production' ? '' : 'ws://175.27.214.13:11086',
+    SHOW_PSB_FILLING: process.env.REACT_APP_ENV === 'prod' ? true : false,
+    ICP: process.env.REACT_APP_ENV === 'prod' ? '蜀ICP备2025165504号-1' : '蜀ICP备2025165504号-2',
   },
   // 不能删除，构建使用
   exportStatic: {},

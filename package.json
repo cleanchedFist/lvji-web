@@ -33,8 +33,8 @@
     "test:coverage": "npm run jest -- --coverage",
     "test:update": "npm run jest -- -u",
     "tsc": "tsc --noEmit",
-    "up:pre": "npm run build && gh-pages -d dist -b preview",
-    "up:prod": "npm run build && gh-pages -d dist -b prod"
+    "up:pre": "cross-env REACT_APP_ENV=pre npm run build && gh-pages -d dist -b preview",
+    "up:prod": "cross-env REACT_APP_ENV=prod npm run build && gh-pages -d dist -b prod"
   },
   "lint-staged": {
     "**/*.{jsx,ts,tsx}": "npm run lint-staged:js",

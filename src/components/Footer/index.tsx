@@ -3,25 +3,29 @@ import React from 'react';
 import PSBFilling from './components/PSBFilling';
 
 const Footer: React.FC = () => {
+  const links = [];
+
+  if (SHOW_PSB_FILLING) {
+    links.push({
+      key: 'Public Security Bureau Filing Number',
+      title: <PSBFilling />,
+      href: 'https://beian.miit.gov.cn/',
+      blankTarget: true,
+    });
+  }
+
+  links.push({
+    key: 'ICP',
+    title: `ICP备案/许可证号：${ICP}`,
+    href: 'https://beian.miit.gov.cn/',
+    blankTarget: true,
+  });
   return (
     <DefaultFooter
       style={{
         background: 'none',
       }}
-      links={[
-        {
-          key: 'Public Security Bureau Filing Number',
-          title: <PSBFilling />,
-          href: 'https://beian.miit.gov.cn/',
-          blankTarget: true,
-        },
-        {
-          key: 'ICP',
-          title: 'ICP备案/许可证号：蜀ICP备2025165504号-1',
-          href: 'https://beian.miit.gov.cn/',
-          blankTarget: true,
-        },
-      ]}
+      links={links}
     />
   );
 };
