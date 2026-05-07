@@ -25,6 +25,7 @@ export async function getInitialState(): Promise<{
   isUserRole?: boolean;
   balance?: { frozenBalance: number; availableBalance: number; totalBalance: number };
 }> {
+  console.log('代码更新时间：2026/05/06');
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser({

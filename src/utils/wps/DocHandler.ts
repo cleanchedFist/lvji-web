@@ -47,7 +47,7 @@ async function focusText(Application: any, text: string) {
     // 滚动文档窗口, 显示指定的区域
     await Application.ActiveDocument.ActiveWindow.ScrollIntoView(range);
   } else {
-    message.warning('因格式问题匹配原文失败，请手动定位查找');
+    message.warning('WPS 匹配失败');
   }
 }
 
