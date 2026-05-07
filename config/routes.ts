@@ -25,6 +25,11 @@ export default [
         path: '/user/regist',
         component: './User/Regist',
       },
+      {
+        name: 'forget',
+        path: '/user/forget',
+        component: './User/ForgotPassword',
+      },
     ],
   },
   {

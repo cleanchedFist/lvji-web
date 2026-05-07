@@ -3,7 +3,7 @@ import { lawyerRegist, regist } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, MobileOutlined, SwitcherOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProForm, ProFormText } from '@ant-design/pro-components';
-import { Helmet, history } from '@umijs/max';
+import { Helmet, history, Link } from '@umijs/max';
 import { message } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
@@ -169,6 +169,9 @@ const Regist: React.FC = () => {
               ]}
             />
           )}
+          <div className="flex mb-6 justify-between">
+            <Link to="/user/login">返回登录</Link>
+          </div>
         </LoginForm>
       </div>
       <Footer />

@@ -177,15 +177,12 @@ const Login: React.FC = () => {
             />
           </>
 
-          <div
-            style={{
-              marginBottom: 24,
-            }}
-          >
+          <div className="flex mb-6 justify-between">
             {/* <ProFormCheckbox noStyle name="autoLogin">
               <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
             </ProFormCheckbox> */}
             <Link to="/user/regist">注册</Link>
+            <Link to={`/user/forget?type=${role}`}>忘记密码</Link>
           </div>
         </LoginForm>
       </div>
