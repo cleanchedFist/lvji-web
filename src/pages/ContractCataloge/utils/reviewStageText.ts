@@ -20,7 +20,7 @@ export const reviewStageTheme = (stage?: number) => {
     case 1:
       return 'bg-indigo-50 text-indigo-600';
     case 2:
-      return 'bg-indigo-50 text-indigo-600';
+      return 'bg-sky-50 text-sky-600';
     case 3:
       return 'bg-emerald-50 text-emerald-600';
     default:

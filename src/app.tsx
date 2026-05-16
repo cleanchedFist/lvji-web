@@ -83,6 +83,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
           '/user/login',
           '/user/regist',
           '/clm/reviews/file/:id',
+          '/clm/reviews/step/:id',
         ];
         const rootPath = whiteList[0];
         const isAllowed = whiteList.some((p) => matchPath({ path: p }, pathname));

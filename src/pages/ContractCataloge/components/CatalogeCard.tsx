@@ -2,11 +2,16 @@ import { FileText, Guard } from '@/components/Icon';
 import NormalBtn from '@/components/NormalBtn';
 import { deleteContractDir, setReviewDown } from '@/services/ant-design-pro/api';
 import { Contract_Type } from '@/utils/const';
-import { clientFileDownload, contractDownload } from '@/utils/contractHandle';
+import {
+  clientFileDownload,
+  contractDownload,
+  fixedContractDownload,
+  reviewReportDownload,
+} from '@/utils/contractHandle';
 import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { Modal, message } from 'antd';
-import { Download, Trash2 } from 'lucide-react';
+import { Download, Loader2, Sparkles, Trash2 } from 'lucide-react';
 import { useContext, useMemo } from 'react';
 import { useModel } from 'umi';
 import { ActionContext, CatalogePageContext } from '../utils/context';
@@ -46,7 +51,12 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
 
   const downloadReviewVersion = (data: API.CatalogeCardProps) => {
     const contractName = data.name;
-    contractDownload({ contractName, fileId: data.latestFileId, reviewId: data.reviewId });
+    fixedContractDownload({ contractName, fileId: data.latestFileId, reviewId: data.reviewId });
+  };
+
+  const downloadReviewReport = (data: API.CatalogeCardProps) => {
+    const contractName = data.name;
+    reviewReportDownload({ contractName, fileId: data.latestFileId, reviewId: data.reviewId });
   };
 
   const handleDelete = (id: number) => {
@@ -94,6 +104,10 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
     }
     return '';
   }, [contract.stage, contract.version]);
+
+  const isAiProcessing = useMemo(() => {
+    return contract.stage === 1;
+  }, [contract.stage]);
   return (
     <div className="bg-white hover:shadow-md rounded-xl w-full border border-gray-100">
       {/* 头部区域：标题、元数据和操作按钮 */}
@@ -127,6 +141,25 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
 
           {/* 右侧：操作图标和主按钮 */}
           <div className="flex items-center">
+            {listType === Contract_Type.ClientUpload && (
+              <button
+                type="button"
+                onClick={() => handleReview(contract)}
+                disabled={isAiProcessing}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all mr-5 ${
+                  isAiProcessing
+                    ? 'bg-purple-100 text-purple-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg active:scale-95'
+                }`}
+              >
+                {isAiProcessing ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4 text-purple-200" />
+                )}
+                {isAiProcessing ? 'AI 正在审查中...' : '发起 AI 审查'}
+              </button>
+            )}
             {/* 下载图标 */}
             <button
               type="button"
@@ -194,10 +227,19 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
         {listType === Contract_Type.ClientUpload && (
           <CatalogeCardBtn
             onClick={() => downloadReviewVersion(contract)}
-            disabled={contract.stage !== 3}
+            disabled={!!contract.stage && [0, 1].includes(contract.stage)}
           >
             <Guard />
             下载审查版本
+          </CatalogeCardBtn>
+        )}
+        {listType === Contract_Type.ClientUpload && (
+          <CatalogeCardBtn
+            onClick={() => downloadReviewReport(contract)}
+            disabled={!!contract.stage && [0, 1].includes(contract.stage)}
+          >
+            <Guard />
+            下载审查报告
           </CatalogeCardBtn>
         )}
         {listType !== Contract_Type.ClientUpload && (
