@@ -28,6 +28,8 @@ module.exports = {
     'bg-emerald-50',
     'text-emerald-600',
     'bg-sky-50',
-    'text-sky-600'
+    'text-sky-600',
+    'bg-rose-50', 
+    'text-rose-600'
   ]
 };

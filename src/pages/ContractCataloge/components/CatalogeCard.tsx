@@ -145,9 +145,9 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
               <button
                 type="button"
                 onClick={() => handleReview(contract)}
-                disabled={isAiProcessing}
+                disabled={![0, 4].includes(contract.stage as number)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all mr-5 ${
-                  isAiProcessing
+                  ![0, 4].includes(contract.stage as number)
                     ? 'bg-purple-100 text-purple-400 cursor-not-allowed'
                     : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg active:scale-95'
                 }`}
@@ -227,7 +227,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
         {listType === Contract_Type.ClientUpload && (
           <CatalogeCardBtn
             onClick={() => downloadReviewVersion(contract)}
-            disabled={!!contract.stage && [0, 1].includes(contract.stage)}
+            disabled={[0, 1, 4].includes(contract.stage as number)}
           >
             <Guard />
             下载审查版本
@@ -236,7 +236,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
         {listType === Contract_Type.ClientUpload && (
           <CatalogeCardBtn
             onClick={() => downloadReviewReport(contract)}
-            disabled={!!contract.stage && [0, 1].includes(contract.stage)}
+            disabled={[0, 1, 4].includes(contract.stage as number)}
           >
             <Guard />
             下载审查报告
