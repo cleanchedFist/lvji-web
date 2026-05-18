@@ -46,6 +46,7 @@ const filterFn = (type: string) => {
 
 const ReviewPanel = ({ fileType, data }: ReviewPanelProps) => {
   const [activeTab, setActiveTab] = useState('全部');
+  const [inRevise, setInRevise] = useState(false);
   const reviewItemsData = useMemo(() => {
     if (activeTab === '全部') {
       return formReviewPanelData(data);
@@ -64,7 +65,14 @@ const ReviewPanel = ({ fileType, data }: ReviewPanelProps) => {
         {' '}
         {/* 负边距和填充用于自定义滚动条区域 */}
         {reviewItemsData.map((item, index) => (
-          <ReviewCard allowRevise={fileType !== 'f'} key={item.id} index={index} data={item} />
+          <ReviewCard
+            allowRevise={fileType !== 'f'}
+            elseInRevise={inRevise}
+            setInRevise={setInRevise}
+            key={item.id}
+            index={index}
+            data={item}
+          />
         ))}
         <div className="text-center text-gray-400 text-sm py-4">--- 审查项已加载完毕 ---</div>
       </div>

@@ -35,10 +35,14 @@ type ReviewCardProps = BaseReviewData & {
 const ReviewCard = ({
   allowRevise,
   index,
+  setInRevise,
+  elseInRevise,
   data = {} as ReviewCardProps,
 }: {
   allowRevise: boolean;
   index: number;
+  elseInRevise: boolean;
+  setInRevise: (inRevise: boolean) => void;
   data: ReviewCardProps;
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -83,12 +87,14 @@ const ReviewCard = ({
       })
       .finally(() => {
         setReviseLoading(false);
+        setInRevise(false);
       });
   }
 
   function handleRevise() {
     // revised 当前是需要接受修订状态，因此，执行accept 以及设置为
     setReviseLoading(true);
+    setInRevise(true);
     handleWpsRevise(!revised, (success: boolean) => {
       if (success) {
         UpdateReviseState(data.id, !revised);
@@ -170,11 +176,11 @@ const ReviewCard = ({
 
                 {allowRevise && (
                   <button
-                    disabled={reviseLoading}
+                    disabled={reviseLoading || elseInRevise}
                     type="button"
                     onClick={handleRevise}
                     className={`flex items-center text-xs font-medium py-1 px-3 rounded-full shadow-md shadow-indigo-300 transition-colors text-white ${
-                      reviseLoading
+                      reviseLoading || elseInRevise
                         ? 'bg-indigo-600 opacity-40 cursor-not-allowed'
                         : 'bg-indigo-600 hover:bg-indigo-700'
                     }`}
