@@ -37,7 +37,7 @@ function handleDel(row: API.AnalysisListItem, action: any) {
 }
 
 function handleExport(row: API.AnalysisListItem) {
-  contractDownload({ contractName: row.contractName, fileId: row.fileId, reviewId: row.reviewId });
+  contractDownload({ contractName: row.contractName, fileId: +row.fileId, reviewId: row.reviewId });
 }
 
 function handleView(row: API.AnalysisListItem) {
@@ -193,7 +193,7 @@ const columns: ProColumns<API.AnalysisListItem>[] = [
         onClick={() => handleExport(record)}
         className="text-slate-500 hover:text-slate-700 font-medium text-xs hover:underline cursor-pointer"
       >
-        导出报告
+        导出合同
       </span>,
     ],
   },
