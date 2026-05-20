@@ -4,7 +4,6 @@ import { forwardRef, useContext, useImperativeHandle, useMemo, useRef } from 're
 import { CatalogePageContext } from '../../utils/context';
 import ClientConfirmModal, { ClientConfirmModalHandler } from './ClientConfirmModal';
 import {
-  LawyerField,
   ModelField,
   ParseField,
   RequirementField,
@@ -114,13 +113,13 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
                 modelOptions={state.modelOptions}
               />
             )}
-            {hasFeature('lawyer') && (
+            {/* {hasFeature('lawyer') && (
               <LawyerField
                 lawyerId={state.lawyerId}
                 lawyerOptions={state.lawyerOptions}
                 onChange={actions.setLawyerId}
               />
-            )}
+            )} */}
             {hasFeature('parse') && (
               <ParseField shouldParse={state.shouldParse} onChange={actions.setShouldParse} />
             )}
