@@ -36,12 +36,14 @@ const UploadContractModal = forwardRef<UploadContractModalRef>((props, ref) => {
   const { hasFeature } = actions;
 
   const okBtnDisabled = useMemo(() => {
-    return !!(
-      state.orderPrice &&
+    const isTooLong =
+      state.step === 2 && state.contractWordCount && state.contractWordCount > 25000;
+    const isInsufficient =
       state.step === 2 &&
-      +(initialState?.balance?.availableBalance || 0) < +state.orderPrice
-    );
-  }, [initialState?.balance, state.orderPrice, state.step]);
+      state.orderPrice &&
+      +(initialState?.balance?.availableBalance || 0) < +state.orderPrice;
+    return !!(isTooLong || isInsufficient);
+  }, [initialState?.balance, state.orderPrice, state.step, state.contractWordCount]);
 
   // 对外暴露 API
   useImperativeHandle(ref, () => ({
