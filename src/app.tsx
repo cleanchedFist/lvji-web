@@ -2,6 +2,7 @@ import { AvatarDropdown, AvatarName, Footer } from '@/components';
 import usePageHistory from '@/hooks/usePageHistory';
 import useSessionStorage from '@/hooks/useSessionStorage';
 import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
+import { CODE_UPDATE_TIME } from '@/utils/timestamp';
 import { LeftOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
@@ -25,7 +26,7 @@ export async function getInitialState(): Promise<{
   isUserRole?: boolean;
   balance?: { frozenBalance: number; availableBalance: number; totalBalance: number };
 }> {
-  console.log('代码更新时间：2026/05/06');
+  console.log(`代码更新时间：${new Date(CODE_UPDATE_TIME).toLocaleString()}`);
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser({
@@ -83,6 +84,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
           '/user/login',
           '/user/regist',
           '/clm/reviews/file/:id',
+          '/clm/reviews/step/:id',
         ];
         const rootPath = whiteList[0];
         const isAllowed = whiteList.some((p) => matchPath({ path: p }, pathname));

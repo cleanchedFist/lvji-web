@@ -53,7 +53,7 @@ const CatalogeList = forwardRef((props: any, ref) => {
       const params = {
         size: PAGE_SIZE,
         current: page,
-        word: key,
+        words: key,
       };
 
       const dataFn = tabId === 1 ? getAssignedDirList : getDirList;

@@ -614,3 +614,10 @@ export function contractReview(reviewId: number, params: Record<string, any>) {
     data: params,
   });
 }
+
+export function downloadFixedContract(reviewId: number) {
+  return request<BlobPart>(`/api/llm-service/download/auto-fixed/${reviewId}`, {
+    method: 'GET',
+    responseType: 'blob',
+  });
+}

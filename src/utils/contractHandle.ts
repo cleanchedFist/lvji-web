@@ -1,5 +1,6 @@
 import {
   downloadClientFile,
+  downloadFixedContract,
   downloadReview,
   downReviewReport,
   getFileInfo,
@@ -72,6 +73,23 @@ export const reviewReportDownload = async (props: {
   try {
     const data = await downReviewReport(+props.reviewId);
     const result = blobFileDownload(data, `审查报告-${props.contractName}`, 'doc');
+    hide();
+    return result;
+  } catch (e) {
+    hide();
+    return false;
+  }
+};
+
+export const fixedContractDownload = async (props: {
+  fileId: number;
+  contractName: string;
+  reviewId: string | number;
+}) => {
+  const hide = message.loading('正在导出');
+  try {
+    const data = await downloadFixedContract(+props.reviewId);
+    const result = blobFileDownload(data, `修订版本-${props.contractName}`, 'doc');
     hide();
     return result;
   } catch (e) {

@@ -36,7 +36,7 @@ const useUploadLogic = (
   // fileds
   const [nextVersion, setNextVersion] = useState('1.0.0');
   const [model, setModel] = useState<string>('deepseek-v3.2');
-  const [lawyerId, setLawyerId] = useState<number>();
+  const [lawyerId, setLawyerId] = useState<number>(6);
   const [shouldParse, setShouldParse] = useState<boolean>(false);
   const [requirement, setRequirement] = useState<string>('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
