@@ -8,6 +8,7 @@ import { message } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import Settings from '../../../../config/defaultSettings';
+import VertifyCode from '../components/VertifyCode';
 import RegistType from './components/RegistType';
 
 const useStyles = createStyles(({ token }) => {
@@ -125,6 +126,15 @@ const Regist: React.FC = () => {
               },
             ]}
           />
+          <ProForm.Item
+            name="code"
+            rules={[
+              { required: true, message: '请输入验证码！' },
+              { pattern: /^\d{6}$/, message: '验证码格式错误！' },
+            ]}
+          >
+            <VertifyCode type="regist"></VertifyCode>
+          </ProForm.Item>
           <ProFormText
             name="username"
             fieldProps={{

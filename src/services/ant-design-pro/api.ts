@@ -621,3 +621,50 @@ export function downloadFixedContract(reviewId: number) {
     responseType: 'blob',
   });
 }
+
+export function sendSmsCodeForReset(phoneNumber: number) {
+  return request('/api/user-service/password/forgot', {
+    method: 'POST',
+    data: {
+      phoneNumber: phoneNumber,
+    },
+  });
+}
+
+export function verifySmsCode({ phoneNumber, code }: { phoneNumber: number; code: string }) {
+  return request('/api/user-service/password/verify', {
+    method: 'POST',
+    data: {
+      phoneNumber: phoneNumber,
+      code: code,
+    },
+  });
+}
+
+export function resetPassword({
+  phoneNumber,
+  password,
+  resetToken,
+}: {
+  phoneNumber: number;
+  password: string;
+  resetToken: string;
+}) {
+  return request('/api/user-service/password/reset', {
+    method: 'POST',
+    data: {
+      phoneNumber: phoneNumber,
+      newPassword: password,
+      resetToken: resetToken,
+    },
+  });
+}
+
+export function sendSmsCode(phoneNumber: number) {
+  return request('/api/user-service/register/send-code', {
+    method: 'POST',
+    data: {
+      phoneNumber: phoneNumber,
+    },
+  });
+}

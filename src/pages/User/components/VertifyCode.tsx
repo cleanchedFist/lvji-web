@@ -1,12 +1,16 @@
-import { Input } from 'antd';
+import { sendSmsCode, sendSmsCodeForReset } from '@/services/ant-design-pro/api';
+import { Form, Input, message } from 'antd';
 import { ShieldCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
 type RegistTypeProps = {
   onChange?: (data: string) => void;
   value?: string;
+  type: string;
 };
-export default function VertifyCode({ value, onChange = () => {} }: RegistTypeProps) {
+export default function VertifyCode({ type, value, onChange = () => {} }: RegistTypeProps) {
   const [countdown, setCountdown] = useState(0);
+  const form = Form.useFormInstance();
   // 倒计时逻辑
   useEffect(() => {
     if (countdown > 0) {
@@ -14,10 +18,18 @@ export default function VertifyCode({ value, onChange = () => {} }: RegistTypePr
       return () => clearTimeout(timer);
     }
   }, [countdown]);
-  const handleSendCode = () => {
-    if (countdown === 0) {
+  const handleSendCode = async () => {
+    if (!form || countdown) return;
+    try {
+      await form.validateFields(['phoneNumber']);
+      const phoneNumber = form.getFieldValue('phoneNumber');
+      const sendCode = type === 'regist' ? sendSmsCode : sendSmsCodeForReset;
+      await sendCode(phoneNumber);
+
       setCountdown(60);
-      // 这里添加发送验证码的逻辑
+      message.success('验证码已发送！');
+    } catch (e) {
+      console.log('表单校验未通过:', e);
     }
   };
   return (

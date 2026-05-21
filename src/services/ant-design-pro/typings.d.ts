@@ -72,6 +72,17 @@ declare namespace API {
     password?: string;
     autoLogin?: boolean;
     type?: string;
+    phoneNumber?: number;
+    code?: string;
+  };
+
+  type RegistParams = {
+    username?: string;
+    password: string;
+    autoLogin?: boolean;
+    type?: string;
+    phoneNumber: number;
+    code: string;
   };
 
   type ErrorResponse = {

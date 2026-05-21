@@ -1,15 +1,14 @@
 import { Footer } from '@/components';
-import { lawyerRegist, regist } from '@/services/ant-design-pro/api';
+import { resetPassword, verifySmsCode } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, MobileOutlined } from '@ant-design/icons';
 import { LoginForm, ProForm, ProFormText } from '@ant-design/pro-components';
-import { Helmet, history, Link, useSearchParams } from '@umijs/max';
+import { Helmet, history, Link } from '@umijs/max';
 import { message } from 'antd';
 import { createStyles } from 'antd-style';
 import React from 'react';
 import Settings from '../../../../config/defaultSettings';
-import RegistType from './components/RegistType';
-import VertifyCode from './components/VertifyCode';
+import VertifyCode from '../components/VertifyCode';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -51,21 +50,16 @@ const Regist: React.FC = () => {
   const { styles } = useStyles();
   const { styles: loginStyle } = UseLoginStyles();
 
-  const [searchParams] = useSearchParams();
-  const type = searchParams.get('type');
-
-  const handleSubmit = async (values: API.LoginParams) => {
+  const handleSubmit = async (values: API.RegistParams) => {
     try {
       // 登录
-      if (values?.type === 'lawyer') {
-        await lawyerRegist({ ...values });
-      } else {
-        await regist({ ...values });
-      }
-      message.success('注册成功！');
+      const { phoneNumber, code, password } = values;
+      const { data } = await verifySmsCode({ phoneNumber, code });
+      await resetPassword({ phoneNumber, password, resetToken: data });
+      message.success('密码重置成功，请登陆');
       history.push('/user/login');
     } catch (error) {
-      console.log('xxx', error);
+      message.error('重置失败，请重试');
     }
   };
 
@@ -74,15 +68,15 @@ const Regist: React.FC = () => {
       minWidth: 280,
       maxWidth: '75vw',
     },
-    logo: <img alt="logo" src="/logo.svg" />,
+    // logo: <img alt="logo" src="/logo.svg" />,
     title: '合同 AI',
     submitter: {
       searchConfig: {
         submitText: '确认修改',
       },
     },
-    onFinish: async (values: API.LoginParams) => {
-      await handleSubmit(values as API.LoginParams);
+    onFinish: async (values: API.RegistParams) => {
+      await handleSubmit(values as API.RegistParams);
     },
   };
 
@@ -95,9 +89,9 @@ const Regist: React.FC = () => {
         <LoginForm {...loginFormConfig}>
           <div className="h-4"></div>
 
-          <ProForm.Item name="type" initialValue={type === '1' ? 'lawyer' : 'user'}>
+          {/* <ProForm.Item name="type" initialValue={type === '1' ? 'lawyer' : 'user'}>
             <RegistType />
-          </ProForm.Item>
+          </ProForm.Item> */}
 
           <ProFormText
             name="phoneNumber"
@@ -109,13 +103,13 @@ const Regist: React.FC = () => {
             ]}
           />
           <ProForm.Item
-            name="captcha"
+            name="code"
             rules={[
               { required: true, message: '请输入验证码！' },
               { pattern: /^\d{6}$/, message: '验证码格式错误！' },
             ]}
           >
-            <VertifyCode></VertifyCode>
+            <VertifyCode type="reset"></VertifyCode>
           </ProForm.Item>
           <ProFormText.Password
             name="password"
