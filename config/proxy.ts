@@ -19,8 +19,8 @@ export default {
     // },
     '/api/': {
       // 要代理的地址
-      target: 'https://www.lawyercentralai.cn/', // 测试
-      // target: 'http://175.27.214.13:11086', // 正式
+      // target: 'https://www.lawyercentralai.cn/', // 测试
+      target: 'http://175.27.214.13:11086', // 正式
       secure: false,
       // 配置了这个可以从 http 代理到 https
       changeOrigin: true,

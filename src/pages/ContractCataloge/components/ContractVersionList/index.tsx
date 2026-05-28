@@ -93,12 +93,12 @@ const ContractVersionList = forwardRef<ContractVersionListRef>((props: any, ref)
                 >
                   版本历史
                 </button>
-                <button
+                {/* <button
                   type="button"
                   className="px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-700"
                 >
                   版本对比
-                </button>
+                </button> */}
               </div>
               <List style={{ maxHeight: '400px', overflow: 'scroll' }}>
                 {versionList?.map((i) => (
