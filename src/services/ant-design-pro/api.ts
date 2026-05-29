@@ -32,6 +32,16 @@ export async function login(body: API.LoginParams) {
   });
 }
 
+export function smsLogin(body: API.LoginParams) {
+  return request('/api/user-service/login/sms', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+  });
+}
+
 export async function regist(body: API.LoginParams) {
   return request<API.LoginResult>('/api/user-service/register', {
     method: 'POST',
@@ -662,6 +672,15 @@ export function resetPassword({
 
 export function sendSmsCode(phoneNumber: number) {
   return request('/api/user-service/register/send-code', {
+    method: 'POST',
+    data: {
+      phoneNumber: phoneNumber,
+    },
+  });
+}
+
+export function sendLoginSmsCode(phoneNumber: number) {
+  return request('/api/user-service/login/send-code', {
     method: 'POST',
     data: {
       phoneNumber: phoneNumber,

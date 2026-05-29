@@ -1,4 +1,4 @@
-import { sendSmsCode, sendSmsCodeForReset } from '@/services/ant-design-pro/api';
+import { sendLoginSmsCode, sendSmsCode, sendSmsCodeForReset } from '@/services/ant-design-pro/api';
 import { Form, Input, message } from 'antd';
 import { ShieldCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -23,7 +23,8 @@ export default function VertifyCode({ type, value, onChange = () => {} }: Regist
     try {
       await form.validateFields(['phoneNumber']);
       const phoneNumber = form.getFieldValue('phoneNumber');
-      const sendCode = type === 'regist' ? sendSmsCode : sendSmsCodeForReset;
+      const sendCode =
+        type === 'regist' ? sendSmsCode : type === 'login' ? sendLoginSmsCode : sendSmsCodeForReset;
       await sendCode(phoneNumber);
 
       setCountdown(60);
