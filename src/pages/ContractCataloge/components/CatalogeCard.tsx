@@ -99,7 +99,7 @@ const CatalogeCard = ({ contract }: { contract: API.CatalogeCardProps }) => {
   };
 
   const tagPrefix = useMemo(() => {
-    if (contract.stage === 0 && contract.version !== '1.0.0') {
+    if (contract.stage === 0 && contract.version && contract.version !== '1.0.0') {
       return '新版本';
     }
     return '';
