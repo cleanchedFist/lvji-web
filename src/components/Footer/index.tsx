@@ -5,14 +5,12 @@ import PSBFilling from './components/PSBFilling';
 const Footer: React.FC = () => {
   const links = [];
 
-  if (SHOW_PSB_FILLING) {
-    links.push({
-      key: 'Public Security Bureau Filing Number',
-      title: <PSBFilling />,
-      href: 'https://beian.miit.gov.cn/',
-      blankTarget: true,
-    });
-  }
+  links.push({
+    key: 'Public Security Bureau Filing Number',
+    title: <PSBFilling code={PSB} />,
+    href: 'https://beian.miit.gov.cn/',
+    blankTarget: true,
+  });
 
   links.push({
     key: 'ICP',

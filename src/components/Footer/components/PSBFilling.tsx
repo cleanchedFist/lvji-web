@@ -1,9 +1,9 @@
 import banner from '@/static/PSB.jpg';
-export default function PSBFilling() {
+export default function PSBFilling({ code }: { code: string }) {
   return (
     <div style={{ display: 'inline-block' }}>
       <img style={{ display: 'inline-block', width: 16 }} src={banner} alt="川公网安备"></img>
-      <span>川公网安备 51019002008297号</span>
+      <span>川公网安备 {code}</span>
     </div>
   );
 }

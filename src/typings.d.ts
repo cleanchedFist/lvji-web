@@ -19,5 +19,5 @@ declare module 'bizcharts-plugin-slider';
 declare module '*/web-office-sdk-solution-v1.1.27.es.js';
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
-declare const SHOW_PSB_FILLING: boolean;
+declare const PSB: string;
 declare const ICP: string;
