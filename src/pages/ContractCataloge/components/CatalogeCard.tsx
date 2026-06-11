@@ -8,6 +8,7 @@ import {
   fixedContractDownload,
   reviewReportDownload,
 } from '@/utils/contractHandle';
+import { formatTime } from '@/utils/formatTime';
 import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { Modal, message } from 'antd';
@@ -15,7 +16,6 @@ import { Download, Loader2, Sparkles, Trash2 } from 'lucide-react';
 import { useContext, useMemo } from 'react';
 import { useModel } from 'umi';
 import { ActionContext, CatalogePageContext } from '../utils/context';
-import { formatTime } from '../utils/formatTime';
 import { reviewStageText, reviewStageTheme } from '../utils/reviewStageText';
 import CatalogeCardBtn from './CatalogeCardBtn';
 /**

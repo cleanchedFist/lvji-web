@@ -1,3 +1,4 @@
+import { formatTime } from '@/utils/formatTime';
 import { useModel } from '@umijs/max';
 import { Check, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
@@ -43,7 +44,9 @@ const NoticeCard = ({ notices }: { notices: API.NoticeItem[] }) => {
                 <span className="text-[10px] font-extrabold tracking-wider px-2 py-0.5 rounded-full uppercase bg-indigo-100 text-indigo-700">
                   系统更新
                 </span>
-                <span className="text-xs text-slate-400 font-medium">{currentNotif.datetime}</span>
+                <span className="text-xs text-slate-400 font-medium">
+                  {formatTime(currentNotif.createTimeStamp)}
+                </span>
               </div>
               <h3 className="text-lg font-extrabold text-slate-800 leading-snug">
                 {currentNotif.title}
@@ -54,7 +57,7 @@ const NoticeCard = ({ notices }: { notices: API.NoticeItem[] }) => {
           {/* 具体文本内容 */}
           <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5">
             <p className="text-sm text-slate-600 leading-relaxed font-normal whitespace-pre-line">
-              {currentNotif.description}
+              {currentNotif.content}
             </p>
           </div>
         </div>

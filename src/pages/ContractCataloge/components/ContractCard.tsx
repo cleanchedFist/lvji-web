@@ -1,6 +1,7 @@
 import { removeContract, setReviewDown } from '@/services/ant-design-pro/api';
 import { Contract_Type } from '@/utils/const';
 import { clientFileDownload, contractDownload } from '@/utils/contractHandle';
+import { formatTime } from '@/utils/formatTime';
 import { deleteModalConfig } from '@/utils/modalConfig';
 import { history } from '@umijs/max';
 import { message, Modal } from 'antd';
@@ -8,7 +9,6 @@ import { FileText } from 'lucide-react';
 import { useContext } from 'react';
 import { useModel } from 'umi';
 import { CatalogePageContext } from '../utils/context';
-import { formatTime } from '../utils/formatTime';
 import { reviewStageText, reviewStageTheme } from '../utils/reviewStageText';
 import CatalogeCardBtn from './ContractCardBtn';
 
