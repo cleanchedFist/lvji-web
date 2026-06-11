@@ -1,17 +1,19 @@
-import { AvatarDropdown, AvatarName, Footer } from '@/components';
-import usePageHistory from '@/hooks/usePageHistory';
-import useSessionStorage from '@/hooks/useSessionStorage';
-import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
-import { CODE_UPDATE_TIME } from '@/utils/timestamp';
 import { LeftOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, matchPath, matchRoutes } from '@umijs/max';
+
+import { AvatarDropdown, AvatarName, Footer, ForceNoticeModal } from '@/components';
+import usePageHistory from '@/hooks/usePageHistory';
+import useSessionStorage from '@/hooks/useSessionStorage';
+import { getNotices, currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
+import { CODE_UPDATE_TIME } from '@/utils/timestamp';
+
 import defaultSettings from '../config/defaultSettings';
 import './git-markdown.less';
 import './markdown.css';
 import { errorConfig } from './requestErrorConfig';
-// const isDev = process.env.NODE_ENV === 'development';
+
 const loginPath = '/user/login';
 const registPath = '/user/regist';
 const ReivewResultPath = { path: '/clm/reviews/result/:id' };
@@ -25,6 +27,7 @@ export async function getInitialState(): Promise<{
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
   isUserRole?: boolean;
   balance?: { frozenBalance: number; availableBalance: number; totalBalance: number };
+  notices?: API.NoticeItem[];
 }> {
   console.log(`代码更新时间：${new Date(CODE_UPDATE_TIME).toLocaleString()}`);
   const fetchUserInfo = async () => {
@@ -46,12 +49,13 @@ export async function getInitialState(): Promise<{
   // 如果不是登录页面，执行
   const { location } = history;
   if (location.pathname !== loginPath && location.pathname !== registPath) {
-    const currentUser = await fetchUserInfo();
+    const [currentUser, noticesRes] = await Promise.all([fetchUserInfo(), getNotices()]);
     return {
       fetchUserInfo,
       currentUser,
       settings: defaultSettings as Partial<LayoutSettings>,
       isUserRole: currentUser?.role === 'user',
+      notices: noticesRes?.data?.records || [],
       balance: {
         frozenBalance: 0,
         availableBalance: 0,
@@ -61,6 +65,7 @@ export async function getInitialState(): Promise<{
   }
   return {
     fetchUserInfo,
+    notices: [],
     settings: defaultSettings as Partial<LayoutSettings>,
   };
 }
@@ -165,40 +170,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         history.push('/');
       }
     },
-
-    // links: isDev
-    //   ? [
-    //       <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-    //         <LinkOutlined />
-    //         <span>OpenAPI 文档</span>
-    //       </Link>,
-    //     ]
-    //   : [],
     menuHeaderRender: undefined,
-    // 自定义 403 页面
-    // unAccessible: <div>unAccessible</div>,
-    // 增加一个 loading 的状态
-    // childrenRender: (children) => {
-    //   // if (initialState?.loading) return <PageLoading />;
-    //   return (
-    //     <>
-    //       {children}
-    //       {isDev && (
-    //         <SettingDrawer
-    //           disableUrlParams
-    //           enableDarkTheme
-    //           settings={initialState?.settings}
-    //           onSettingChange={(settings) => {
-    //             setInitialState((preInitialState) => ({
-    //               ...preInitialState,
-    //               settings,
-    //             }));
-    //           }}
-    //         />
-    //       )}
-    //     </>
-    //   );
-    // },
     menuExtraRender: (menuProps) => {
       const styleObj = {
         color: '#4f46e5',
@@ -219,6 +191,15 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         </div>
       ) : (
         <></>
+      );
+    },
+    childrenRender: (children) => {
+      return (
+        <>
+          {children}
+          {/* 这里的全局组件可以完美使用 useModel，因为它在 Layout 内部 */}
+          <ForceNoticeModal />
+        </>
       );
     },
     ...initialState?.settings,

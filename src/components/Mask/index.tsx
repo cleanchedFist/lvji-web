@@ -1,11 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+
+let openMaskCount = 0;
 
 const Mask = ({ children, visible }: { children: React.ReactNode; visible: boolean }) => {
+  const isLockedByThisInstance = useRef<boolean>(false);
   useEffect(() => {
-    if (visible) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+    if (visible && !isLockedByThisInstance.current) {
+      openMaskCount++;
+      isLockedByThisInstance.current = true;
+      if (openMaskCount === 1) {
+        document.body.style.overflow = 'hidden';
+      }
+    } else if (!visible && isLockedByThisInstance.current) {
+      openMaskCount--;
+      isLockedByThisInstance.current = false; // 释放标记
+      if (openMaskCount === 0) {
+        document.body.style.overflow = '';
+      }
     }
   }, [visible]);
 

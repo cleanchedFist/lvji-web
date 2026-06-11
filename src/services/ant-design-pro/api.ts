@@ -63,10 +63,103 @@ export async function lawyerRegist(body: API.LoginParams) {
 }
 
 /** 此处后端没有提供注释 GET /api/notices */
-export async function getNotices(options?: { [key: string]: any }) {
-  return request<API.NoticeIconList>('/api/notices', {
-    method: 'GET',
-    ...(options || {}),
+export async function getNotices(options?: {
+  [key: string]: any;
+}): Promise<{ success: boolean; data: API.NoticeList }> {
+  // return request<API.NoticeList>('/api/notices', {
+  //   method: 'GET',
+  //   ...(options || {}),
+  // });
+
+  return new Promise((resolve) => {
+    const data = {
+      success: true,
+      data: {
+        current: 1,
+        size: 8,
+        total: 8,
+        records: [
+          // 1. 通知类 (notification)
+          {
+            id: '000000001',
+            avatar:
+              'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/MSbNSpbNargAAAAAAAAAAAAAFl94AQBr',
+            title: '你收到了 14 份新周报',
+            description: '这种产品自动化程度高，可以大大提升效率。',
+            datetime: '2026-06-10',
+            type: 'notification' as API.NoticeItemType,
+          },
+          {
+            id: '000000002',
+            avatar:
+              'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/h7bSREvN1cAAAAAAAAAAAAAAFl94AQBr',
+            title: '你推荐的 林白已 通过第三轮面试',
+            description: '这种产品自动化程度高，可以大大提升效率。',
+            datetime: '2026-06-09',
+            type: 'notification' as API.NoticeItemType,
+          },
+          {
+            id: '000000003',
+            avatar:
+              'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/jB8vS5tdZ6wAAAAAAAAAAAAAFl94AQBr',
+            title: '这种模板可以区分已读和未读状态',
+            description: '这种产品自动化程度高，可以大大提升效率。',
+            datetime: '2026-06-08',
+            read: true,
+            type: 'notification' as API.NoticeItemType,
+          },
+
+          // 2. 消息类 (message)
+          {
+            id: '000000006',
+            avatar:
+              'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/n4ofSB13UAYAAAAAAAAAAAAAFl94AQBr',
+            title: '曲丽丽 评论了你',
+            description: '描述信息描述信息描述信息描述信息描述信息',
+            datetime: '2026-06-10',
+            type: 'message' as API.NoticeItemType,
+            clickClose: true,
+          },
+          {
+            id: '000000007',
+            avatar:
+              'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/2wXbRR76mN8AAAAAAAAAAAAAFl94AQBr',
+            title: '朱偏右 回复了你',
+            description: '这种产品自动化程度高，可以大大提升效率。',
+            datetime: '2026-06-10',
+            type: 'message' as API.NoticeItemType,
+          },
+
+          // 3. 待办/事件类 (event)
+          {
+            id: '000000009',
+            title: '任务名称',
+            description: '任务需要在 2026-06-12 20:00 前启动',
+            extra: '未开始',
+            status: 'todo',
+            type: 'event' as API.NoticeItemType,
+          },
+          {
+            id: '000000010',
+            title: '第三方紧急代码变更',
+            description: '冠华提交于 2026-06-09，需在 2026-06-11 前完成代码变更测试',
+            extra: '马上到期',
+            status: 'urgent',
+            type: 'event' as API.NoticeItemType,
+          },
+          {
+            id: '000000011',
+            title: '信息安全考试',
+            description: '指派竹尔于 2026-06-05 前完成更新并发布',
+            extra: '已耗时 4 天',
+            status: 'doing',
+            type: 'event' as API.NoticeItemType,
+          },
+        ],
+      },
+    };
+
+    setTimeout(() => resolve(data), 1000);
   });
 }
 

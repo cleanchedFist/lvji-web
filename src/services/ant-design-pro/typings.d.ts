@@ -94,17 +94,17 @@ declare namespace API {
     success?: boolean;
   };
 
-  type NoticeIconList = {
-    data?: NoticeIconItem[];
+  type NoticeList = {
+    records?: NoticeItem[];
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
   };
 
-  type NoticeIconItemType = 'notification' | 'message' | 'event';
+  type NoticeItemType = 'notification' | 'message' | 'event';
 
-  type NoticeIconItem = {
-    id?: string;
+  type NoticeItem = {
+    id: string;
     extra?: string;
     key?: string;
     read?: boolean;
@@ -113,7 +113,7 @@ declare namespace API {
     status?: string;
     datetime?: string;
     description?: string;
-    type?: NoticeIconItemType;
+    type?: NoticeItemType;
   };
 
   type File = {

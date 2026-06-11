@@ -146,7 +146,7 @@
     },
     "/api/notices": {
       "summary": "getNotices",
-      "description": "NoticeIconItem",
+      "description": "NoticeItem",
       "get": {
         "tags": ["api"],
         "operationId": "getNotices",
@@ -156,7 +156,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NoticeIconList"
+                  "$ref": "#/components/schemas/NoticeList"
                 }
               }
             }
@@ -524,13 +524,13 @@
           }
         }
       },
-      "NoticeIconList": {
+      "NoticeList": {
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/NoticeIconItem"
+              "$ref": "#/components/schemas/NoticeItem"
             }
           },
           "total": {
@@ -543,14 +543,14 @@
           }
         }
       },
-      "NoticeIconItemType": {
-        "title": "NoticeIconItemType",
+      "NoticeItemType": {
+        "title": "NoticeItemType",
         "description": "已读未读列表的枚举",
         "type": "string",
         "properties": {},
         "enum": ["notification", "message", "event"]
       },
-      "NoticeIconItem": {
+      "NoticeItem": {
         "type": "object",
         "properties": {
           "id": {
@@ -584,7 +584,7 @@
             "extensions": {
               "x-is-enum": true
             },
-            "$ref": "#/components/schemas/NoticeIconItemType"
+            "$ref": "#/components/schemas/NoticeItemType"
           }
         }
       }
