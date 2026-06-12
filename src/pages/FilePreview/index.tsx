@@ -1,8 +1,9 @@
 import WpsSkeleton from '@/components/WpsSkeleton';
+import { getFileInfo } from '@/services/ant-design-pro/api';
 import useWpsHidden from '@/utils/wps/useWpsHidden';
 import WebOfficeProvider, { ProviderRef } from '@/utils/wps/wpsProvider';
 import { PageContainer } from '@ant-design/pro-components';
-import { useParams } from '@umijs/max';
+import { useParams, useRequest } from '@umijs/max';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 const ContractView: React.FC = () => {
@@ -10,18 +11,22 @@ const ContractView: React.FC = () => {
   const providerRef = useRef<ProviderRef>();
   const { showWps, resetAutoHide } = useWpsHidden();
   const [reinitialize, setReinitialize] = useState(false);
+  const { data: fileInfo } = useRequest(getFileInfo, { defaultParams: [+params.id!] });
 
   const sdkConfig = useMemo(() => {
-    const token = window.localStorage.getItem('token');
-    return {
-      mode: 'sample',
-      officeType: 'w',
-      appId: 'AK20250915UQIAZX',
-      fileId: params.id,
-      token: token,
-      mount: '#wps-container',
-    };
-  }, [params.id]);
+    if (fileInfo && params.id) {
+      const token = window.localStorage.getItem('token');
+      return {
+        mode: 'sample',
+        officeType: fileInfo.type === 'pdf' ? 'f' : 'w',
+        appId: 'AK20250915UQIAZX',
+        fileId: params.id,
+        token: token,
+        mount: '#wps-container',
+      };
+    }
+    return null;
+  }, [params.id, fileInfo]);
 
   useEffect(() => {
     if (reinitialize) {

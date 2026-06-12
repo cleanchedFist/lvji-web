@@ -1,5 +1,6 @@
 import PageContainer from '@/components/PageContainer';
 import WpsSkeleton from '@/components/WpsSkeleton';
+import { getFileInfo } from '@/services/ant-design-pro/api';
 import useWpsHidden from '@/utils/wps/useWpsHidden';
 import WebOfficeProvider, { ProviderRef } from '@/utils/wps/wpsProvider';
 import { useParams } from '@umijs/max';
@@ -22,21 +23,32 @@ const ContractView: React.FC = () => {
 
   const { fileId, isLoading, reviewChunkRespDTOList, reviewResultNewRespDTO, taskQueue } =
     UseRequestFetch(params.id!);
+  const [fileType, setFileType] = useState('');
+
+  useEffect(() => {
+    if (fileId) {
+      getFileInfo(fileId)
+        .then((res) => {
+          setFileType(res.data.type);
+        })
+        .catch(() => {});
+    }
+  }, [fileId]);
 
   const sdkConfig = useMemo(() => {
     const token = window.localStorage.getItem('token');
-    if (!fileId || !token) {
+    if (!fileId || !token || !fileType) {
       return null;
     }
     return {
       mode: 'sample',
-      officeType: 'w',
+      officeType: fileType === 'pdf' ? 'f' : 'w',
       appId: 'AK20250915UQIAZX',
       fileId: fileId,
       token: token,
       mount: '#wps-container',
     };
-  }, [fileId]);
+  }, [fileId, fileType]);
 
   useEffect(() => {
     if (reinitialize) {
