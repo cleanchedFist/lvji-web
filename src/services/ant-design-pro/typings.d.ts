@@ -101,18 +101,15 @@ declare namespace API {
     success?: boolean;
   };
 
-  type NoticeItemType = 'notification' | 'message' | 'event';
+  type NoticeItemType = 'notification' | 'alert' | 'message';
 
   type NoticeItem = {
     id: string;
-    extra?: string;
-    key?: string;
     read?: boolean;
-    avatar?: string;
     title?: string;
     status?: string;
-    datetime?: string;
-    description?: string;
+    createTimeStamp: number;
+    content?: string;
     type?: NoticeItemType;
   };
 

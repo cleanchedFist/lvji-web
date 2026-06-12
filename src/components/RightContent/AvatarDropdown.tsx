@@ -4,6 +4,7 @@ import { createStyles } from 'antd-style';
 import React from 'react';
 import HeaderDropdown from '../HeaderDropdown';
 import InvitationModal from './InvitationCode';
+import NoticesModal from './NoticesModal';
 import OrderRecordsModal from './OrderRecordsModal';
 import useUserMenu from './useUserMenu';
 
@@ -40,7 +41,8 @@ const useStyles = createStyles(({ token }) => {
 export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) => {
   const { styles } = useStyles();
   const { initialState } = useModel('@@initialState');
-  const { menuItems, menuHandler, invitationModal, orderRecordsModal } = useUserMenu();
+  const { menuItems, menuHandler, invitationModal, orderRecordsModal, noticesModal } =
+    useUserMenu();
   const { currentUser } = initialState || {};
 
   const loading = (
@@ -82,6 +84,10 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) =
           onCancel={() => orderRecordsModal.setOrderRecordsVisible(false)}
         />
       )}
+      <NoticesModal
+        visible={noticesModal.noticesVisible}
+        onCancel={() => noticesModal.setNoticesVisible(false)}
+      />
     </>
   );
 };
