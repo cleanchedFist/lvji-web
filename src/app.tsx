@@ -100,6 +100,15 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         }
       },
       footerRender: () => <Footer />,
+      childrenRender: (children) => {
+        return (
+          <>
+            {children}
+            {/* 这里的全局组件可以完美使用 useModel，因为它在 Layout 内部 */}
+            <ForceNoticeModal />
+          </>
+        );
+      },
       ...initialState?.settings,
     };
   }
