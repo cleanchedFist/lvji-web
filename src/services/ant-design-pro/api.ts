@@ -62,92 +62,40 @@ export async function lawyerRegist(body: API.LoginParams) {
   });
 }
 
-/** 此处后端没有提供注释 GET /api/notices */
 export async function getNotices(options?: {
   [key: string]: any;
 }): Promise<{ success: boolean; data: API.NoticeList }> {
-  // return request<API.NoticeList>('/api/notices', {
-  //   method: 'GET',
-  //   ...(options || {}),
-  // });
+  return request('/api/notification-service/notification/list', {
+    method: 'GET',
+    ...(options || {}),
+    params: {
+      ...options,
+    },
+  });
+}
 
-  return new Promise((resolve) => {
-    const data = {
-      success: true,
-      data: {
-        current: 1,
-        size: 8,
-        total: 8,
-        records: [
-          {
-            id: '000000002',
-            title: '请假申请审批通过',
-            content: '您的年假申请已被主管审批通过，请合理安排工作交接。',
-            createTimeStamp: 1781193600000, // 2026-06-11
-            type: 'notification' as API.NoticeItemType,
-            read: false,
-          },
-          {
-            id: '000000003',
-            title: '服务器 CPU 负载过高预警',
-            content: '生产环境核心节点集群 CPU 使用率已连续 5 分钟超过 90%，请及时检查。',
-            createTimeStamp: 1781193600000, // 2026-06-11
-            type: 'alert' as API.NoticeItemType,
-            read: false,
-          },
-          {
-            id: '000000004',
-            title: '收到来自李四的私信',
-            content: '“上次方案里提到的数据接口，我已经部署到测试环境了，你有空测一下。”',
-            createTimeStamp: 1781193600000, // 2026-06-11
-            type: 'message' as API.NoticeItemType,
-            read: true,
-          },
-          {
-            id: '000000005',
-            title: '系统版本更新提示',
-            content: '系统将于今晚 23:00 进行全线升级，预计耗时 1 小时，期间部分服务可能短暂中断。',
-            createTimeStamp: 1781107200000, // 2026-06-10
-            type: 'notification' as API.NoticeItemType,
-            read: false,
-          },
-          {
-            id: '000000006',
-            title: '数据库连接数接近上限',
-            content: 'RDS 数据库当前活跃连接数已达 85%，存在潜在拒绝服务风险。',
-            createTimeStamp: 1781107200000, // 2026-06-10
-            type: 'alert' as API.NoticeItemType,
-            read: false,
-          },
-          {
-            id: '000000007',
-            title: '产品经理发来一条讨论',
-            content: '“看下这个需求的排期，下周三能不能提测？”',
-            createTimeStamp: 1781020800000, // 2026-06-09
-            type: 'message' as API.NoticeItemType,
-            read: true,
-          },
-          {
-            id: '000000008',
-            title: '安全中心：异地登录提醒',
-            content: '您的账号于 14:22 在上海市进行了登录，如非本人操作请尽快修改密码。',
-            createTimeStamp: 1781020800000, // 2026-06-09
-            type: 'alert' as API.NoticeItemType,
-            read: false,
-          },
-          {
-            id: '000000009',
-            title: '项目里程碑达成通知',
-            content: '恭喜！“AI 效能工具”项目已顺利完成交付，进入日常运营维护阶段。',
-            createTimeStamp: 1780934400000, // 2026-06-08
-            type: 'notification' as API.NoticeItemType,
-            read: true,
-          },
-        ],
-      },
-    };
+export function readNotice(id: string) {
+  return request(`/api/notification-service/notification/read/${id}`, {
+    method: 'PUT',
+  });
+}
 
-    setTimeout(() => resolve(data), 1000);
+export function readAllNotice() {
+  return request('/api/notification-service/notification/read-all', {
+    method: 'PUT',
+  });
+}
+
+export function deleteNotice(id: string) {
+  return request(`/api/notification-service/notification/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+export function deleteAllNotice(ids: string[]) {
+  return request(`/api/notification-service/notification/batch`, {
+    method: 'DELETE',
+    data: ids,
   });
 }
 

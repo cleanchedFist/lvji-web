@@ -105,12 +105,14 @@ declare namespace API {
 
   type NoticeItem = {
     id: string;
-    read?: boolean;
+    isRead?: number;
     title?: string;
     status?: string;
-    createTimeStamp: number;
+    createTime: string;
     content?: string;
     type?: NoticeItemType;
+    readTime: string | null;
+    displayMode: number; // 1=强制弹窗, 2=仅消息中心
   };
 
   type File = {

@@ -10,7 +10,7 @@ const NoticesModal = ({ visible, onCancel }: { visible: boolean; onCancel: () =>
   const notices = useModel('@@initialState', (model) => model.initialState?.notices);
 
   const unreadCount = useMemo(() => {
-    return notices?.filter((i) => !i.read)?.length || 0;
+    return notices?.filter((i) => !i.isRead)?.length || 0;
   }, [notices]);
 
   return (
@@ -70,7 +70,9 @@ const NoticesModal = ({ visible, onCancel }: { visible: boolean; onCancel: () =>
             handleSelect={setActiveNotice}
           />
         )}
-        {activeNotice && <NoticeDetailCard notice={activeNotice} />}
+        {activeNotice && (
+          <NoticeDetailCard notice={activeNotice} onBack={() => setActiveNotice(null)} />
+        )}
       </div>
     </Mask>
   );

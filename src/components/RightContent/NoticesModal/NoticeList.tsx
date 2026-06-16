@@ -1,3 +1,5 @@
+import { deleteAllNotice, readAllNotice } from '@/services/ant-design-pro/api';
+import useUpdateNotice from '@/utils/notice/useUpdateNotice';
 import { Check, Inbox, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import NoticeListCard from './NoticeListCard';
@@ -13,19 +15,28 @@ const NoticeList = ({
 }) => {
   const tabs = [
     { id: 'all', label: '全部', filter: (i: API.NoticeItem) => i },
-    { id: 'unread', label: '未读', filter: (i: API.NoticeItem) => !i.read },
-    { id: 'system', label: '系统', filter: (i: API.NoticeItem) => i.type === 'notification' },
+    { id: 'unread', label: '未读', filter: (i: API.NoticeItem) => !i.isRead },
+    // { id: 'system', label: '系统', filter: (i: API.NoticeItem) => i.type === 'notification' },
   ];
 
   const [filterCategory, setFilterCategory] = useState(tabs[0].id);
+  const { updateNoticy } = useUpdateNotice();
 
   const filterNotices = useMemo(() => {
     const currentTab = tabs.filter((i) => i.id === filterCategory)[0];
     return notices.filter(currentTab.filter);
   }, [notices, filterCategory]);
 
-  const handleMarkAllRead = () => {};
-  const handleClearRead = () => {};
+  const handleMarkAllRead = () => {
+    readAllNotice();
+    updateNoticy();
+  };
+  const handleClearRead = () => {
+    // 获取所有已读的id
+    const ids = filterNotices.filter((i) => i.isRead === 1).map((i) => i.id);
+    deleteAllNotice(ids);
+    updateNoticy();
+  };
 
   return (
     <div className="bg-white p-4 border-b border-slate-100 space-y-3 min-h-0 flex flex-col overflow-hidden">

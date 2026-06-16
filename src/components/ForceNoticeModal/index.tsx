@@ -4,7 +4,7 @@ import NoticeCard from './NoticeCard';
 
 const ForceNoticeModal = () => {
   const forceNotices = useModel('@@initialState', (model) =>
-    model.initialState?.notices?.filter((i) => i.type === 'notification'),
+    model.initialState?.notices?.filter((i) => i.displayMode === 1 && i.isRead === 0),
   );
 
   return (

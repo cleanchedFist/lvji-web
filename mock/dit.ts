@@ -1,183 +1,46 @@
+import { Request, Response } from 'express';
+function generateNumericCode() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+const list = [11, 12, 13, 14, 15].map((i, k) => {
+  return {
+    id: i,
+    title: '系统维护通知',
+    content: `系统将于今晚 02:00-04:00 ${i} 升级维护，届时无法使用。`,
+    isRead: 0,
+    readTime: null,
+    displayMode: 0,
+    createTime: '2026-06-15 16:06:41',
+  };
+});
+
 export default {
-  'GET /api/llm-service/dir/all/list': {
-    code: '0',
-    message: null,
-    data: {
-      current: 1,
-      size: 5,
-      total: 4,
-      records: [
-        {
-          id: 5,
-          name: '餐饮服务采购合同',
-          userId: 6,
-          parta: null,
-          partb: null,
-          latestFileId: 355,
-          version: null,
-          checked: true,
-          createTimeStamp: 1763450375000,
-        },
-        {
-          id: 4,
-          name: '测试合同',
-          userId: 6,
-          parta: null,
-          partb: null,
-          latestFileId: 350,
-          version: null,
-          checked: true,
-          createTimeStamp: 1763449971000,
-        },
-        {
-          id: 2,
-          name: '融资顾问服务协议',
-          userId: 6,
-          parta: 'XX公司',
-          partb: 'XX公司',
-          latestFileId: 345,
-          version: null,
-          checked: true,
-          createTimeStamp: 1763447445000,
-        },
-        {
-          id: 1,
-          name: '电梯日常维保合同',
-          userId: 6,
-          parta: null,
-          partb: null,
-          latestFileId: 361,
-          version: '1.01',
-          checked: false,
-          createTimeStamp: 1763447363000,
-        },
-      ],
-    },
-    requestId: null,
-    success: true,
+  'GET /api/notification-service/notification/list': (req: Request, res: Response) => {
+    console.log(list);
+    res.status(200).json({
+      code: '0',
+      message: null,
+      requestId: null,
+      success: true,
+      data: {
+        current: 1,
+        size: 10,
+        total: 3,
+        records: list,
+      },
+    });
   },
-  'GET /api/llm-service/dir/cnt': {
-    code: '0',
-    message: null,
-    data: 6,
-    requestId: null,
-    success: true,
-  },
-  'POST /api/llm-service/upload/file': {
-    code: '0',
-    message: null,
-    data: 361,
-    requestId: null,
-    success: true,
-  },
-  'GET /api/llm-service/upload/change': {
-    code: '0',
-    message: null,
-    data: null,
-    requestId: null,
-    success: true,
-  },
-  'GET /api/llm-service/dir/one/list': {
-    code: '0',
-    message: null,
-    data: {
-      current: 1,
-      size: 5,
-      total: 6,
-      records: [
-        {
-          id: 344,
-          name: '电梯维修保养合同-甲方.docx',
-          title: '电梯日常维保合同',
-          parta: null,
-          partb: null,
-          status: 2,
-          stage: '起草中',
-          createTimeStamp: 1763447358000,
-        },
-        {
-          id: 346,
-          name: '劳务外包服务合同-无偏向.docx',
-          title: null,
-          parta: null,
-          partb: null,
-          status: 1,
-          stage: '起草中',
-          createTimeStamp: 1763447538000,
-        },
-        {
-          id: 354,
-          name: '劳务外包服务合同-无偏向.docx',
-          title: null,
-          parta: null,
-          partb: null,
-          status: 1,
-          stage: '起草中',
-          createTimeStamp: 1763450083000,
-        },
-        {
-          id: 356,
-          name: '劳务外包服务合同-无偏向.docx',
-          title: null,
-          parta: null,
-          partb: null,
-          status: 1,
-          stage: '起草中',
-          createTimeStamp: 1763453553000,
-        },
-        {
-          id: 357,
-          name: '劳务外包服务合同-无偏向.docx',
-          title: null,
-          parta: null,
-          partb: null,
-          status: 1,
-          stage: '起草中',
-          createTimeStamp: 1763454268000,
-        },
-      ],
-    },
-    requestId: null,
-    success: true,
-  },
-  'GET /api/llm-service/retrieval/344': {
-    code: '0',
-    message: null,
-    data: {
-      id: 344,
-      title: '西式分餐外卖订餐合同',
-      name: '2020.7.27西式分餐外卖订餐合同.docx',
-      status: 2,
-      parta: 'xxxx有限责任公司',
-      partb: 'yyyy有限公司',
-      reviewer: null,
-      price: 11000.0,
-      startTime: 1595865600000,
-      endTime: null,
-      type: '外卖订餐合同',
-      stage: '起草中',
-    },
-    requestId: null,
-    success: true,
-  },
-  'GET /api/llm-service/retrieval/346': {
-    code: '0',
-    message: null,
-    data: {
-      id: 346,
-      title: '西式分餐外卖订餐合同2222',
-      name: '2020.7.27西式分餐外卖订餐合同.docx',
-      status: 2,
-      parta: 'xxxx有限责任公司222',
-      partb: 'yyyy有限公司',
-      reviewer: null,
-      price: 11000.0,
-      startTime: 1595865600000,
-      endTime: null,
-      type: '外卖订餐合同',
-      stage: '起草中',
-    },
-    requestId: null,
-    success: true,
+  'PUT /api/notification-service/notification/read/:id': (req: Request, res: Response) => {
+    const { id } = req.params;
+    const a = list.find((i) => i.id === +id) || ({} as API.NoticeItem);
+    a.isRead = 1;
+    console.log('更新');
+    res.status(200).json({
+      code: '0',
+      message: null,
+      requestId: null,
+      success: true,
+    });
   },
 };

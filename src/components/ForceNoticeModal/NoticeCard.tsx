@@ -1,22 +1,25 @@
-import { formatTime } from '@/utils/formatTime';
-import { useModel } from '@umijs/max';
+import { readNotice } from '@/services/ant-design-pro/api';
+import useUpdateNotice from '@/utils/notice/useUpdateNotice';
+import { message } from 'antd';
 import { Check, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 const NoticeCard = ({ notices }: { notices: API.NoticeItem[] }) => {
-  const { initialState, setInitialState } = useModel('@@initialState');
   const [currentNotifIndex, setCurrentNotifIndex] = useState(0);
+  const { updateNoticy } = useUpdateNotice();
 
   const currentNotif = useMemo(() => {
     return { ...notices[currentNotifIndex], checked: true };
   }, [currentNotifIndex, notices]);
 
   const handleAcknowledge = (id: string) => {
-    const current = initialState?.notices?.filter((i) => i.id !== id) || [];
-    setInitialState((preInitialState) => ({
-      ...preInitialState,
-      notices: current,
-    }));
+    readNotice(id)
+      .then(() => {
+        updateNoticy();
+      })
+      .catch(() => {
+        message.error('已读失败，请重试');
+      });
   };
 
   return (
@@ -42,10 +45,10 @@ const NoticeCard = ({ notices }: { notices: API.NoticeItem[] }) => {
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-extrabold tracking-wider px-2 py-0.5 rounded-full uppercase bg-indigo-100 text-indigo-700">
-                  系统更新
+                  系统通知
                 </span>
                 <span className="text-xs text-slate-400 font-medium">
-                  {formatTime(currentNotif.createTimeStamp)}
+                  {currentNotif.createTime}
                 </span>
               </div>
               <h3 className="text-lg font-extrabold text-slate-800 leading-snug">
