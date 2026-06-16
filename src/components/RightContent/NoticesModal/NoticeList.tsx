@@ -33,9 +33,11 @@ const NoticeList = ({
   };
   const handleClearRead = () => {
     // 获取所有已读的id
-    const ids = filterNotices.filter((i) => i.isRead === 1).map((i) => i.id);
-    deleteAllNotice(ids);
-    updateNoticy();
+    const ids = filterNotices?.filter((i) => i.isRead === 1)?.map((i) => i.id);
+    if (ids.length) {
+      deleteAllNotice(ids);
+      updateNoticy();
+    }
   };
 
   return (
