@@ -9,7 +9,7 @@ const { Text } = Typography;
 
 interface OptionType {
   label: string;
-  value: string;
+  value: number;
 }
 
 export enum UploadType {
@@ -96,6 +96,7 @@ export const LawyerField = ({
   return (
     <ConfigItem label="指派律师">
       <Select
+        disabled={true}
         className="w-full"
         placeholder="请选择审核律师"
         value={lawyerId}

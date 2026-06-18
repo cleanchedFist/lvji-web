@@ -94,26 +94,25 @@ declare namespace API {
     success?: boolean;
   };
 
-  type NoticeIconList = {
-    data?: NoticeIconItem[];
+  type NoticeList = {
+    records?: NoticeItem[];
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
   };
 
-  type NoticeIconItemType = 'notification' | 'message' | 'event';
+  type NoticeItemType = 'notification' | 'alert' | 'message';
 
-  type NoticeIconItem = {
-    id?: string;
-    extra?: string;
-    key?: string;
-    read?: boolean;
-    avatar?: string;
+  type NoticeItem = {
+    id: string;
+    isRead?: number;
     title?: string;
     status?: string;
-    datetime?: string;
-    description?: string;
-    type?: NoticeIconItemType;
+    createTime: string;
+    content?: string;
+    type?: NoticeItemType;
+    readTime: string | null;
+    displayMode: number; // 1=强制弹窗, 2=仅消息中心
   };
 
   type File = {

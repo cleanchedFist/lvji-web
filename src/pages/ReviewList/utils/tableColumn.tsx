@@ -1,6 +1,6 @@
-import { formatDuration, formatTime } from '@/pages/ContractCataloge/utils/formatTime';
 import { removeReview } from '@/services/ant-design-pro/api';
 import { contractDownload } from '@/utils/contractHandle';
+import { formatDuration, formatTime } from '@/utils/formatTime';
 import { deleteModalConfig } from '@/utils/modalConfig';
 import type { ProColumns } from '@ant-design/pro-components';
 import { history } from '@umijs/max';

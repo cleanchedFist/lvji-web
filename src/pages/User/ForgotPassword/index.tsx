@@ -1,11 +1,13 @@
+import { Helmet, history } from '@umijs/max';
+import { message } from 'antd';
+import React from 'react';
+
 import { Footer } from '@/components';
+import CLink from '@/components/CLink';
 import { resetPassword, verifySmsCode } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
 import { LockOutlined, MobileOutlined } from '@ant-design/icons';
 import { LoginForm, ProForm, ProFormText } from '@ant-design/pro-components';
-import { Helmet, history, Link } from '@umijs/max';
-import { message } from 'antd';
-import React from 'react';
 import Settings from '../../../../config/defaultSettings';
 import VertifyCode from '../components/VertifyCode';
 
@@ -105,7 +107,7 @@ const Regist: React.FC = () => {
               ]}
             />
             <div className="flex mb-6 justify-between">
-              <Link to="/user/login">返回登录</Link>
+              <CLink to="/user/login">返回登录</CLink>
             </div>
           </LoginForm>
         </div>

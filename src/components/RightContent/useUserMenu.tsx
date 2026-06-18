@@ -1,5 +1,5 @@
 import { history, useModel } from '@umijs/max';
-import { List, LogOut, Share2 } from 'lucide-react';
+import { Bell, List, LogOut, Share2 } from 'lucide-react';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useCallback, useMemo, useState } from 'react';
@@ -9,6 +9,7 @@ const useUserMenu = () => {
   const { initialState = {}, setInitialState } = useModel('@@initialState');
   const [invitationVisible, setInvitationVisible] = useState(false);
   const [orderRecordsVisible, setOrderRecordsVisible] = useState(false);
+  const [noticesVisible, setNoticesVisible] = useState(false);
 
   /**
    * 退出登录，并且将当前的 url 保存
@@ -34,7 +35,13 @@ const useUserMenu = () => {
     const { currentUser, isUserRole } = initialState || {};
     if (!currentUser) return [];
 
-    const items = [];
+    const items = [
+      {
+        key: 'notices',
+        icon: <Bell size={16} />,
+        label: '通知中心',
+      },
+    ];
 
     // 特定权限菜单
     if (currentUser.type === 2) {
@@ -84,6 +91,12 @@ const useUserMenu = () => {
         return;
       }
 
+      if (key === 'notices') {
+        // 展示弹窗
+        setNoticesVisible(true);
+        return;
+      }
+
       // 处理普通跳转
       history.push(`/account/${key}`);
     },
@@ -100,6 +113,10 @@ const useUserMenu = () => {
     orderRecordsModal: {
       orderRecordsVisible,
       setOrderRecordsVisible,
+    },
+    noticesModal: {
+      noticesVisible,
+      setNoticesVisible,
     },
   };
 };

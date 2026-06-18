@@ -1,9 +1,11 @@
 import { Footer } from '@/components';
+import CLink from '@/components/CLink';
 import { login, smsLogin } from '@/services/ant-design-pro/api';
 import UseLoginStyles from '@/utils/loginCardStyle';
+import useUpdateNotice from '@/utils/notice/useUpdateNotice';
 import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProForm, ProFormText } from '@ant-design/pro-components';
-import { FormattedMessage, Helmet, history, Link, SelectLang, useIntl, useModel } from '@umijs/max';
+import { FormattedMessage, Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 import { Form, message } from 'antd';
 import { createStyles } from 'antd-style';
 import { KeyRound, Smartphone } from 'lucide-react';
@@ -42,6 +44,7 @@ const Lang = () => {
 const Login: React.FC = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
   const { styles: loginStyle } = UseLoginStyles();
+  const { updateNoticy } = useUpdateNotice();
   const [role, setRole] = useState<number>(0);
   const intl = useIntl();
 
@@ -72,6 +75,7 @@ const Login: React.FC = () => {
 
       const urlParams = new URL(window.location.href).searchParams;
       history.push(urlParams.get('redirect') || '/');
+      await updateNoticy();
     } catch (error) {}
   };
   const [form] = Form.useForm();
@@ -223,9 +227,9 @@ const Login: React.FC = () => {
                 )}
               </button>
               <div className="flex items-center space-x-3 text-slate-400">
-                <Link to="/user/regist">注册</Link>
+                <CLink to="/user/regist">注册</CLink>
                 <span className="text-slate-200">|</span>
-                <Link to={`/user/forget?type=${role}`}>忘记密码</Link>
+                <CLink to={`/user/forget?type=${role}`}>忘记密码</CLink>
               </div>
             </div>
           </LoginForm>

@@ -62,11 +62,40 @@ export async function lawyerRegist(body: API.LoginParams) {
   });
 }
 
-/** 此处后端没有提供注释 GET /api/notices */
-export async function getNotices(options?: { [key: string]: any }) {
-  return request<API.NoticeIconList>('/api/notices', {
+export async function getNotices(options?: {
+  [key: string]: any;
+}): Promise<{ success: boolean; data: API.NoticeList }> {
+  return request('/api/notification-service/notification/list', {
     method: 'GET',
     ...(options || {}),
+    params: {
+      ...options,
+    },
+  });
+}
+
+export function readNotice(id: string) {
+  return request(`/api/notification-service/notification/read/${id}`, {
+    method: 'PUT',
+  });
+}
+
+export function readAllNotice() {
+  return request('/api/notification-service/notification/read-all', {
+    method: 'PUT',
+  });
+}
+
+export function deleteNotice(id: string) {
+  return request(`/api/notification-service/notification/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+export function deleteAllNotice(ids: string[]) {
+  return request(`/api/notification-service/notification/batch`, {
+    method: 'DELETE',
+    data: ids,
   });
 }
 
