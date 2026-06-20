@@ -1,6 +1,6 @@
 import PageContainer from '@/components/PageContainer';
 import { contractPre, contractReview } from '@/services/ant-design-pro/api';
-import { useNavigate, useParams, useRequest } from '@umijs/max';
+import { useModel, useNavigate, useParams, useRequest } from '@umijs/max';
 import { Form, message } from 'antd';
 import React, { useState } from 'react';
 import StepOne, { FormData as StepOneFormData } from './components/StepOne/index';
@@ -8,6 +8,7 @@ import StepTwo from './components/StepTwo';
 import { initialForm } from './dataSchema';
 
 const ContractStep: React.FC = () => {
+  const { initialState } = useModel('@@initialState');
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
@@ -34,7 +35,10 @@ const ContractStep: React.FC = () => {
       contractReview(data.reviewResultNewId, { ...reviewParams, fileId: params.id }).then((res) => {
         // 审查成功
         if (res.data) {
-          navigate(`/clm/reviews/result/${data.reviewResultNewId}`);
+          const nextUrl = initialState?.isUserRole
+            ? '/user/cataloge'
+            : `/clm/reviews/result/${data.reviewResultNewId}`;
+          navigate(nextUrl);
         } else {
           message.warning('审查失败，请重试');
         }
