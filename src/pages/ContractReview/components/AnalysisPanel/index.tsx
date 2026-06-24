@@ -1,10 +1,16 @@
 import { useMemo } from 'react';
+import ClauseCard from './ClauseCard';
 import DealNodesCard from './DealNodesCard';
 import ObjectCard from './ObjectCard';
 import PurposeCard from './PurposeCard';
 import ViolateCard from './ViolateCard';
 
-type ReviewAnalysisKey = 'objectRule' | 'purposeRule' | 'violateRule' | 'dealNodesRule';
+type ReviewAnalysisKey =
+  | 'objectRule'
+  | 'purposeRule'
+  | 'violateRule'
+  | 'dealNodesRule'
+  | 'clauseRule';
 
 export type ReviewAnalysisData = Record<ReviewAnalysisKey, any>;
 
@@ -43,12 +49,17 @@ const ReviewPanel = ({ data }: { data: ReviewAnalysisData }) => {
     return formatFn(data?.violateRule, 'contractParties', []);
   }, [data]);
 
+  const clause = useMemo(() => {
+    return formatFn(data?.clauseRule, 'contractClauses', []);
+  }, [data]);
+
   return (
     <div className="w-full flex-1 flex-col  overflow-y-auto">
       <ObjectCard data={object} />
       <DealNodesCard data={dealNodes} />
-      <PurposeCard data={purpose} />
       <ViolateCard data={violate} />
+      <PurposeCard data={purpose} />
+      <ClauseCard data={clause} />
     </div>
   );
 };

@@ -17,7 +17,15 @@ type ViolateCardData = {
   contractor: ViolateItemData;
 };
 
-const ViolateItem = ({ party, data }: { data: responsibilitie[]; party: string }) => {
+const ViolateItem = ({
+  party,
+  partyName,
+  data,
+}: {
+  data: responsibilitie[];
+  partyName?: string;
+  party: string;
+}) => {
   return data.map((item, idx) => (
     <div
       key={idx}
@@ -28,7 +36,7 @@ const ViolateItem = ({ party, data }: { data: responsibilitie[]; party: string }
 
       <div className="p-5 md:p-6 flex-1 flex flex-col">
         <div className="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">
-          {party}
+          {partyName ? `${party}:${partyName}` : party}
         </div>
         <h4 className="text-base md:text-lg font-bold text-slate-800 mb-4 leading-snug">
           {item.condition}
@@ -53,14 +61,22 @@ const ViolateItem = ({ party, data }: { data: responsibilitie[]; party: string }
 };
 
 const ViolateCard = ({ data }: { data: ViolateCardData }) => {
-  if (!data || !(data.contractee && data.contractor)) return <></>;
-  console.log(333, data);
+  if (!data || !(data.contractee?.responsibilities && data.contractor?.responsibilities))
+    return <></>;
   return (
     <AnalysisBaseCard title="违约责任">
       {data ? (
         <>
-          <ViolateItem party="甲方" data={data.contractee?.responsibilities || []}></ViolateItem>
-          <ViolateItem party="乙方" data={data.contractor?.responsibilities || []}></ViolateItem>
+          <ViolateItem
+            party="甲方"
+            partyName={data.contractee?.party}
+            data={data.contractee?.responsibilities || []}
+          ></ViolateItem>
+          <ViolateItem
+            party="乙方"
+            partyName={data.contractor?.party}
+            data={data.contractor?.responsibilities || []}
+          ></ViolateItem>
         </>
       ) : (
         '无内容'

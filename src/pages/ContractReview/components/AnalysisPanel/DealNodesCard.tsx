@@ -1,5 +1,6 @@
 import { RightOutlined } from '@ant-design/icons';
-import { Box, PencilLine, ShieldCheck } from 'lucide-react'; // 对应截图中的图标
+import { Box, PencilLine, ShieldCheck } from 'lucide-react';
+import AnalysisBaseCard from './AnalysisBaseCard';
 
 // 定义数据接口
 interface DealNodesCardData {
@@ -21,12 +22,10 @@ const getIcon = (index: number) => {
 const DealNodesCard = ({ data }: { data: DealNodesCardData[] }) => {
   if (!data || !data.length) return <></>;
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm w-full mx-auto mb-2">
-      <h2 className="text-xl font-bold mb-8 text-gray-800">交易流程</h2>
-
+    <AnalysisBaseCard title="交易流程">
       <div className="relative ml-4 border-l-2 border-gray-50">
         {data?.map((node, nodeIdx) => (
-          <div key={nodeIdx} className="mb-10 ml-[24px] relative">
+          <div key={nodeIdx} className="mb-4 ml-[24px] relative">
             {/* 时间轴圆圈图标 */}
             <div className="absolute -left-[42px] -top-[4px] w-[36px] h-[36px] bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
               {getIcon(nodeIdx)}
@@ -38,49 +37,53 @@ const DealNodesCard = ({ data }: { data: DealNodesCardData[] }) => {
             {/* 甲方与乙方内容区域 */}
             <div className="space-y-4">
               {/* 甲方卡片 */}
-              <div className="bg-gray-50/50 rounded-xl p-5 border border-gray-50">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="bg-blue-100 text-blue-600 text-xs font-bold px-2 py-1 rounded">
-                    甲方
-                  </span>
+              {node.firstParty && (
+                <div className="rounded-xl p-4 border border-gray-150">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="bg-blue-100 text-blue-600 text-xs font-bold px-2 py-1 rounded">
+                      甲方
+                    </span>
+                  </div>
+                  <ul className="space-y-3">
+                    {node.firstParty?.map((item, k) => (
+                      <li
+                        key={k}
+                        className="flex items-center gap-2 text-sm text-gray-600 leading-relaxed"
+                      >
+                        <RightOutlined className="stroke-current stroke-[60px] w-[10px] h-[10px] text-blue-400" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-3">
-                  {node.firstParty?.map((item, k) => (
-                    <li
-                      key={k}
-                      className="flex items-center gap-2 text-sm text-gray-600 leading-relaxed"
-                    >
-                      <RightOutlined className="stroke-current stroke-[60px] w-[10px] h-[10px] text-blue-400" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              )}
 
               {/* 乙方卡片 */}
-              <div className="bg-gray-50/50 rounded-xl p-5 border border-gray-50">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="bg-green-100 text-green-600 text-xs font-bold px-2 py-1 rounded">
-                    乙方
-                  </span>
+              {node.secondParty && (
+                <div className="rounded-xl p-4 border border-gray-150">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="bg-green-100 text-green-600 text-xs font-bold px-2 py-1 rounded">
+                      乙方
+                    </span>
+                  </div>
+                  <ul className="space-y-3">
+                    {node.secondParty?.map((item, k) => (
+                      <li
+                        key={k}
+                        className="flex items-center gap-2 text-sm text-gray-600 leading-relaxed"
+                      >
+                        <RightOutlined className="stroke-current stroke-[60px] w-[10px] h-[10px] text-green-400" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-3">
-                  {node.secondParty?.map((item, k) => (
-                    <li
-                      key={k}
-                      className="flex items-center gap-2 text-sm text-gray-600 leading-relaxed"
-                    >
-                      <RightOutlined className="stroke-current stroke-[60px] w-[10px] h-[10px] text-green-400" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              )}
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </AnalysisBaseCard>
   );
 };
 

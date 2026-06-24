@@ -6,7 +6,7 @@ import { components } from './MarkdownStyle';
 const RiskCard = ({ data }: { data: string }) => {
   return (
     data && (
-      <div className="mt-8 p-2 relative">
+      <div className="mt-2 p-2 relative">
         <div className="absolute -inset-1 bg-gradient-to-r from-red-100 to-amber-100 rounded-2xl blur opacity-30"></div>
         <div className="relative bg-white border-2 border-red-50 rounded-2xl p-6 flex gap-5 shadow-sm">
           <div className="flex-shrink-0">
@@ -37,7 +37,7 @@ const MainCard = ({ data }: { data: string[] }) => {
     data.map((section, idx) => (
       <div
         key={idx}
-        className="bg-gray-50/50 p-2 rounded-2xl border border-gray-50 relative overflow-hidden"
+        className="bg-gray-50/50 p-2 rounded-2xl border border-gray-100 relative overflow-hidden mb-2"
       >
         <Markdown components={components}>{`# ${section}`}</Markdown>
       </div>

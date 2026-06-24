@@ -20,21 +20,38 @@ export const components = {
     }
 
     return (
-      <div className="flex items-center gap-2 mb-4 mt-2">
+      <div className="flex items-center gap-2 mb-2 mt-2">
         <div className="p-1.5 bg-white rounded shadow-sm border border-gray-100">{icon}</div>
         <h3 className="text-lg font-bold text-gray-800 flex items-center">{children}</h3>
       </div>
     );
   },
   ul: ({ children }: React.ComponentPropsWithoutRef<'ul'>) => (
-    <div className="space-y-3 mb-6">{children}</div>
+    <div className="space-y-3">{children}</div>
   ),
   li: ({ children }: React.ComponentPropsWithoutRef<'li'>) => {
     const childrenArray = React.Children.toArray(children);
     const isBoldSplit =
       typeof childrenArray?.[0] === 'object' &&
       (childrenArray?.[0] as React.ReactElement)?.type === 'strong';
-    let detail = (childrenArray?.[1] as string)?.replace(/^:/, '').replace(/^：/, '');
+
+    // --- 🛠️ 修复逻辑开始 ---
+    let detail = '';
+    if (childrenArray?.[1]) {
+      const nextNode = childrenArray[1];
+
+      if (typeof nextNode === 'string') {
+        // 情况 A：如果是标准的纯字符串，直接正则替换
+        detail = nextNode.replace(/^[：:]/, '');
+      } else if (typeof nextNode === 'object' && 'props' in nextNode) {
+        // 情况 B：如果是一个被包裹的 React 元素（对象），安全地提取它内部的文本再替换
+        const nodeChildren = (nextNode as React.ReactElement).props?.children;
+        if (typeof nodeChildren === 'string') {
+          detail = nodeChildren.replace(/^[：:]/, '');
+        }
+      }
+    }
+    // --- 🛠️ 修复逻辑结束 ---
 
     return (
       <div className="flex items-start gap-3 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-hover hover:border-blue-200 mt-1">
